@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="masthead">
+    <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center ">
+        <div class="d-flex justify-content-center">
+            <div class="text-center">
+                <h1 class="mx-auto my-0 text-uppercase">Snowboarding is the way to be</h1>
+                <h2 class="text-white-50 mx-auto mt-2 mb-5">Snowboarders Community </h2>                        
+            </div>            
+        </div>       
+    </div>
+    <div class="d-flex align-items-end flex-column">
+        <a id="more_content" class="btn btn-primary btn-hero" href="#cards-tricks">+<i class='fas fa-arrow-down' style='font-size:48px;color:white'></i></a>
+    </div>    
+</div>  
+<section id="cards-tricks" class="d-flex mt-5">
+    <div class="container ">
+        {% for j in 0..1 %}
+            <div class="row justify-content-around  gx-0">
+                {% for i in 0..4 %}
+                        <div class="card my-3" style="width: 15rem;">
+                            <a class="text-decoration-none" href="{{ path('trickpage')}} ">
+                                <img src="{{asset('images/trick.png')}}" class="card-img-top" alt="Snowboard trick"/>
+                                <h5 class="card-title text-center my-2">Trick Name</h5>
+                            </a>
+                            <div class="modification text-center"><i class="bi bi-trash3-fill"></i><i class='fas fa-arrow-down' style='font-size:48px;color:black'></i>
+                                <a href="#" class="btn btn-danger btn-sm">Trash<i class="bi bi-trash3-fill"></i></a>
+                                <a href="#" class="btn btn-info btn-sm">pen<i class="bi bi-pencil-fill"></i></a>                            
+                            </div>
+                        </div>
+                {% endfor %}
+            </div>
+        
+
+        {% endfor %}
+        <div class="button-load-more text-center mb-5">
+                <a href="" class="btn btn-sm rounded text-light bg-dark px-5 py-3" >Load More</a>
+        </div>
+            
+    </div>
+</section>
+{% set nbTrick = 17 %} {# variable de test à remplacer par le tableau des tricks #}
+{% if nbTrick > 15 %}
+    <div class="d-flex justify-content-end">
+        <a  href="#cards-tricks" class="btn text-light bg-dark px-5 py-3" >UP</a>
+    </div>           
+{% endif %}
+  
+
+{% endblock %}
