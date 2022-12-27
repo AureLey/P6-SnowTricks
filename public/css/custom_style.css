@@ -1,3 +1,30 @@
+
+
+/* NAVBAR*/
+.navbar{
+    align-items: center;
+}
+.navbar-collapse
+{
+    justify-content:flex-end; 
+}
+
+.navbar-dark .navbar-toggler-icon 
+{
+    color: aliceblue;
+}
+
+footer
+{
+    background-color:#1a1717;
+    color: aliceblue !important; 
+}
+
+.nav-link { 
+    color: aliceblue !important; 
+}
+
+
 /*HOMEPAGE*/
 #mainNav
 {
@@ -22,30 +49,197 @@
     position : absolute;
     bottom   : 1rem;
 }
-
-footer
+.card-img-top
 {
-    background-color:#1b0e0e;
-    color: aliceblue !important;
-       
-
+    height: 70%;
 }
-.nav-link { 
-    color: aliceblue !important; 
+
+.card-homepage
+{
+    width: 11rem; 
+    height:18rem;
+}
+i
+{
+    font-size: 20px;
 }
 
 /* TRICKPAGE */
 
-.default-img-trick
+#gallery
 {
-    display: block;
-    max-height: 20%;
-    height: auto;
-    margin-left: auto;
-    margin-right: auto;
+    visibility: visible;
+    display: block; 
+}
+#see-media,#navicon
+{
+    visibility: hidden;
+    display: none;
 }
 
+
+
+.default-img-trick
+{    
+    aspect-ratio: 3/1;
+    width: 100%;
+    height: auto;
+    background-size:cover;
+    position:relative;
+}  
+
+
+.trick-buttons 
+{
+    position: absolute;
+    right: 5%;
+    top: 10%;
+    z-index: 1;
+}
+.trick-name
+{
+    position: absolute;
+    left: 40%;
+    top:50%;
+    z-index: 1;
+}
+
+.overlay
+{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: rgb(0, 0, 0, 0);
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.044) 30%, rgba(0, 0, 0, 0.46) 75%, #000 100%);
+}
+
+.trick-media-card
+{
+    transition: transform .2s;    
+}
+
+.trick-media-card:hover
+{
+    transform: scale(1.25);
+}
+.trick-group
+{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+/* SIGN PAGE */
 .form-container
 {
-    height: 100vh;
+    height:82vh;
+}
+
+#already-account, #register
+{
+    visibility: hidden; 
+    display: none;   
+}
+
+/**************MEDIA ***********/
+
+@media only screen and (max-width:992px)
+{
+    /* Size du hamburger */
+    #see-media
+    {
+        visibility: visible;
+        display: block;       
+    } 
+    #gallery,#navmenutext
+    {
+        visibility: hidden;
+        display: none;       
+    }
+    .navbar{
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        z-index: 2;
+        
+    }
+    .navbar-nav
+    {
+        display:flex;
+        flex-direction: row;
+        justify-content: space-around;
+        
+    }
+    .navbar-nav>li>a>i
+    {
+        font-size: 2rem;
+    }
+    #navicon
+    {
+        visibility: visible;
+        display: block;        
+    } 
+    footer 
+    {
+        visibility: hidden;
+        display: none;
+    }
+}
+
+
+
+@media only screen and (max-width: 750px) 
+{  
+    .card-homepage
+    {
+        width: 12rem; 
+        height:19rem;
+    }
+    h4
+    {
+        font-size: 1.5rem;
+    }
+
+    i
+    {
+        margin-left: .5rem;
+        margin-right: .5rem;
+        font-size: 20px
+    }
+    #already-account, #register
+    {
+        visibility: visible;
+        display: block;
+    }
+    .form-container
+    {
+        height:100vh;
+    } 
+    .trick-group
+    {        
+        flex-wrap: wrap;        
+    }
+}
+
+@media only screen and (max-width:503px)
+{
+    .card-homepage
+    {
+        width: 20rem; 
+        height:30rem;
+    }
+
+    div.card-title h4
+    {
+        font-size: 2rem;
+    }
+
+    div.modification >a>i
+    {
+        margin-left: 2rem;
+        margin-right: 2rem;
+        font-size: 30px
+    }
+
+      
 }
