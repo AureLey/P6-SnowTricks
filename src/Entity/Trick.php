@@ -35,7 +35,7 @@ class Trick
     #[ORM\JoinColumn(nullable: false)]
     private ?user $user = null;
 
-    #[ORM\ManyToOne(inversedBy: 'tricks')]
+    #[ORM\ManyToOne(inversedBy: 'tricks', cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?group $groupTrick = null;
 
@@ -198,5 +198,10 @@ class Trick
         }
 
         return $this;
+    }
+
+    public function __toString():string
+    {
+        return $this->name;
     }
 }

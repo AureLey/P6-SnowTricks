@@ -19,7 +19,7 @@ class Group
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\OneToMany(mappedBy: 'groupTrick', targetEntity: Trick::class)]
+    #[ORM\OneToMany(mappedBy: 'groupTrick',targetEntity: Trick::class)]
     private Collection $tricks;
 
     public function __construct()
@@ -73,4 +73,9 @@ class Group
 
         return $this;
     }
+    public function __toString():string
+    {
+        return $this->name;
+    }
+    
 }
