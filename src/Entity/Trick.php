@@ -33,11 +33,11 @@ class Trick
 
     #[ORM\ManyToOne(inversedBy: 'groupTrick')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?user $user = null;
+    private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'tricks', cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
-    private ?group $groupTrick = null;
+    private ?Group $groupTrick = null;
 
     #[ORM\OneToMany(mappedBy: 'mediaTrick', targetEntity: Media::class)]
     private Collection $media;

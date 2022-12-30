@@ -49,16 +49,12 @@ footer
     position : absolute;
     bottom   : 1rem;
 }
-.card-img-top
+.card-img-top 
 {
-    height: 70%;
+    height: 150px;
+    width:100%;   
 }
 
-.card-homepage
-{
-    width: 11rem; 
-    height:18rem;
-}
 i
 {
     font-size: 20px;
@@ -145,12 +141,21 @@ i
 
 @media only screen and (max-width:992px)
 {
-    /* Size du hamburger */
+    /* HOMEPAGE */
+    /* trick card */
+    .card-img-top
+    {
+        height: auto;
+    }
+
+     /* TrickPage bouton   */
     #see-media
     {
         visibility: visible;
         display: block;       
     } 
+
+    /* GALLERY TRICKPAGE AND NAVBAR */
     #gallery,#navmenutext
     {
         visibility: hidden;
@@ -178,7 +183,10 @@ i
     {
         visibility: visible;
         display: block;        
-    } 
+    }
+    
+    
+    /* FOOTER */
     footer 
     {
         visibility: hidden;
@@ -190,11 +198,13 @@ i
 
 @media only screen and (max-width: 750px) 
 {  
-    .card-homepage
+    /* HOMEPAGE */
+    /* trick card */
+    .card-img-top
     {
-        width: 12rem; 
-        height:19rem;
+        height: 250px;
     }
+    
     h4
     {
         font-size: 1.5rem;
@@ -223,12 +233,7 @@ i
 
 @media only screen and (max-width:503px)
 {
-    .card-homepage
-    {
-        width: 20rem; 
-        height:30rem;
-    }
-
+    
     div.card-title h4
     {
         font-size: 2rem;

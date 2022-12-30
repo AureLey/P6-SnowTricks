@@ -8,15 +8,12 @@
           <a class="nav-link" href="{{path('homepage')}}"><i class="bi bi-house-fill"></i></a>
         </li>
         <li id="navicon" class="nav-item">
-          <a class="nav-link" href="{{path('trickpagedetail')}}"><i class="bi bi-bookmark-fill"></i></a>
+          <a class="nav-link" href="#"><i class="bi bi-bookmark-fill"></i></a>
         </li>
         {# endresponsive menu #}
         <li id="navmenutext" class="nav-item active">
           <a class="nav-link" href="{{path('homepage')}}">Home</a>
-        </li>
-        <li id="navmenutext" class="nav-item">
-          <a class="nav-link" href="{{path('trickpagedetail')}}"> Trick</a>
-        </li>
+        </li>        
         {% if not app.user %}
         {# responsive logout #}
           <li id="navicon" class="nav-item">
@@ -27,12 +24,11 @@
           </li>
           <li id="navmenutext" class="nav-item">
             <a class="nav-link" href="{{path('signup')}}">Signup</a>
-          </li>
-          <li id="navmenutext" class="nav-item">
-            <a class="nav-link" href="{{path('newtrickpagedetail')}}">New Trick</a>
-          </li>
-        
+          </li>        
         {% else %}
+          <li id="navmenutext" class="nav-item">
+            <a class="nav-link" href="{{path('newtrickpage')}}">New Trick</a>
+          </li>
           <li id="navmenutext" class="nav-item">
             <a class="nav-link" href="{{path('logout')}}">Logout</a>
           </li>{# end responsive logout #}

@@ -8,6 +8,7 @@ use App\Entity\User;
 use App\Entity\Group;
 use App\Entity\Media;
 use App\Entity\Trick;
+use App\Entity\Comment;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 
@@ -30,7 +31,7 @@ class AppFixtures extends Fixture
                                 "Slide",
                     ],
 
-            "boardslide"=>[    "bloardslide",
+            "boardslide"=>[    "boardslide",
                                 "A slide performed where the riders leading foot passes over the rail on approach, 
                                 with their snowboard traveling perpendicular along the rail or other obstacle. 
                                 When performing a frontside boardslide, the snowboarder is facing uphill. 
@@ -116,60 +117,60 @@ class AppFixtures extends Fixture
         //Picture
         $pictures =[
 
-            "50-50"=>["50-50.jpeg","picture"],
+            "50-50"=>["50-50.jpg","picture"],
 
-            "boardslide"=>["bloardslide.jpeg","picture"],
+            "boardslide"=>["boardslide.jpg","picture"],
 
-            "Lipslide"=>["lipslide.jpeg","picture"],
+            "Lipslide"=>["lipslide.jpg","picture"],
 
-            "Back Flip"=>["backflip.jpeg","picture"],
+            "Back Flip"=>["backflip.jpg","picture"],
 
-            "Front Flip"=>[ "frontflip.jpeg","picture"],
+            "Front Flip"=>[ "frontflip.jpg","picture"],
 
-            "Wildcat"=>["wildcat.jpeg","picture"],
+            "Wildcat"=>["wildcat.jpg","picture"],
 
-            "Tamedog"=>["tamedog.jpeg","picture"],
+            "Tamedog"=>["tamedog.jpg","picture"],
 
-            "Backside Misty"=>["misty.jpeg","picture"],
+            "Backside Misty"=>["misty.jpg","picture"],
 
-            "Beef Carpaccio"=>["beef carpaccio.jpeg","picture"],
+            "Beef Carpaccio"=>["beefcarpaccio.jpg","picture"],
 
-            "Beef Curtains"=>["beef curtains.jpeg","pictures"],
+            "Beef Curtains"=>["beefcurtains.jpg","picture"],
 
-            "Bloody Dracula"=>["bloody dracula.jpeg","picture"],
+            "Bloody Dracula"=>["bloodydracula.jpg","picture"],
 
-            "Drunk Driver"=>["drunk.jpeg","picture"],
+            "Drunk Driver"=>["drunk.jpg","picture"],
 
-            "Japan Air"=>["japan.jpeg","picture"],
+            "Japan Air"=>["japan.jpg","picture"],
             ];
         // VIDEOS
         $videos =[
 
-            "50-50"=>["https://youtu.be/kxZbQGjSg4w","video"],
+            "50-50"=>["https://youtu.be/embed/kxZbQGjSg4w","video"],
 
-            "boardslide"=>["https://www.youtube.com/watch?v=R3OG9rNDIcs","video"],
+            "boardslide"=>["https://www.youtube.com/embed/R3OG9rNDIcs","video"],
 
-            "Lipslide"=>["https://youtu.be/LSVn5aI56aU","video"],
+            "Lipslide"=>["https://youtu.be/embed/LSVn5aI56aU","video"],
 
-            "Back Flip"=>["https://youtu.be/0sehBOkD01Q","video"],
+            "Back Flip"=>["https://youtu.be/embed/0sehBOkD01Q","video"],
 
-            "Front Flip"=>[ "https://youtu.be/qvnsjVJCbA0","video"],
+            "Front Flip"=>[ "https://youtu.be/embed/qvnsjVJCbA0","video"],
 
-            "Wildcat"=>["https://youtu.be/7KUpodSrZqI","video"],
+            "Wildcat"=>["https://youtu.be/embed/7KUpodSrZqI","video"],
 
-            "Tamedog"=>["https://youtu.be/qvnsjVJCbA0","video"],
+            "Tamedog"=>["https://youtu.be/embed/qvnsjVJCbA0","video"],
 
-            "Backside Misty"=>["https://youtu.be/yMvDA7FEWjk","video"],
+            "Backside Misty"=>["https://youtu.be/embed/yMvDA7FEWjk","video"],
 
-            "Beef Carpaccio"=>["https://youtu.be/5ylWnm4rF1o","video"],
+            "Beef Carpaccio"=>["https://youtu.be/embed/5ylWnm4rF1o","video"],
 
-            "Beef Curtains"=>["https://youtu.be/5ylWnm4rF1o","video"],
+            "Beef Curtains"=>["https://youtu.be/embed/5ylWnm4rF1o","video"],
 
-            "Bloody Dracula"=>["https://youtu.be/UU9iKINvlyU","video"],
+            "Bloody Dracula"=>["https://youtu.be/embed/UU9iKINvlyU","video"],
 
-            "Drunk Driver"=>["https://youtu.be/f9FjhCt_w2U","video"],
+            "Drunk Driver"=>["https://youtu.be/embed/f9FjhCt_w2U","video"],
 
-            "Japan Air"=>["https://youtu.be/YAElDqyD-3I","video"],
+            "Japan Air"=>["https://youtu.be/embed/YAElDqyD-3I","video"],
           ];
             
 
@@ -210,15 +211,25 @@ class AppFixtures extends Fixture
             // $key = array_search($trickproperty[2],$group);
             // $trick->setGroupTrick($key);// souci de groupe
             $trick->setUser($user);
-            $this->setMedia($trick,$manager, $pictures, $videos);
+            $this->setMedia($trick,$manager, $pictures, $videos,$user);
 
             $manager->persist($trick);            
         }
+        for($i = 0; $i <= count($tricks);$i++)
+        {
+            $now = new \DateTimeImmutable('now');
+            $comment = new Comment();
+            $comment->setContent("Lorem ipsum, dolor sit amet consectetur adipisicing elit.");
+            $comment->setCreatedAt($now);
+
+        }
+
+
 
         $manager->flush();
     }
 
-    private function setMedia(Trick $trick, ObjectManager $manager, Array $pictures, Array $videos)
+    private function setMedia(Trick $trick, ObjectManager $manager, Array $pictures, Array $videos, User $user)
     {
         // MEDIA Creation
         foreach($pictures as $trickname =>$mediaproperty)
@@ -247,9 +258,17 @@ class AppFixtures extends Fixture
                 $manager->persist($media);
             }
         }
-    }
-        
-        
-        
-    
+        for($i = 0; $i <= rand(1,4);$i++)
+        {
+            $now = new \DateTimeImmutable('now');
+            $comment = new Comment();
+            $comment->setContent("Lorem ipsum, dolor sit amet consectetur adipisicing elit.");
+            $comment->setCreatedAt($now);
+            $comment->setCommentUser($user);
+            $comment->setCommentTrick($trick);
+
+            $manager->persist($comment);
+        }
+
+    }  
 }
