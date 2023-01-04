@@ -46,31 +46,31 @@ class MediaFixtures extends Fixture implements DependentFixtureInterface
         // VIDEOS
         $videos =[
 
-            "50-50"=>["https://youtu.be/embed/kxZbQGjSg4w","video"],
+            "50-50"=>["https://www.youtube.com/embed/kxZbQGjSg4w","video"],
 
             "boardslide"=>["https://www.youtube.com/embed/R3OG9rNDIcs","video"],
 
-            "Lipslide"=>["https://youtu.be/embed/LSVn5aI56aU","video"],
+            "Lipslide"=>["https://www.youtube.com/embed/LSVn5aI56aU","video"],
 
-            "Back Flip"=>["https://youtu.be/embed/0sehBOkD01Q","video"],
+            "Back Flip"=>["https://www.youtube.com/embed/0sehBOkD01Q","video"],
 
-            "Front Flip"=>[ "https://youtu.be/embed/qvnsjVJCbA0","video"],
+            "Front Flip"=>[ "https://www.youtube.com/embed/qvnsjVJCbA0","video"],
 
-            "Wildcat"=>["https://youtu.be/embed/7KUpodSrZqI","video"],
+            "Wildcat"=>["https://www.youtube.com/embed/7KUpodSrZqI","video"],
 
-            "Tamedog"=>["https://youtu.be/embed/qvnsjVJCbA0","video"],
+            "Tamedog"=>["https://www.youtube.com/embed/qvnsjVJCbA0","video"],
 
-            "Backside Misty"=>["https://youtu.be/embed/yMvDA7FEWjk","video"],
+            "Backside Misty"=>["https://www.youtube.com/embed/yMvDA7FEWjk","video"],
 
-            "Beef Carpaccio"=>["https://youtu.be/embed/5ylWnm4rF1o","video"],
+            "Beef Carpaccio"=>["https://www.youtube.com/embed/5ylWnm4rF1o","video"],
 
-            "Beef Curtains"=>["https://youtu.be/embed/5ylWnm4rF1o","video"],
+            "Beef Curtains"=>["https://www.youtube.com/embed/5ylWnm4rF1o","video"],
 
-            "Bloody Dracula"=>["https://youtu.be/embed/UU9iKINvlyU","video"],
+            "Bloody Dracula"=>["https://www.youtube.com/embed/UU9iKINvlyU","video"],
 
-            "Drunk Driver"=>["https://youtu.be/embed/f9FjhCt_w2U","video"],
+            "Drunk Driver"=>["https://www.youtube.com/embed/f9FjhCt_w2U","video"],
 
-            "Japan Air"=>["https://youtu.be/embed/YAElDqyD-3I","video"],
+            "Japan Air"=>["https://www.youtube.com/embed/YAElDqyD-3I","video"],
           ];
         
         

@@ -114,10 +114,12 @@ i
     transition: transform .2s;    
 }
 
-.trick-media-card:hover
+.trick-media-card > img
 {
-    transform: scale(1.25);
+    height: 150px;
+    width:100%;    
 }
+
 .trick-group
 {
     display: flex;

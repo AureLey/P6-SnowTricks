@@ -62,5 +62,5 @@ class Media
         $this->mediaTrick = $mediaTrick;
 
         return $this;
-    }
+    }    
 }

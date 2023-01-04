@@ -1,0 +1,39 @@
+{# <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">              
+                <h5 class="modal-title" >titre:{{trick.name}}</h5>
+                    <button type="button" class="close border-0" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="ratio ratio-16x9 modal-body" aria-describedby="content">
+
+                    <iframe width="560" height="315" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div> 					
+           <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div> #}
+
+<div id="myModal" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+    <!-- Modal content -->
+        <div class="modal-content" id="myModal">
+            <div class="modal-header">              
+                <h5 class="modal-title" >titre:{{trick.name}}</h5>
+                <button type="button" class="close border-0" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="ratio ratio-16x9 modal-body" aria-describedby="content">
+                <img class="modal-content" id="image-content">
+            </div> 					
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>  
+    </div>
+</div>

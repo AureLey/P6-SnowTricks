@@ -11,17 +11,20 @@ class TrickPageController extends AbstractController
 {
     #[Route('/trick/details/{slug}', name: 'trickpagedetail')]
     public function showTrick(Trick $trick): Response
-    {        
+    {
         return $this->render('trickpage/trickpage.html.twig', [
             'controller_name' => 'TrickPageController',
-            'trick'=> $trick,
+            'trick'=> $trick,            
         ]);
     }
+
+
     #[Route('/trick/details/{slug}/update', name: 'updatetrickpage')]
-    public function updateTrick(): Response
+    public function updateTrick(Trick $trick): Response
     {        
         return $this->render('trickpage/updatetrickpage.html.twig', [
             'controller_name' => 'TrickPageController',
+            'trick'=> $trick,
         ]);
     }
     #[Route('/trick/details/new', name: 'newtrickpage')]
