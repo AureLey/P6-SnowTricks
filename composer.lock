@@ -6275,16 +6275,16 @@
         },
         {
             "name": "symfony/string",
-            "version": "v6.1.7",
+            "version": "v6.1.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/string.git",
-                "reference": "823f143370880efcbdfa2dbca946b3358c4707e5"
+                "reference": "e1b613efac6ace3495fcb3e47eb4658422ee5be4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/string/zipball/823f143370880efcbdfa2dbca946b3358c4707e5",
-                "reference": "823f143370880efcbdfa2dbca946b3358c4707e5",
+                "url": "https://api.github.com/repos/symfony/string/zipball/e1b613efac6ace3495fcb3e47eb4658422ee5be4",
+                "reference": "e1b613efac6ace3495fcb3e47eb4658422ee5be4",
                 "shasum": ""
             },
             "require": {
@@ -6340,7 +6340,7 @@
                 "utf8"
             ],
             "support": {
-                "source": "https://github.com/symfony/string/tree/v6.1.7"
+                "source": "https://github.com/symfony/string/tree/v6.1.9"
             },
             "funding": [
                 {
@@ -6356,7 +6356,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-10-10T09:34:31+00:00"
+            "time": "2022-12-14T16:05:20+00:00"
         },
         {
             "name": "symfony/translation",

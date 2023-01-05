@@ -2,20 +2,17 @@
 
 {% block body %}
 <div class="container bg-light rounded">
+    {{form_start(trickform)}}
 		<div class="header-trick pt-5">
 			<div class="default-img-trick" style="background-image:url('{{asset("images/default-img.jpg")}}');">
 				<div class="overlay">
 					<div class="container">
 						<div class="trick-buttons mt-2">
-							<a href="{{ path('updatetrickpage',{'slug' : trick.slug })}}" class="btn btn-info btn-sm mx-2">
-								<i class="bi bi-pencil-fill"></i>
-							</a>
-							<a href="#" class="btn btn-danger btn-sm mx-2">
-								<i class="bi bi-trash3-fill"></i>
-							</a>
+							{{form_row(trickform.poster, {'label' : 'pick a picture', 'label_attr':{'class' :' text-white '},'attr':{'class' :  'form-control text-uppercase'}})}}
 						</div>
-						<div class="trick-name">
-							<h1 class="mx-auto my-4 text-uppercase text-light">Trick name</h1>
+						</div>
+						<div class="trick-name  input-group-lg">
+							{{form_row(trickform.name, {'label' : false,'attr':{'class' :  'form-control  text-uppercase'}})}}
 						</div>
 					</div>
 				</div>
@@ -24,36 +21,22 @@
         <div class="content-trick mt-4">
             {# --------------------Gallery links--------------------- #}
             <section id="gallery">
-                <div class="row  justify-content-center">
-                    {% for i in 0..5 %}
-                        {# Media Link #}
-                        <div class="col-3 mx-4">
-                            <img src="{{asset('images/default-img.jpg')}}" class="w-100 rounded my-2"/>                            
-                            <div class="modification text-center mb-2">
-                                <a href="#" class="btn btn-danger btn-sm mx-2"><i class="bi bi-trash3-fill"></i></a>
-                                <a href="#exampleModal0" class="btn btn-info btn-sm mx-2" data-toggle="modal" data-target="#exampleModal0"><i class="bi bi-pencil-fill"></i></a>                            
-                            </div>
-                        </div>
-                    {% endfor %}
-                    <div class="modal fade" id="exampleModal0" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">var twig</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="formFile" class="form-label">Chemin du fichier</label>
-                                    <input class="form-control" type="file" id="formFile">
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <div class="row  justify-content-center g-0">
+                    {% for media in trick.media %}                        
+                        <div class="col-lg-3">
+							<div class="trick-media-card mx-4">
+                            {% if media.type =='picture' %}                           
+								<img src="{{asset('images/'~media.link)}}" class="w-100 rounded my-2"/> 
+                            {% else %}
+									<iframe class="w-100 rounded ratio ratio-16x9 my-2" src={{media.link}} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            {% endif %}                         
+                                <div class="modification text-center mb-2">
+                                    <a href="#" class="btn btn-danger btn-sm mx-2"><i class="bi bi-trash3-fill"></i></a>
+                                    <a href="#exampleModal0" class="btn btn-info btn-sm mx-2" data-toggle="modal" data-target="#exampleModal0"><i class="bi bi-pencil-fill"></i></a>                            
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                        </div>                        
+                    {% endfor %}                    
                 </div>
             </section>
             {# responsive section  #}
@@ -63,9 +46,8 @@
                 </div>
             </section>
             <section class="row mx-auto col-8 pb-5">
-                <div class="form-floating my-4">
-                    <textarea class="form-control" placeholder="Description de la figure" id="textAreaDescription" style="height: 100px"></textarea>
-                    <label for="textAreaDescription">Description de la figure</label>
+                <div class="form-floating my-4">                    
+                    {{form_row(trickform.content, {'label' : false,'attr':{'class' :  'form-control' }})}}
                 </div>                   
                 <div class="trick-group">
                     <div class="form-floating col-6">
@@ -82,7 +64,9 @@
                         <a href="#" class="btn btn-danger btn-sm mx-2">Delete</a>
                     </div>
                 </div>
-            </section>                    
-        </div>       
+            </section>                 
+        </div> 
+    {{form_end(trickform)}}          
 </div>
+
 {% endblock %}

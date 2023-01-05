@@ -45,6 +45,8 @@ class Trick
     #[ORM\OneToMany(mappedBy: 'commentTrick', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
 
+    private string $poster; // Represent 1st Picture of the trick
+
     public function __construct()
     {
         $this->media = new ArrayCollection();
@@ -203,5 +205,25 @@ class Trick
     public function __toString():string
     {
         return $this->name;
+    }
+
+    /**
+     * Get the value of poster
+     */ 
+    public function getPoster()
+    {
+        return $this->poster;
+    }
+
+    /**
+     * Set the value of poster
+     *
+     * @return  self
+     */ 
+    public function setPoster($poster)
+    {
+        $this->poster = $poster;
+
+        return $this;
     }
 }

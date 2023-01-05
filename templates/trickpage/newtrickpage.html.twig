@@ -2,18 +2,17 @@
 
 {% block body %}
 <div class="container bg-light rounded">
+    {{form_start(trickform)}} 
 		<div class="header-trick pt-5">
 			<div class="default-img-trick" style="background-image:url('{{asset("images/default-img.jpg")}}');">
 				<div class="overlay">
 					<div class="container">
 						<div class="trick-buttons mt-2">
-                            {# replace update/delete button by file input #}
-							<div class="mb-3">                                
-                                <input class="form-control" type="file" id="formFile">
-                            </div>
+							{{form_row(trickform.poster, {'label' : 'pick a picture', 'label_attr':{'class' :' text-white '},'attr':{'class' :  'form-control text-uppercase'}})}}
 						</div>
-						<div class="trick-name input-group-lg">
-							<input type="text" class="form-control text-uppercase" placeholder="Trick Name">
+						</div>
+						<div class="trick-name  input-group-lg">
+							{{form_row(trickform.name, {'label' : false,'attr':{'class' :  'form-control  text-uppercase','placeholder':'Trick name'}})}}
 						</div>
 					</div>
 				</div>
@@ -22,35 +21,14 @@
         <div class="content-trick mt-4">
             {# --------------------Gallery links--------------------- #}
             <section id="gallery">
-                <div class="row  justify-content-center">
+                <div class="row container justify-content-center">
                     <div id="new-media">
-                        {# Media Link #}
-                        <div class="col-3 mx-4">
-                            <img src="{{asset('images/default-img.jpg')}}" class="w-100 rounded my-2"/>                            
-                            <div class="modification text-center mb-2">                                
-                                <a href="#newcard" class="btn btn-info btn-sm mx-2" data-toggle="modal" data-target="#newcard"><i class="bi bi-pencil-fill"></i></a>                            
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal fade" id="newcard" tabindex="-1" role="dialog" aria-labelledby="newcard" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">var twig</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="formFile" class="form-label">Chemin du fichier</label>
-                                    <input class="form-control" type="file" id="formFile">
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        <ul class="media" 
+                            data-index="{{ trickform.media|length > 0 ? trickform.media|last.vars.name + 1 : 0 }}"
+                            data-prototype="{{ form_widget(trickform.media.vars.prototype)|e('html_attr') }}">                        
+                        </ul>
+                        {# {{ form_widget(trickform.media.vars.prototype.link, {'attr':{'class' :  'form-control add_media_list'}}) }}                         #}
+                    </div>                    
                 </div>
             </section>
             {# responsive section  #}
@@ -61,24 +39,50 @@
             </section>
             <section class="row mx-auto col-8 pb-5">
                 <div class="form-floating my-4">
-                    <textarea class="form-control" placeholder="Description de la figure" id="textAreaDescription" style="height: 100px"></textarea>
-                    <label for="textAreaDescription">Description de la figure</label>
+                    {{form_row(trickform.content, {'label' : false,'attr':{'class' :  'form-control' }})}}
                 </div>                   
                 <div class="trick-group">
-                    <div class="form-floating col-6">
-                        <select class="form-select" id="groupSelect" aria-label="group trick select">
-                            <option selected>Open select group trick</option>
-                            <option value="1">group 1</option>
-                            <option value="2">group 2</option>
-                            <option value="3">group 3</option>
-                        </select>
-                        <label for="groupSelect">Select a trick group</label>
+                    <div class="form-floating col-6 my-3">                        
+                        {{ form_row(trickform.groupTrick,{'label' : false,'attr':{'class' :  'form-select'} })}}
                     </div>
                     <div class="my-3">
-                        <a href="#" class="btn btn-success btn-sm mx-2">Save</a>                        
+                        <button type="submit" class="btn btn-success btn-sm mx-2">Save</button>                        
                     </div>
                 </div>
             </section>                    
-        </div>       
+        </div>
+    {{form_end(trickform)}}        
 </div>
+<script>
+const addMedia = document.createElement('a')
+    addMedia.classList.add('add_media_list','btn','btn-success')    
+    addMedia.href='#'
+    addMedia.innerText='Add a media'
+    addMedia.dataset.collectionHolderClass='media'
+
+const newLinkLi = document.createElement('li').append(addMedia)
+
+const collectionHolder = document.querySelector('ul.media')
+                            collectionHolder.appendChild(addMedia)
+
+const addFormToCollection = (e) => {
+	    const collectionHolder = document.querySelector('.' + e.currentTarget.dataset.collectionHolderClass);
+
+        const item = document.createElement('li');
+
+        item.innerHTML = collectionHolder
+        .dataset
+        .prototype
+        .replace(
+            /__name__/g,
+            collectionHolder.dataset.index
+        );
+
+        collectionHolder.appendChild(item);
+
+        collectionHolder.dataset.index++;
+}
+
+addMedia.addEventListener("click", addFormToCollection)
+</script>
 {% endblock %}

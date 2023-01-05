@@ -14,7 +14,7 @@
         <li id="navmenutext" class="nav-item active">
           <a class="nav-link" href="{{path('homepage')}}">Home</a>
         </li>        
-        {% if not app.user %}
+        {% if  app.user %}
         {# responsive logout #}
           <li id="navicon" class="nav-item">
             <a class="nav-link" href="{{path('signin')}}"><i class="bi bi-box-arrow-in-right"></i></a>

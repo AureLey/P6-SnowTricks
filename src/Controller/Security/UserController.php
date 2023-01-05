@@ -39,4 +39,10 @@ class UserController extends AbstractController
             'controller_name' => 'UserController',
         ]);
     }
+
+    #[Route('/', name: 'logout')]
+    public function logout(): Response
+    {
+        
+    }
 }
