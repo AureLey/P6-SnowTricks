@@ -1,4 +1,5 @@
 <?php
+//src/Entity/Group.php
 
 namespace App\Entity;
 

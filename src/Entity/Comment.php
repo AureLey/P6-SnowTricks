@@ -1,4 +1,5 @@
 <?php
+//src/Entity/Comment.php
 
 namespace App\Entity;
 

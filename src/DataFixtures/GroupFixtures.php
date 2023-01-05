@@ -8,7 +8,7 @@ namespace App\DataFixtures;
 
 use App\Entity\User;
 use App\Entity\Group;
-use App\Entity\Media;
+use App\Entity\Video;
 use App\Entity\Trick;
 use App\Entity\Comment;
 use Doctrine\Persistence\ObjectManager;

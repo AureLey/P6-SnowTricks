@@ -29,22 +29,23 @@
 		<div class="content-trick mt-4">		
             <section id="gallery">
                 <div class="row  justify-content-center">
-					{% set path ='' %}
-					{% set idMedia = 0 %}
-                    {% for media in trick.media %}
-                        {# Media Link #}
-						{% set path = media.link %}
-						{% set idMedia = loop.index %}
+					{% for image in trick.images %}
+                        {# Video Name #}						
 						<div class="col-lg-3">
 							<div class="trick-media-card mx-4">                            
-								{% if media.type == "picture" %}									
-									<img src="{{asset('images/'~media.link)}}" class="w-100 rounded my-2"/>									
-								{% else %}
-									<iframe class="w-100 rounded ratio ratio-16x9 my-2" src={{media.link}} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-								{% endif %}                            
+								<img src="{{asset('images/'~image.name)}}" class="w-100 rounded my-2"/>								
 							</div>
 						</div>
-					{% endfor %}				
+					{% endfor %}
+							
+                    {% for video in trick.videos %}
+                        						
+						<div class="col-lg-3">
+							<div class="trick-media-card mx-4">                          
+								<iframe class="w-100 rounded ratio ratio-16x9 my-2" src={{video.name}} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+							</div>
+						</div>
+					{% endfor %}
 				</div>
             </section>
             {# responsive section  #}

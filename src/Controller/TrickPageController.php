@@ -31,8 +31,10 @@ class TrickPageController extends AbstractController
         $formTrick->handleRequest($request);
 
         if($formTrick->isSubmitted() && $formTrick->isValid())
-        {
-            dd($formTrick['media']->getData());die();
+        {   
+            
+            dd($formTrick);
+            dd($trick);
             $now = new \DateTimeImmutable('now');
             $trick->setUser($this->getUser());
             $trick->setCreatedAt($now);

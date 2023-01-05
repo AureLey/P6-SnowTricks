@@ -60,7 +60,7 @@ footer
                 0 10px 10px #30363d07, 0 7px 70px rgba(90, 97, 105, 0.1);
     transition: transform 0.2s ease;
 }
-.card:hover
+#card-homepage:hover
 {
     transform: scale(1.1);
 }

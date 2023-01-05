@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Group;
 use App\Entity\Trick;
+use App\Form\ImageFormType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -23,8 +24,12 @@ class TrickFormType extends AbstractType
                                 'class' => Group::class,
                                 'choice_label'=>'name',])
             ->add('poster', FileType::class,['required' => false,])
-            ->add('media', CollectionType::class, [
-                                'entry_type' => MediaFormType::class,
+            ->add('videos', CollectionType::class, [
+                                'entry_type' => VideoFormType::class,
+                                'entry_options' => ['label' => false],
+                                'allow_add' => true])
+            ->add('images', CollectionType::class, [
+                                'entry_type' => ImageFormType::class,
                                 'entry_options' => ['label' => false],
                                 'allow_add' => true,                                
             ]);
