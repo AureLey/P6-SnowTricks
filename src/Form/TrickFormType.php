@@ -23,15 +23,19 @@ class TrickFormType extends AbstractType
             ->add('groupTrick', EntityType::class, [
                                 'class' => Group::class,
                                 'choice_label'=>'name',])
-            ->add('poster', FileType::class,['required' => false,])
+            ->add('poster', TextType::class,['required' => false,])
             ->add('videos', CollectionType::class, [
-                                'entry_type' => VideoFormType::class,
-                                'entry_options' => ['label' => false],
-                                'allow_add' => true])
+                                'label' => false,
+                                'entry_type'    => VideoFormType::class,                             
+                                'allow_add'     => true,
+                                'allow_delete' => true,
+                                'by_reference'  => false,])
             ->add('images', CollectionType::class, [
-                                'entry_type' => ImageFormType::class,
-                                'entry_options' => ['label' => false],
-                                'allow_add' => true,                                
+                                'label' => false,
+                                'entry_type'    => ImageFormType::class,                                
+                                'allow_add'     => true,
+                                'allow_delete' => true,
+                                'by_reference'  => false,                                
             ]);
         ;
     }
@@ -39,7 +43,8 @@ class TrickFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Trick::class,
+            'data_class' => Trick::class
+            
         ]);
     }
 }

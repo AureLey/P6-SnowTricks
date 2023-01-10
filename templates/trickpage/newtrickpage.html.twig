@@ -9,8 +9,7 @@
 					<div class="container">
 						<div class="trick-buttons mt-2">
 							{{form_row(trickform.poster, {'label' : 'pick a picture', 'label_attr':{'class' :' text-white '},'attr':{'class' :  'form-control text-uppercase'}})}}
-						</div>
-						</div>
+						</div>						
 						<div class="trick-name  input-group-lg">
 							{{form_row(trickform.name, {'label' : false,'attr':{'class' :  'form-control  text-uppercase','placeholder':'Trick name'}})}}
 						</div>
@@ -18,24 +17,40 @@
 				</div>
 			</div>
 		</div>
-        <div class="content-trick mt-4">
-            {# --------------------Gallery names--------------------- #}
+        {# --------------------Gallery names--------------------- #}
+        <div class="content-trick mt-4">            
             <section id="gallery">
                 <div class="row container justify-content-center">
                     <div id="new-media">
-                        <ul class="videos" 
-                            data-index="{{ trickform.videos|length > 0 ? trickform.media|last.vars.name + 1 : 0 }}"
-                            data-prototype="{{ form_widget(trickform.videos.vars.prototype)|e('html_attr') }}">                        
-                        </ul>
-                        <ul class="images" 
-                            data-index="{{ trickform.videos|length > 0 ? trickform.media|last.vars.name + 1 : 0 }}"
-                            data-prototype="{{ form_widget(trickform.images.vars.prototype)|e('html_attr') }}">                        
-                        </ul>
-                        {# {{ form_widget(trickform.media.vars.prototype.name, {'attr':{'class' :  'form-control add_media_list'}}) }}                         #}
-                    {# {{ form_widget(trickform.videos.vars.prototype.name, {'attr':{'class' :  'form-control add_video_list'}}) }}
-                    {{ form_widget(trickform.images.vars.prototype.name, {'attr':{'class' :  'form-control add_image_list'}}) }}  #}
-                    
-                    </div>                    
+                        <div class="image-block my-3">                       
+                            Images:{{ form_label(trickform.images) }}
+                            <button type="button" class="btn btn-outline-info btn-new" data-collection="#images">New Image</button>
+                            <div id="images" class="row"
+                                data-prototype="{{ include("trickpage/_image.html.twig", {form: trickform.images.vars.prototype})|e("html_attr") }}"
+                                data-index="{{ trickform.images|length > 0 ? trickform.images|last.vars.name + 1 : 0 }}">
+                                
+                                {% for image in trickform.images %}
+                                    <div class="col-3">
+                                        {{ include("trickpage/_image.html.twig", {form: image}) }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="video-block my-3">
+                            Videos:
+                            <button type="button" class="btn btn-outline-success btn-new" data-collection="#videos">New video</button>
+                            <div id="videos" class="row"
+                                data-prototype="{{ include("trickpage/_image.html.twig", {form: trickform.videos.vars.prototype})|e("html_attr") }}"
+                                data-index="{{ trickform.videos|length > 0 ? trickform.videos|last.vars.name + 1 : 0 }}">
+                                
+                                {% for video in trickform.videos %}
+                                    <div class="col-3">
+                                        {{ include("trickpage/_video.html.twig", {form: video}) }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>                       
+                    </div>                          
                 </div>
             </section>
             {# responsive section  #}
@@ -58,38 +73,36 @@
                 </div>
             </section>                    
         </div>
-    {{form_end(trickform)}}        
+    {{form_end(trickform)}}
 </div>
 <script>
-const addImage = document.createElement('a')
-addImage.classList.add('btn','btn-success')
-addImage.href='#'
-addImage.innerText='Ajouter Image'
-addImage.dataset.collectionHolderClass='images'
 
-const newLinkLi = document.createElement('li').append(addImage)
+const newItem = (e) => {
+  const collectionHolder = document.querySelector(e.currentTarget.dataset.collection);
 
-const collectionHolder = document.querySelector('ul.images')
-collectionHolder.appendChild(addImage)
+  const item = document.createElement("div");
+  item.classList.add("col-3");
+  item.innerHTML = collectionHolder
+    .dataset
+    .prototype
+    .replace(
+      /__name__/g,
+      collectionHolder.dataset.index
+    );
 
-const addFormToCollection = (e) => {
-	const collectionHolder = document.querySelector('.' + e.currentTarget.dataset.collectionHolderClass);
+  item.querySelector(".btn-remove").addEventListener("click", () => item.remove());
 
-      const item = document.createElement('li');
+  collectionHolder.appendChild(item);
 
-      item.innerHTML = collectionHolder
-        .dataset
-        .prototype
-        .replace(
-          /__name__/g,
-          collectionHolder.dataset.index
-        );
+  collectionHolder.dataset.index++;
+};
 
-      collectionHolder.appendChild(item);
+document
+  .querySelectorAll('.btn-remove')
+  .forEach(btn => btn.addEventListener("click", (e) => e.currentTarget.closest(".col-3").remove()));
 
-      collectionHolder.dataset.index++;
-}
-
-addImage.addEventListener("click", addFormToCollection)
+document
+  .querySelectorAll('.btn-new')
+  .forEach(btn => btn.addEventListener("click", newItem));
 </script>
 {% endblock %}

@@ -3,17 +3,18 @@
 
 namespace App\Entity;
 
-use App\Repository\TrickRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Entity\Image;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\TrickRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
 class Trick
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
+    #[ORM\GeneratedValue(strategy:'AUTO')]
     #[ORM\Column]
     private ?int $id = null;
 
@@ -45,10 +46,10 @@ class Trick
 
     private string $poster;
 
-    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Image::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Image::class,cascade: ['all'], orphanRemoval: true)]
     private Collection $images;
 
-    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Video::class)]
+    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Video::class,cascade: ['all'])]
     private Collection $videos; // Represent 1st Picture of the trick
 
     public function __construct()
@@ -185,7 +186,7 @@ class Trick
     /**
      * Get the value of poster
      */ 
-    public function getPoster()
+    public function getPoster(): ?string
     {
         return $this->poster;
     }
@@ -195,7 +196,7 @@ class Trick
      *
      * @return  self
      */ 
-    public function setPoster($poster)
+    public function setPoster($poster): self
     {
         $this->poster = $poster;
 
@@ -261,4 +262,5 @@ class Trick
 
         return $this;
     }
+
 }

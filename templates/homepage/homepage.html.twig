@@ -21,13 +21,13 @@
                 <div class="col-lg-3">
                     <div id='card-homepage' class="card my-4 mx-3">                    
                         <a class="img-card text-decoration-none text-dark" href="{{ path('trickpagedetail',{'slug' : trick.slug })}}">
-                            <img src="{{asset('images/'~trick.images[0].name)}}" class="card-img-top" alt="Snowboard trick"/>                             
+                            <img src="{{asset('images/'~trick.images.first.name)}}" class="card-img-top" alt="Snowboard trick"/>                             
                             <div class="card-title pt-2 mx-3">
                                 <h4 class="btn btn-outline-dark">{{trick.name}}</h4>
                                                       
                             {% if not app.user %}                                
                                     <a href="#" class="btn btn-outline-danger btn-sm mx-2"><i class="bi bi-trash3-fill"></i></a>
-                                    <a href="#" class="btn btn-outline-info btn-sm mx-2"><i class="bi bi-pencil-fill"></i></a>                          
+                                    <a href="{{ path('updatetrickpage',{'slug' : trick.slug })}}" class="btn btn-outline-info btn-sm mx-2"><i class="bi bi-pencil-fill"></i></a>                          
                             {% endif %}
                                 
                             </div>  

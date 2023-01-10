@@ -13,7 +13,7 @@ class VideoFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class,['label' =>'Nouvelle vidéo'])            
+            ->add('name', TextType::class,['label' =>'URL video'])            
         ;
     }
 
@@ -21,6 +21,7 @@ class VideoFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Video::class,
+            'label' => false //Remove Fieldset legend ( collection index)
         ]);
     }
 }
