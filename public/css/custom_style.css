@@ -52,7 +52,8 @@ footer
 .card-img-top 
 {
     height: 150px;
-    width:100%;   
+    width:100%;
+    cursor: pointer;   
 }
 .card{
     box-shadow: 0 2px 0 rgba(82, 86, 92, 0.062), 
@@ -61,33 +62,58 @@ footer
     transition: transform 0.2s ease;
     border-width: 0;
 }
-#card-homepage:hover
-{
+/* -----------------------------CSS MODAL----------------------- */
+img{
+	max-width: 100%;
+}
+.gallery{
+	background-color: #dbddf1;
+	padding: 80px 0;
+}
+.gallery img{
+	background-color: #ffffff;
+	padding: 15px;
+	width: 100%;
+	box-shadow: 0 0 15px rgba(0,0,0,0.3);
+	
+}
+#gallery .modal-img{
+	width: 100%;    
+}
+
+
+/* ----------------------------------END CSS MODAL -------------------- */
+
+.img-card > h4, .card-title > a{
+    border-radius: 0px 0px 20px 20px;
+}
+
+.img-card > img{
+    border-radius: 5px 5px 0 0;
+}
+#card-homepage:hover{
     transform: scale(1.1);
 }
 
-i
-{
+i{
     font-size: 20px;
 }
 
 /* TRICKPAGE */
 
-#gallery
-{
+#gallery{
     visibility: visible;
     display: block; 
 }
-#see-media,#navicon
-{
+
+#see-media,#navicon{
     visibility: hidden;
     display: none;
 }
 
 
 
-.default-img-trick
-{    
+.default-img-trick{    
     aspect-ratio: 3/1;
     width: 100%;
     height: auto;
@@ -96,23 +122,20 @@ i
 }  
 
 
-.trick-buttons 
-{
+.trick-buttons{
     position: absolute;
     right: 5%;
     top: 10%;
     z-index: 1;
 }
-.trick-name
-{
+.trick-name{
     position: absolute;
     left: 40%;
     top:50%;
     z-index: 1;
 }
 
-.overlay
-{
+.overlay{
     position: absolute;
     height: 100%;
     width: 100%;
@@ -120,32 +143,27 @@ i
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.044) 30%, rgba(0, 0, 0, 0.46) 75%, #000 100%);
 }
 
-.trick-media-card
-{
+.trick-media-card{
     transition: transform .2s;    
 }
 
-.trick-media-card > img
-{
+.trick-media-card > img{
     height: 150px;
     width:100%;    
 }
 
-.trick-group
-{
+.trick-group{
     display: flex;
     flex-wrap: nowrap;
     justify-content: space-between;
 }
 
 /* SIGN PAGE */
-.form-container
-{
+.form-container{
     height:82vh;
 }
 
-#already-account, #register
-{
+#already-account, #register{
     visibility: hidden; 
     display: none;   
 }

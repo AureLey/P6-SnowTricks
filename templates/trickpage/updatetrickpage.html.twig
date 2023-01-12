@@ -3,14 +3,32 @@
 {% block body %}
 <div class="container bg-light rounded">
     {{form_start(trickform)}}
-		{% include 'trickpage/_header.html.twig'with {'edit': true }  %}
+        {# Include Hero & Featured Image #}
+		{% include 'trickpage/trickTemplate/_header.html.twig'with {'edit': true }  %}
         {# --------------------Gallery links--------------------- #}
         <div class="content-trick mt-4">		
             <section id="gallery">
-                <div class="row  justify-content-center">
-                    {% include 'trickpage/gallery.html.twig'with {'update': true }  %}                   
+                {# {% include 'trickpage/trickTemplate/_gallery.html.twig'with {'update': true }  %} #}
+                <div class="row  justify-content-center">                    
+                    {% for image in trickform.images %}
+                        <div class="col-3">
+                            {% set index = loop.index %}                        
+                            {{ form_widget(image.name) }}
+                            <img src="{{asset('images/'~trick.images[index-1].name)}}" class="card-img-top gallery-item" alt="Snowboard trick"/>
+                        </div>
+                    {% endfor %}
+                    
+                    {% for video in trickform.videos %}
+                        <div class="col-3">
+                            {% set index = loop.index %}                        
+                            {{ form_widget(video.name) }}
+                            <iframe class="w-100 rounded ratio ratio-16x9 gallery-item" src="{{trick.videos[index-1].name}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                    {% endfor %}
+                    
                 </div>
             </section>
+            {{ include("trickpage/_modal.html.twig")}}
             {# responsive section  #}
             <section id="see-media">
                 <div class="button-load-more text-center mb-5">
@@ -26,7 +44,7 @@
                         {{ form_row(trickform.groupTrick,{'label' : false,'attr':{'class' :  'form-select'} })}}
                 </div>
                 <div class="my-3">
-                    <a href="#" class="btn btn-success btn-sm mx-2">Save</a>
+                    <button type="submit" class="btn btn-success btn-sm mx-2">Save</button>                    
                     <a href="#" class="btn btn-danger btn-sm mx-2">Delete</a>
                 </div>                
             </section>                 

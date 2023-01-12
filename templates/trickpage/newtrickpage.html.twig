@@ -24,28 +24,28 @@
                     <div id="new-media">
                         <div class="image-block my-3">                       
                             Images:{{ form_label(trickform.images) }}
-                            <button type="button" class="btn btn-outline-info btn-new" data-collection="#images">New Image</button>
+                            <button type="button" class="btn btn-outline-info btn-new" data-collection="#images"><i class="bi bi-image">New Image</i></button>
                             <div id="images" class="row"
-                                data-prototype="{{ include("trickpage/_image.html.twig", {form: trickform.images.vars.prototype})|e("html_attr") }}"
+                                data-prototype="{{ include("trickpage/trickTemplate/_image.html.twig", {form: trickform.images.vars.prototype})|e("html_attr") }}"
                                 data-index="{{ trickform.images|length > 0 ? trickform.images|last.vars.name + 1 : 0 }}">
                                 
                                 {% for image in trickform.images %}
                                     <div class="col-3">
-                                        {{ include("trickpage/_image.html.twig", {form: image}) }}
+                                        {{ include("trickpage/trickTemplate/_image.html.twig", {form: image}) }}
                                     </div>
                                 {% endfor %}
                             </div>
                         </div>
                         <div class="video-block my-3">
                             Videos:
-                            <button type="button" class="btn btn-outline-success btn-new" data-collection="#videos">New video</button>
+                            <button type="button" class="btn btn-outline-success btn-new" data-collection="#videos"><i class="bi bi-file-play">New video</i></button>
                             <div id="videos" class="row"
-                                data-prototype="{{ include("trickpage/_image.html.twig", {form: trickform.videos.vars.prototype})|e("html_attr") }}"
+                                data-prototype="{{ include("trickpage/trickTemplate/_image.html.twig", {form: trickform.videos.vars.prototype})|e("html_attr") }}"
                                 data-index="{{ trickform.videos|length > 0 ? trickform.videos|last.vars.name + 1 : 0 }}">
                                 
                                 {% for video in trickform.videos %}
                                     <div class="col-3">
-                                        {{ include("trickpage/_video.html.twig", {form: video}) }}
+                                        {{ include("trickpage/trickTemplate/_video.html.twig", {form: video}) }}
                                     </div>
                                 {% endfor %}
                             </div>

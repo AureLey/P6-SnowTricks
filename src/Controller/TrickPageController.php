@@ -65,9 +65,34 @@ class TrickPageController extends AbstractController
 
 
     #[Route('/trick/details/{slug}/update', name: 'updatetrickpage')]
-    public function updateTrick(Trick $trick): Response
+    public function updateTrick(Trick $trick,Request $request,EntityManagerInterface $entityManager,UserRepository $repo): Response
     {  
+        //CREATE USER 
+        $user = new User();
+        $user = $repo->findBy(['email'=>'admin@admin.com']);
+        $user = $user[0];
+
+        $slugger = new AsciiSlugger();
+
         $form = $this->createForm(TrickFormType::class, $trick );
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {  
+            $now = new \DateTimeImmutable('now');
+            $trick  ->setUser($this->getUser())                    
+                    ->setUpdatedAt($now)
+                    ->setUser($user);
+            //      ->setUser($this->getUser()); 
+            $slug = $slugger->slug($trick->getName());
+            $trick->setSlug($slug);          
+            
+            $entityManager->persist($trick);           
+            $entityManager->flush();
+
+            return $this->redirectToRoute('trickpagedetail',['slug'=>$trick->getSlug()]);
+        }
         
         return $this->render('trickpage/updatetrickpage.html.twig', [
             'controller_name' => 'TrickPageController',

@@ -22,8 +22,7 @@ class TrickFormType extends AbstractType
             ->add('content')                        
             ->add('groupTrick', EntityType::class, [
                                 'class' => Group::class,
-                                'choice_label'=>'name',])
-            ->add('poster', TextType::class,['required' => false,])
+                                'choice_label'=>'name',])            
             ->add('videos', CollectionType::class, [
                                 'label' => false,
                                 'entry_type'    => VideoFormType::class,                             

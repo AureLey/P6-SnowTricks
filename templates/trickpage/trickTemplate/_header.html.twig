@@ -2,10 +2,7 @@
     <div class="default-img-trick" style="background-image:url('{{asset('images/'~trick.images.first.name)}}');">
         <div class="overlay">
             <div class="container">                
-                {% if edit %}
-                    <div class="trick-buttons mt-2">
-                        {{form_row(trickform.poster, {'label' : 'pick a picture', 'label_attr':{'class' :' text-white '},'attr':{'class' :  'form-control text-uppercase'}})}}
-                    </div>						
+                {% if edit %}                    						
                     <div class="trick-name  input-group-lg">
                         {{form_row(trickform.name, {'label' : false,'attr':{'class' :  'form-control  text-uppercase'}})}}
                     </div>

@@ -42,9 +42,7 @@ class Trick
     private ?Group $groupTrick = null;
 
     #[ORM\OneToMany(mappedBy: 'commentTrick', targetEntity: Comment::class, orphanRemoval: true)]
-    private Collection $comments;
-
-    private string $poster;
+    private Collection $comments;    
 
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Image::class,cascade: ['all'], orphanRemoval: true)]
     private Collection $images;
@@ -181,27 +179,7 @@ class Trick
     public function __toString():string
     {
         return $this->name;
-    }
-
-    /**
-     * Get the value of poster
-     */ 
-    public function getPoster(): ?string
-    {
-        return $this->poster;
-    }
-
-    /**
-     * Set the value of poster
-     *
-     * @return  self
-     */ 
-    public function setPoster($poster): self
-    {
-        $this->poster = $poster;
-
-        return $this;
-    }
+    }   
 
     /**
      * @return Collection<int, Image>
