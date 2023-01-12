@@ -2,32 +2,21 @@
 
 {% block body %}
 <div class="masthead">
-    <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center ">
-        <div class="d-flex justify-content-center">
-            <div class="text-center">
-                <h1 class="mx-auto my-0 text-light text-uppercase">Snowboarding is the way to be</h1>
-                <h2 class="text-white-50 mx-auto mt-2 mb-5">Snowboarders Community </h2>                        
-            </div>            
-        </div>       
-    </div>
-    <div class="d-flex align-items-end flex-column">
-        <a id="more_content" href="#cards-tricks"><i class="bi bi-arrow-down-square-fill mx-3" style='font-size:48px;color:white'></i></a>
-    </div>    
-</div>  
+   {{ include("homepage/_hero.html.twig")}}  
 <section id="cards-tricks" class="d-flex mt-5">
     <div class="container ">        
         <div class="row gx-0">
             {% for trick in tricks %}                
                 <div class="col-lg-3">
                     <div id='card-homepage' class="card my-4 mx-3">                    
-                        <a class="img-card text-decoration-none text-dark" href="{{ path('trickpagedetail',{'slug' : trick.slug })}}">
+                        <a class="img-card text-decoration-none text-dark" href="{{ path('trick_detail',{'slug' : trick.slug })}}">
                             <img src="{{asset('images/'~trick.images.first.name)}}" class="card-img-top" alt="Snowboard trick"/>                             
                             <div class="card-title mx-3">
                                 <h4 class="btn btn-outline-secondary">{{trick.name}}</h4>
                                                       
                             {% if not app.user %}                                
                                     <a href="#" class="btn btn-outline-danger btn-sm mx-2"><i class="bi bi-trash3-fill"></i></a>
-                                    <a href="{{ path('updatetrickpage',{'slug' : trick.slug })}}" class="btn btn-outline-info btn-sm mx-2"><i class="bi bi-pencil-fill"></i></a>                          
+                                    <a href="{{ path('update_trick',{'slug' : trick.slug })}}" class="btn btn-outline-info btn-sm mx-2"><i class="bi bi-pencil-fill"></i></a>                          
                             {% endif %}
                                 
                             </div>  

@@ -1,14 +1,26 @@
 <div class="header-trick pt-5">
-    <div class="default-img-trick" style="background-image:url('{{asset('images/'~trick.images.first.name)}}');">
+    {% if trick is defined %}
+        <div class="default-img-trick" style="background-image:url('{{asset('images/'~trick.images.first.name)}}');">
+    {% else %}
+        <div class="default-img-trick" style="background-image:url('{{asset("images/default-img.jpg")}}');">   
+    {% endif %}
+    
         <div class="overlay">
             <div class="container">                
-                {% if edit %}                    						
+                {% if edit %} 
+                    <div class="trick-buttons mt-2">
+                        {# field featured image
+                        {{form_row(trickform.poster, 
+                            {'label' : 'pick a picture',
+                             'label_attr':{'class' :' text-white '},
+                             'attr':{'class' :  'form-control text-uppercase'}})}} #}
+                    </div>                   						
                     <div class="trick-name  input-group-lg">
                         {{form_row(trickform.name, {'label' : false,'attr':{'class' :  'form-control  text-uppercase'}})}}
                     </div>
                 {% elseif not app.user %}                   
                     <div class="trick-buttons mt-2">
-                        <a href="{{ path('updatetrickpage',{'slug' : trick.slug })}}" class="btn btn-info btn-sm mx-2">
+                        <a href="{{ path('update_trick',{'slug' : trick.slug })}}" class="btn btn-info btn-sm mx-2">
                             <i class="bi bi-pencil-fill"></i>
                         </a>
                         <a href="#" class="btn btn-danger btn-sm mx-2">
@@ -19,8 +31,6 @@
                         <h1 class="mx-auto my-4 text-uppercase text-light">{{trick.name}}</h1>
                     </div>					
                 {% endif %}
-                
-                
             </div>
         </div>
     </div>

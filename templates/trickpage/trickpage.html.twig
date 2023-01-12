@@ -1,34 +1,36 @@
 {% extends 'base.html.twig' %}
 
-
-
 {% block body %}
 	<div class="container bg-light rounded">
+
+		{# Include Hero & Featured Image #}
 		{% include 'trickpage/trickTemplate/_header.html.twig'with {'edit': false }  %}
-		{# --------------------Gallery links--------------------- #}
-		<div class="content-trick mt-4">		
+		
+		<div class="content-trick mt-4">
+			{# --------------------Gallery links--------------------- #}		
             <section id="gallery">
                 <div class="row  justify-content-center">
+					{# Gallery of Media #}
 					{% include 'trickpage/trickTemplate/_gallery.html.twig' with {'update': false }  %}				
 				</div>
             </section>
-            {# responsive section  #}
+			
+			{# Modal pour afficher les images #}
+			{{ include("trickpage/_modal.html.twig")}}
+
+            {# On affiche le bouton media qui permet de load les media en responsive #}
             <section id="see-media">
                 <div class="button-load-more text-center mb-5">
                     <a href="" class="btn btn-sm rounded text-light bg-dark px-5 py-3" >See media</a>
                 </div>
             </section>
-			{{ include("trickpage/_modal.html.twig")}}
-			{# --------------------END Gallery links--------------------- #}
-			<div class="content my-4"><p class="fw-bold"><h3>Trick description :</h3></p>  <p>{{trick.content}}</p></div>
-			<div class="d-flex justify-content-evenly mb-4">
-				<h2>
-					<span class="badge bg-secondary ">{{trick.groupTrick}}</span>
-				</h2>
-				<div class="badge text-bg-dark">
-					<h3>Création le : {{trick.createdAt|date('d/m/Y')}}</h3>
-				</div>
-			</div>
+            {# --------------------------------END  GALLERY  ----------------------------------------- #}
+
+			{# Section Contenu Trick && Button #}
+            <section class="row mx-auto col-10 pb-5">
+                {# Description Field && trick group #}
+                {% include 'trickpage/trickTemplate/_content.html.twig' with {'page': 'show' } %}                
+            </section>
 		</div>
 
 		<!--Comment section -->

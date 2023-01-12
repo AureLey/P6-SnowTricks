@@ -1,80 +1,78 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<div class="container bg-light rounded">
-    {{form_start(trickform)}} 
-		<div class="header-trick pt-5">
-			<div class="default-img-trick" style="background-image:url('{{asset("images/default-img.jpg")}}');">
-				<div class="overlay">
-					<div class="container">
-						<div class="trick-buttons mt-2">
-							{{form_row(trickform.poster, {'label' : 'pick a picture', 'label_attr':{'class' :' text-white '},'attr':{'class' :  'form-control text-uppercase'}})}}
-						</div>						
-						<div class="trick-name  input-group-lg">
-							{{form_row(trickform.name, {'label' : false,'attr':{'class' :  'form-control  text-uppercase','placeholder':'Trick name'}})}}
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-        {# --------------------Gallery names--------------------- #}
-        <div class="content-trick mt-4">            
-            <section id="gallery">
-                <div class="row container justify-content-center">
-                    <div id="new-media">
-                        <div class="image-block my-3">                       
-                            Images:{{ form_label(trickform.images) }}
-                            <button type="button" class="btn btn-outline-info btn-new" data-collection="#images"><i class="bi bi-image">New Image</i></button>
-                            <div id="images" class="row"
-                                data-prototype="{{ include("trickpage/trickTemplate/_image.html.twig", {form: trickform.images.vars.prototype})|e("html_attr") }}"
-                                data-index="{{ trickform.images|length > 0 ? trickform.images|last.vars.name + 1 : 0 }}">
+    <div class="container bg-light rounded">
+        {{form_start(trickform)}}
+
+            {# Include Hero & Featured Image #}
+            {% include 'trickpage/trickTemplate/_header.html.twig'with {'edit': true }  %}
+                    
+            <div class="content-trick mt-4">
+                {# --------------------Gallery names--------------------- #}            
+                <section id="gallery">
+                    <div class="row container justify-content-center">
+                        
+                        <div id="new-media">
+
+                            {# Block Images  #}
+                            <div class="image-block my-3">                       
+                                Images:
+                                <button type="button" class="btn btn-outline-info btn-new" data-collection="#images"><i class="bi bi-image">New Image</i></button>
                                 
+                                {# Prototype #}
+                                <div id="images" class="row"
+                                    data-prototype="{{ include("trickpage/trickTemplate/_image.html.twig", {form: trickform.images.vars.prototype})|e("html_attr") }}"
+                                    data-index="{{ trickform.images|length > 0 ? trickform.images|last.vars.name + 1 : 0 }}">
+                                
+                                {# Loop who create Image field #}
                                 {% for image in trickform.images %}
                                     <div class="col-3">
                                         {{ include("trickpage/trickTemplate/_image.html.twig", {form: image}) }}
                                     </div>
                                 {% endfor %}
+                                </div>
                             </div>
-                        </div>
-                        <div class="video-block my-3">
-                            Videos:
-                            <button type="button" class="btn btn-outline-success btn-new" data-collection="#videos"><i class="bi bi-file-play">New video</i></button>
-                            <div id="videos" class="row"
-                                data-prototype="{{ include("trickpage/trickTemplate/_image.html.twig", {form: trickform.videos.vars.prototype})|e("html_attr") }}"
-                                data-index="{{ trickform.videos|length > 0 ? trickform.videos|last.vars.name + 1 : 0 }}">
+
+                            {# Block Vidéos  #}
+                            <div class="video-block my-3">
+                                Videos:
+                                <button type="button" class="btn btn-outline-success btn-new" data-collection="#videos"><i class="bi bi-file-play">New video</i></button>
                                 
+                                {# Prototype #}
+                                <div id="videos" class="row"
+                                    data-prototype="{{ include("trickpage/trickTemplate/_image.html.twig", {form: trickform.videos.vars.prototype})|e("html_attr") }}"
+                                    data-index="{{ trickform.videos|length > 0 ? trickform.videos|last.vars.name + 1 : 0 }}">
+
+                                {# Loop who create Video field #}    
                                 {% for video in trickform.videos %}
                                     <div class="col-3">
                                         {{ include("trickpage/trickTemplate/_video.html.twig", {form: video}) }}
                                     </div>
                                 {% endfor %}
-                            </div>
-                        </div>                       
-                    </div>                          
-                </div>
-            </section>
-            {# responsive section  #}
-            <section id="see-media">
-                <div class="button-load-more text-center mb-5">
-                    <a href="" class="btn btn-sm rounded text-light bg-dark px-5 py-3" >See media</a>
-                </div>
-            </section>
-            <section class="row mx-auto col-8 pb-5">
-                <div class="form-floating my-4">
-                    {{form_row(trickform.content, {'label' : false,'attr':{'class' :  'form-control' }})}}
-                </div>                   
-                <div class="trick-group">
-                    <div class="form-floating col-6 my-3">                        
-                        {{ form_row(trickform.groupTrick,{'label' : false,'attr':{'class' :  'form-select'} })}}
+                                </div>
+                            </div>                       
+                        </div>                          
                     </div>
-                    <div class="my-3">
-                        <button type="submit" class="btn btn-success btn-sm mx-2">Save</button>                        
+                </section>
+                {# On affiche le bouton media qui permet de load les media en responsive #}
+                <section id="see-media">
+                    <div class="button-load-more text-center mb-5">
+                        <a href="" class="btn btn-sm rounded text-light bg-dark px-5 py-3" >See media</a>
                     </div>
-                </div>
-            </section>                    
-        </div>
-    {{form_end(trickform)}}
-</div>
+                </section>
+                {# --------------------------------  GALLERY UPDATE  ----------------------------------------- #}
+
+                {# Section Contenu Trick && Button #}
+                <section class="row mx-auto col-8 pb-5">
+                    {# Description Field && trick group #}
+                    {% include 'trickpage/trickTemplate/_content.html.twig' with {'page': 'new' } %}                
+                </section>                    
+            </div>
+        {{form_end(trickform)}}
+    </div>
+
+
+
 <script>
 
 const newItem = (e) => {
