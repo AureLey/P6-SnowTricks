@@ -5,6 +5,7 @@ use App\Entity\User;
 use App\Entity\Trick;
 use App\Form\TrickFormType;
 use App\Repository\UserRepository;
+use App\Service\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,20 +13,21 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\String\Slugger\AsciiSlugger;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class TrickPageController extends AbstractController
 {
     #[Route('/trick/new', name: 'new_trick')]
-    public function newTrick(Request $request, EntityManagerInterface $entityManager,UserRepository $repo): Response
+    public function newTrick(Request $request, EntityManagerInterface $entityManager,UserRepository $repo,SluggerInterface $slugger, FileUploader $fileUploader): Response
     {  
         //CREATE USER 
         $user = new User();
         $user = $repo->findBy(['email'=>'admin@admin.com']);
         $user = $user[0];
 
-        $slugger = new AsciiSlugger();
+        $slugTrickName = new AsciiSlugger();
               
         $trick = new Trick();   
         $formTrick = $this->createForm(TrickFormType::class, $trick );
@@ -33,15 +35,47 @@ class TrickPageController extends AbstractController
         $formTrick->handleRequest($request);
           
         if($formTrick->isSubmitted() && $formTrick->isValid())
-        {  
+        {   
+            
+            
+            // Controler importFile
+            $trickFilename = $formTrick->get('trickFilename')->getData();
+            if($trickFilename){
+                $trickFilename = $fileUploader->upload($trickFilename);
+            }
+            
+            dd($fileUploader);
+            // if ($trickFilename) {
+            //     $originalFilename = pathinfo($trickFilename->getClientOriginalName(), PATHINFO_FILENAME);
+            //     // this is needed to safely include the file name as part of the URL
+            //     $safeFilename = $slugger->slug($originalFilename);
+            //     $newFilename = $safeFilename.'-'.uniqid().'.'.$trickFilename->guessExtension();
+
+            //     // Move the file to the directory where brochures are stored
+            //     try {
+            //         $trickFilename->move(
+            //             $this->getParameter('brochures_directory'),
+            //             $newFilename
+            //         );
+            //     } catch (FileException $e) {
+            //         // ... handle exception if something happens during file upload
+            //     }
+
+            //     // updates the 'brochureFilename' property to store the PDF file name
+            //     // instead of its contents
+            //     $trick->setTrickF($newFilename);
+            // }
+            // FIN Import File
+
+            
             $now = new \DateTimeImmutable('now');
             $trick  ->setUser($this->getUser())
                     ->setCreatedAt($now)
                     ->setUpdatedAt($now)
                     ->setUser($user);
             //      ->setUser($this->getUser()); 
-            $slug = $slugger->slug($trick->getName());
-            $trick->setSlug($slug);          
+            $slugName = $slugTrickName->slug($trick->getName());
+            $trick->setSlug($slugName);          
             
             $entityManager->persist($trick);           
             $entityManager->flush();
@@ -65,7 +99,7 @@ class TrickPageController extends AbstractController
     }
 
 
-    #[Route ('trick/delete/{slug}', methods: ['GET', 'DELETE'], name :'delete_trick')]
+    #[Route ('trick/delete/{slug}', name :'delete_trick')]
     public function deleteTrick(Trick $trick,EntityManagerInterface $entityManager):Response
     {
         $entityManager->remove($trick);

@@ -19,7 +19,10 @@ class Image
 
     #[ORM\ManyToOne(inversedBy: 'images')]
     #[ORM\JoinColumn(name:'trick_id',referencedColumnName:'id')]
-    private Trick $trick;
+    private Trick $trick;    
+   
+    private ?string $trickFilename;
+
 
     public function getId(): ?int
     {
@@ -50,5 +53,14 @@ class Image
         return $this;
     }
     
+    public function getTrickFilename(): string
+    {
+        return $this->trickFilename;
+    }
+
+    public function setTrickFilename($trickFilename): self
+    {
+        $this->trickFilename = $trickFilename;
+    }
     
 }

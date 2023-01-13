@@ -7,6 +7,7 @@ use App\Entity\Trick;
 use App\Form\ImageFormType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -34,8 +35,8 @@ class TrickFormType extends AbstractType
                                 'entry_type'    => ImageFormType::class,                                
                                 'allow_add'     => true,
                                 'allow_delete' => true,
-                                'by_reference'  => false,                                
-            ]);
+                                'by_reference'  => false])                              
+            
         ;
     }
 
