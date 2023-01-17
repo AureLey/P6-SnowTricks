@@ -14,24 +14,41 @@
                     <div class="row  justify-content-center">
 
                         {#  On parcourt une liste en récupérant l'index.loop dans la liste du formView,
-                            puis on affiche l'image correspondant à l'index dans la liste trick.images||videos #}
-
-                        {# Images #}
-                        {% for image in trickform.images %}
-                            <div class="col-3">
-                                {% set index = loop.index %}                        
-                                {{ form_widget(image.name) }}
-                                <img src="{{asset('images/'~trick.images[index-1].name)}}" class="card-img-top gallery-item" alt="Snowboard trick"/>
+                            puis on affiche l'image correspondant à l'index dans la liste trick.images||videos #}                               
+                            {% for image in trick.images %}
+                            <div class="col-3">                                                      
+                                <img src="{{asset('images/'~image.name)}}" class="card-img-top gallery-item" alt="Snowboard trick"/>
                             </div>
-                        {% endfor %}
+                            {% endfor %}
+                            {{ form_row(trickform.images) }}                           
+                        {# Images #}                        
+                        
                         {# Videos #}
-                        {% for video in trickform.videos %}
+                        {# {% for video in trickform.videos %}
                             <div class="col-3">
-                                {% set index = loop.index %}                        
-                                {{ form_widget(video.name) }}
+                                {% set index = loop.index %}                      
                                 <iframe class="w-100 rounded ratio ratio-16x9 gallery-item" src="{{trick.videos[index-1].name}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                {{ form_widget(video.name) }}
                             </div>
-                        {% endfor %}                    
+                        {% endfor %}                     #}
+                        {# Block Vidéos  #}
+                            <div class="video-block my-3">
+                                Videos:
+                                <button type="button" class="btn btn-outline-success btn-new" data-collection="#videos"><i class="bi bi-file-play">New video</i></button>
+                                
+                                {# Prototype #}
+                                <div id="videos" class="row"
+                                    data-prototype="{{ include("trickpage/trickTemplate/_video.html.twig", {form: trickform.videos.vars.prototype})|e("html_attr") }}"
+                                    data-index="{{ trickform.videos|length > 0 ? trickform.videos|last.vars.name + 1 : 0 }}">
+
+                                {# Loop who create Video field #}    
+                                {% for video in trickform.videos %}
+                                    <div class="col-3">
+                                        {{ include("trickpage/trickTemplate/_video.html.twig", {form: video}) }}
+                                    </div>
+                                {% endfor %}
+                                </div>
+                            </div>
                     </div>
                 </section>
 
@@ -55,5 +72,4 @@
             </div> 
         {{form_end(trickform)}}          
     </div>
-
 {% endblock %}

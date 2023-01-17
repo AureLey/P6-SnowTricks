@@ -18,7 +18,7 @@ class Video
 
     #[ORM\ManyToOne(inversedBy: 'videos')]
     #[ORM\JoinColumn(name:'trick_id',referencedColumnName:'id')]
-    private Trick $trick;
+    private ?Trick $trick;
 
     public function getId(): ?int
     {
@@ -42,7 +42,7 @@ class Video
         return $this->trick;
     }
 
-    public function setTrick(Trick $trick): self
+    public function setTrick(?Trick $trick): self
     {
         $this->trick = $trick;
 

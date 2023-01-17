@@ -1,6 +1,6 @@
 <div class="header-trick pt-5">
     {% if trick is defined %}
-        <div class="default-img-trick" style="background-image:url('{{asset('images/'~trick.images.first.name)}}');">
+        <div class="default-img-trick" style="background-image:url('{{asset('images/'~trick.featuredImage)}}');">
     {% else %}
         <div class="default-img-trick" style="background-image:url('{{asset("images/default-img.jpg")}}');">   
     {% endif %}
@@ -9,11 +9,11 @@
             <div class="container">                
                 {% if edit %} 
                     <div class="trick-buttons mt-2">
-                        {# field featured image
-                        {{form_row(trickform.poster, 
-                            {'label' : 'pick a picture',
+                        {# field featured image #}
+                        {{form_row(trickform.featuredImage, 
+                            {'label' : 'Featured Image',
                              'label_attr':{'class' :' text-white '},
-                             'attr':{'class' :  'form-control text-uppercase'}})}} #}
+                             'attr':{'class' :  'form-control text-uppercase'}})}}
                     </div>                   						
                     <div class="trick-name  input-group-lg">
                         {{form_row(trickform.name, {'label' : false,'attr':{'class' :  'form-control  text-uppercase'}})}}

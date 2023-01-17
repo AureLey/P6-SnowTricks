@@ -48,7 +48,10 @@ class Trick
     private Collection $images;
 
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Video::class,cascade: ['all'])]
-    private Collection $videos; // Represent 1st Picture of the trick
+    private Collection $videos;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $featuredImage = null; // Represent 1st Picture of the trick
 
     public function __construct()
     {
@@ -237,6 +240,18 @@ class Trick
                 $video->setTrick(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFeaturedImage(): ?string
+    {
+        return $this->featuredImage;
+    }
+
+    public function setFeaturedImage(?string $featuredImage): self
+    {
+        $this->featuredImage = $featuredImage;
 
         return $this;
     }

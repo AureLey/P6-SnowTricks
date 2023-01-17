@@ -13,25 +13,9 @@
                     <div class="row container justify-content-center">
                         
                         <div id="new-media">
-
-                            {# Block Images  #}
-                            <div class="image-block my-3">                       
-                                Images:
-                                <button type="button" class="btn btn-outline-info btn-new" data-collection="#images"><i class="bi bi-image">New Image</i></button>
-                                
-                                {# Prototype #}
-                                <div id="images" class="row"
-                                    data-prototype="{{ include("trickpage/trickTemplate/_image.html.twig", {form: trickform.images.vars.prototype})|e("html_attr") }}"
-                                    data-index="{{ trickform.images|length > 0 ? trickform.images|last.vars.name + 1 : 0 }}">
-                                
-                                {# Loop who create Image field #}
-                                {% for image in trickform.images %}
-                                    <div class="col-3">
-                                        {{ include("trickpage/trickTemplate/_image.html.twig", {form: image}) }}
-                                    </div>
-                                {% endfor %}
-                                </div>
-                            </div>
+                            {# Block Images sélection multiple #}
+                            {{ form_row(trickform.images)}}
+                            
 
                             {# Block Vidéos  #}
                             <div class="video-block my-3">
@@ -40,7 +24,7 @@
                                 
                                 {# Prototype #}
                                 <div id="videos" class="row"
-                                    data-prototype="{{ include("trickpage/trickTemplate/_image.html.twig", {form: trickform.videos.vars.prototype})|e("html_attr") }}"
+                                    data-prototype="{{ include("trickpage/trickTemplate/_video.html.twig", {form: trickform.videos.vars.prototype})|e("html_attr") }}"
                                     data-index="{{ trickform.videos|length > 0 ? trickform.videos|last.vars.name + 1 : 0 }}">
 
                                 {# Loop who create Video field #}    
@@ -70,37 +54,4 @@
             </div>
         {{form_end(trickform)}}
     </div>
-
-
-
-<script>
-
-const newItem = (e) => {
-  const collectionHolder = document.querySelector(e.currentTarget.dataset.collection);
-
-  const item = document.createElement("div");
-  item.classList.add("col-3");
-  item.innerHTML = collectionHolder
-    .dataset
-    .prototype
-    .replace(
-      /__name__/g,
-      collectionHolder.dataset.index
-    );
-
-  item.querySelector(".btn-remove").addEventListener("click", () => item.remove());
-
-  collectionHolder.appendChild(item);
-
-  collectionHolder.dataset.index++;
-};
-
-document
-  .querySelectorAll('.btn-remove')
-  .forEach(btn => btn.addEventListener("click", (e) => e.currentTarget.closest(".col-3").remove()));
-
-document
-  .querySelectorAll('.btn-new')
-  .forEach(btn => btn.addEventListener("click", newItem));
-</script>
 {% endblock %}

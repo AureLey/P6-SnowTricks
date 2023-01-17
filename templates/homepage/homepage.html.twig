@@ -10,7 +10,8 @@
                 <div class="col-lg-3">
                     <div id='card-homepage' class="card my-4 mx-3">                    
                         <a class="img-card text-decoration-none text-dark" href="{{ path('trick_detail',{'slug' : trick.slug })}}">
-                            <img src="{{asset('images/'~trick.images.first.name)}}" class="card-img-top" alt="Snowboard trick"/>                             
+                            
+                            <img src="{{asset('images/'~trick.featuredImage)}}" class="card-img-top" alt="Snowboard trick"/>                             
                             <div class="card-title mx-3">
                                 <h4 class="btn btn-outline-secondary">{{trick.name}}</h4>
                                                       

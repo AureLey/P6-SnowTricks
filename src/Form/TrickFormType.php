@@ -7,8 +7,9 @@ use App\Entity\Trick;
 use App\Form\ImageFormType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\All;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -30,12 +31,38 @@ class TrickFormType extends AbstractType
                                 'allow_add'     => true,
                                 'allow_delete' => true,
                                 'by_reference'  => false,])
-            ->add('images', CollectionType::class, [
-                                'label' => false,
-                                'entry_type'    => ImageFormType::class,                                
-                                'allow_add'     => true,
-                                'allow_delete' => true,
-                                'by_reference'  => false])                              
+            // ->add('images', CollectionType::class, [
+            //                     'label' => false,
+            //                     'entry_type'    => ImageFormType::class,                                
+            //                     'allow_add'     => true,
+            //                     'allow_delete' => true,
+            //                     'by_reference'  => false])
+            ->add('images', FileType::class, [
+                                    'mapped' => false,
+                                    'multiple' => true,
+                                    'required' => false,
+                                    'constraints' => [
+                                        new All([
+                                            new File([
+                                                'maxSize' => '204k',
+                                                'mimeTypes' => [
+                                                        'image/jpeg',
+                                                        'image/png',],
+                                                'mimeTypesMessage' => 'Please upload a valid image',])
+                                            ]),]])
+
+            ->add('featuredImage', FileType::class, [
+                'label' => 'Featured Image',             
+                'mapped' => false,// unmapped fields can't define their validation using annotations
+                'required' => false,              
+                'constraints' => [
+                    new File([
+                        'maxSize' => '204k',
+                        'mimeTypes' => [
+                                'image/jpeg',
+                                'image/png',
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid image',])],])                              
             
         ;
     }

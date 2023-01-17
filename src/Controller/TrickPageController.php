@@ -2,19 +2,21 @@
 
 namespace App\Controller;
 use App\Entity\User;
+use App\Entity\Image;
 use App\Entity\Trick;
 use App\Form\TrickFormType;
-use App\Repository\UserRepository;
 use App\Service\FileUploader;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\String\Slugger\AsciiSlugger;
-use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class TrickPageController extends AbstractController
@@ -30,42 +32,35 @@ class TrickPageController extends AbstractController
         $slugTrickName = new AsciiSlugger();
               
         $trick = new Trick();   
-        $formTrick = $this->createForm(TrickFormType::class, $trick );
+        $form = $this->createForm(TrickFormType::class, $trick );
         
-        $formTrick->handleRequest($request);
+        $form->handleRequest($request);
           
-        if($formTrick->isSubmitted() && $formTrick->isValid())
+        if($form->isSubmitted() && $form->isValid())
         {   
             
-            
-            // Controler importFile
-            $trickFilename = $formTrick->get('trickFilename')->getData();
-            if($trickFilename){
-                $trickFilename = $fileUploader->upload($trickFilename);
+            // Get UploadedListFile and add it to the trick as Image object
+            $imagesListUpload = $form->get('images')->getData();            
+            if($imagesListUpload)
+            {
+                foreach ($imagesListUpload as $imageUpload) {
+                    $imageName = $fileUploader->upload($imageUpload);
+                    $image = new Image();                    
+                    $image->setName($imageName);                  
+                    $trick->addImage($image);
+                    
+                }
+            }            
+
+
+            //Featured Image traitment
+            $featuredImageFile = $form->get('featuredImage')->getData();
+            if ($featuredImageFile) {
+
+                $featuredImageName = $fileUploader->upload($featuredImageFile);
+                $trick->setFeaturedImage($featuredImageName);
             }
             
-            dd($fileUploader);
-            // if ($trickFilename) {
-            //     $originalFilename = pathinfo($trickFilename->getClientOriginalName(), PATHINFO_FILENAME);
-            //     // this is needed to safely include the file name as part of the URL
-            //     $safeFilename = $slugger->slug($originalFilename);
-            //     $newFilename = $safeFilename.'-'.uniqid().'.'.$trickFilename->guessExtension();
-
-            //     // Move the file to the directory where brochures are stored
-            //     try {
-            //         $trickFilename->move(
-            //             $this->getParameter('brochures_directory'),
-            //             $newFilename
-            //         );
-            //     } catch (FileException $e) {
-            //         // ... handle exception if something happens during file upload
-            //     }
-
-            //     // updates the 'brochureFilename' property to store the PDF file name
-            //     // instead of its contents
-            //     $trick->setTrickF($newFilename);
-            // }
-            // FIN Import File
 
             
             $now = new \DateTimeImmutable('now');
@@ -85,7 +80,7 @@ class TrickPageController extends AbstractController
             
         return $this->render('trickpage/newtrickpage.html.twig', [
             'controller_name' => 'TrickPageController',
-            'trickform' => $formTrick->createView(),
+            'trickform' => $form->createView(),
         ]);
     }
 
@@ -109,21 +104,29 @@ class TrickPageController extends AbstractController
 
 
     #[Route('/trick/update/{slug}', name: 'update_trick')]
-    public function updateTrick(Trick $trick,Request $request,EntityManagerInterface $entityManager,UserRepository $repo): Response
+    public function updateTrick(Trick $trick,Request $request,EntityManagerInterface $entityManager,UserRepository $repo, FileUploader $fileUploader): Response
     {  
         //CREATE USER 
         $user = new User();
         $user = $repo->findBy(['email'=>'admin@admin.com']);
         $user = $user[0];
+        
+        //create file_path
+        $slugger = new AsciiSlugger();      
+        
+        $form = $this->createForm(TrickFormType::class, $trick )
+                     ->handleRequest($request);
 
-        $slugger = new AsciiSlugger();
-
-        $form = $this->createForm(TrickFormType::class, $trick );
-
-        $form->handleRequest($request);
-
+        
         if($form->isSubmitted() && $form->isValid())
         {  
+            //checking If Field FeaturedImage get a file, and update it
+            $featuredImageFile = $form->get('featuredImage')->getData();
+            if ($featuredImageFile) {
+                $featuredImage = $fileUploader->upload($featuredImageFile);
+                $trick->setFeaturedImage($featuredImage);
+            }
+           
             $now = new \DateTimeImmutable('now');
             $trick  ->setUser($this->getUser())                    
                     ->setUpdatedAt($now)

@@ -21,9 +21,9 @@ class Image
     #[ORM\JoinColumn(name:'trick_id',referencedColumnName:'id')]
     private Trick $trick;    
    
-    private ?string $trickFilename;
+    // private ?string $imageFilename;
 
-
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -53,14 +53,15 @@ class Image
         return $this;
     }
     
-    public function getTrickFilename(): string
-    {
-        return $this->trickFilename;
-    }
+    // public function getImageFilename(): string
+    // {
+    //     return $this->imageFilename;
+    // }
 
-    public function setTrickFilename($trickFilename): self
-    {
-        $this->trickFilename = $trickFilename;
-    }
+    // public function setImageFilename($imageFilename): self
+    // {
+    //     $this->imageFilename = $imageFilename;
+    // }
+
     
 }
