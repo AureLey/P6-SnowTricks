@@ -31,25 +31,25 @@ class TrickFormType extends AbstractType
                                 'allow_add'     => true,
                                 'allow_delete' => true,
                                 'by_reference'  => false,])
-            // ->add('images', CollectionType::class, [
-            //                     'label' => false,
-            //                     'entry_type'    => ImageFormType::class,                                
-            //                     'allow_add'     => true,
-            //                     'allow_delete' => true,
-            //                     'by_reference'  => false])
-            ->add('images', FileType::class, [
-                                    'mapped' => false,
-                                    'multiple' => true,
-                                    'required' => false,
-                                    'constraints' => [
-                                        new All([
-                                            new File([
-                                                'maxSize' => '204k',
-                                                'mimeTypes' => [
-                                                        'image/jpeg',
-                                                        'image/png',],
-                                                'mimeTypesMessage' => 'Please upload a valid image',])
-                                            ]),]])
+            ->add('images', CollectionType::class, [
+                                'label' => false,
+                                'entry_type'    => ImageFormType::class,                                
+                                'allow_add'     => true,
+                                'allow_delete' => true,
+                                'by_reference'  => false])
+            // ->add('images', FileType::class, [
+            //                         'mapped' => false,
+            //                         'multiple' => true,
+            //                         'required' => false,
+            //                         'constraints' => [
+            //                             new All([
+            //                                 new File([
+            //                                     'maxSize' => '204k',
+            //                                     'mimeTypes' => [
+            //                                             'image/jpeg',
+            //                                             'image/png',],
+            //                                     'mimeTypesMessage' => 'Please upload a valid image',])
+            //                                 ]),]])
 
             ->add('featuredImage', FileType::class, [
                 'label' => 'Featured Image',             

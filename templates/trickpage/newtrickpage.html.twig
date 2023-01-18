@@ -10,32 +10,8 @@
             <div class="content-trick mt-4">
                 {# --------------------Gallery names--------------------- #}            
                 <section id="gallery">
-                    <div class="row container justify-content-center">
-                        
-                        <div id="new-media">
-                            {# Block Images sélection multiple #}
-                            {{ form_row(trickform.images)}}
-                            
-
-                            {# Block Vidéos  #}
-                            <div class="video-block my-3">
-                                Videos:
-                                <button type="button" class="btn btn-outline-success btn-new" data-collection="#videos"><i class="bi bi-file-play">New video</i></button>
-                                
-                                {# Prototype #}
-                                <div id="videos" class="row"
-                                    data-prototype="{{ include("trickpage/trickTemplate/_video.html.twig", {form: trickform.videos.vars.prototype})|e("html_attr") }}"
-                                    data-index="{{ trickform.videos|length > 0 ? trickform.videos|last.vars.name + 1 : 0 }}">
-
-                                {# Loop who create Video field #}    
-                                {% for video in trickform.videos %}
-                                    <div class="col-3">
-                                        {{ include("trickpage/trickTemplate/_video.html.twig", {form: video}) }}
-                                    </div>
-                                {% endfor %}
-                                </div>
-                            </div>                       
-                        </div>                          
+                    <div class="row container justify-content-center">                        
+                      {% include 'trickpage/trickTemplate/_form.html.twig'with {'trickform': trickform }  %}                             
                     </div>
                 </section>
                 {# On affiche le bouton media qui permet de load les media en responsive #}

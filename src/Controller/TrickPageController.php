@@ -7,6 +7,8 @@ use App\Entity\Trick;
 use App\Form\TrickFormType;
 use App\Service\FileUploader;
 use App\Repository\UserRepository;
+use App\Repository\ImageRepository;
+use App\Repository\TrickRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,21 +39,18 @@ class TrickPageController extends AbstractController
         $form->handleRequest($request);
           
         if($form->isSubmitted() && $form->isValid())
-        {   
-            
+        {  
             // Get UploadedListFile and add it to the trick as Image object
             $imagesListUpload = $form->get('images')->getData();            
             if($imagesListUpload)
             {
                 foreach ($imagesListUpload as $imageUpload) {
-                    $imageName = $fileUploader->upload($imageUpload);
-                    $image = new Image();                    
-                    $image->setName($imageName);                  
-                    $trick->addImage($image);
-                    
+                    $imageName = $fileUploader->upload($imageUpload->getFile());                    
+                    $imageUpload->setName($imageName);                                      
+                    $trick->addImage($imageUpload);                    
                 }
             }            
-
+            
 
             //Featured Image traitment
             $featuredImageFile = $form->get('featuredImage')->getData();
@@ -104,8 +103,9 @@ class TrickPageController extends AbstractController
 
 
     #[Route('/trick/update/{slug}', name: 'update_trick')]
-    public function updateTrick(Trick $trick,Request $request,EntityManagerInterface $entityManager,UserRepository $repo, FileUploader $fileUploader): Response
+    public function updateTrick(Trick $trick,Request $request,EntityManagerInterface $entityManager,UserRepository $repo,TrickRepository $repoTrick,ImageRepository $repoImage, FileUploader $fileUploader): Response
     {  
+        
         //CREATE USER 
         $user = new User();
         $user = $repo->findBy(['email'=>'admin@admin.com']);
@@ -117,9 +117,23 @@ class TrickPageController extends AbstractController
         $form = $this->createForm(TrickFormType::class, $trick )
                      ->handleRequest($request);
 
-        
+
         if($form->isSubmitted() && $form->isValid())
-        {  
+        { 
+            // Get UploadedListFile and add it to the trick as Image object
+            $imagesList = $form->get('images')->getData();
+                       
+            if($imagesList)
+            {
+                foreach ($imagesList as $image) {
+                    if ($image->getId() === null) {
+                        $imageName = $fileUploader->upload($image->getFile());                    
+                        $image->setName($imageName);                                      
+                        $trick->addImage($image);                        
+                    }                     
+                }
+            }
+            
             //checking If Field FeaturedImage get a file, and update it
             $featuredImageFile = $form->get('featuredImage')->getData();
             if ($featuredImageFile) {

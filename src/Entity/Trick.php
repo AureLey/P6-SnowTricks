@@ -47,7 +47,7 @@ class Trick
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Image::class,cascade: ['all'], orphanRemoval: true)]
     private Collection $images;
 
-    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Video::class,cascade: ['all'])]
+    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Video::class,cascade: ['all'], orphanRemoval: true)]
     private Collection $videos;
 
     #[ORM\Column(length: 255, nullable: true)]

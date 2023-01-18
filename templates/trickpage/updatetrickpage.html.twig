@@ -10,50 +10,13 @@
             <div class="content-trick mt-4">		
                 {# --------------------Gallery links--------------------- #}
                 <section id="gallery">
-                    {# {% include 'trickpage/trickTemplate/_gallery.html.twig'with {'update': true }  %} #}
-                    <div class="row  justify-content-center">
-
-                        {#  On parcourt une liste en récupérant l'index.loop dans la liste du formView,
-                            puis on affiche l'image correspondant à l'index dans la liste trick.images||videos #}                               
-                            {% for image in trick.images %}
-                            <div class="col-3">                                                      
-                                <img src="{{asset('images/'~image.name)}}" class="card-img-top gallery-item" alt="Snowboard trick"/>
-                            </div>
-                            {% endfor %}
-                            {{ form_row(trickform.images) }}                           
-                        {# Images #}                        
-                        
-                        {# Videos #}
-                        {# {% for video in trickform.videos %}
-                            <div class="col-3">
-                                {% set index = loop.index %}                      
-                                <iframe class="w-100 rounded ratio ratio-16x9 gallery-item" src="{{trick.videos[index-1].name}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                                {{ form_widget(video.name) }}
-                            </div>
-                        {% endfor %}                     #}
-                        {# Block Vidéos  #}
-                            <div class="video-block my-3">
-                                Videos:
-                                <button type="button" class="btn btn-outline-success btn-new" data-collection="#videos"><i class="bi bi-file-play">New video</i></button>
-                                
-                                {# Prototype #}
-                                <div id="videos" class="row"
-                                    data-prototype="{{ include("trickpage/trickTemplate/_video.html.twig", {form: trickform.videos.vars.prototype})|e("html_attr") }}"
-                                    data-index="{{ trickform.videos|length > 0 ? trickform.videos|last.vars.name + 1 : 0 }}">
-
-                                {# Loop who create Video field #}    
-                                {% for video in trickform.videos %}
-                                    <div class="col-3">
-                                        {{ include("trickpage/trickTemplate/_video.html.twig", {form: video}) }}
-                                    </div>
-                                {% endfor %}
-                                </div>
-                            </div>
+                    <div class="row container justify-content-center">                        
+                        {% include 'trickpage/trickTemplate/_form.html.twig'with {'trickform': trickform }  %}                             
                     </div>
                 </section>
 
                 {# Modal pour afficher les images #}
-                {{ include("trickpage/_modal.html.twig")}}
+                {{ include("trickpage/trickTemplate/_modal.html.twig")}}
 
                 {# On affiche le bouton media qui permet de load les media en responsive #}
                 <section id="see-media">
