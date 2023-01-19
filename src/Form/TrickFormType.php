@@ -57,7 +57,7 @@ class TrickFormType extends AbstractType
                 'required' => false,              
                 'constraints' => [
                     new File([
-                        'maxSize' => '204k',
+                        'maxSize' => '2048k',
                         'mimeTypes' => [
                                 'image/jpeg',
                                 'image/png',

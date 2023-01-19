@@ -6,19 +6,26 @@ namespace App\Entity;
 use App\Entity\Image;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use App\Repository\TrickRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
+
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
+#[UniqueEntity(
+    fields :'name',
+    message: 'Trick already exist',
+    )]
 class Trick
-{
+{    
+    
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy:'AUTO')]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
@@ -27,10 +34,11 @@ class Trick
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
 
+    
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\Column]
+    #[ORM\Column]    
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'groupTrick')]

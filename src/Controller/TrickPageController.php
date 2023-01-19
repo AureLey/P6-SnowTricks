@@ -41,26 +41,30 @@ class TrickPageController extends AbstractController
         if($form->isSubmitted() && $form->isValid())
         {  
             // Get UploadedListFile and add it to the trick as Image object
-            $imagesListUpload = $form->get('images')->getData();            
+            $imagesListUpload = $form->get('images')->getData();
+            //Featured Image traitment
+            $featuredImageFile = $form->get('featuredImage')->getData(); 
+
             if($imagesListUpload)
             {
-                foreach ($imagesListUpload as $imageUpload) {
-                    $imageName = $fileUploader->upload($imageUpload->getFile());                    
-                    $imageUpload->setName($imageName);                                      
+                foreach ($imagesListUpload as $imageUpload) {                   
+                    
+                    $imageName = $fileUploader->upload($imageUpload->getFile());
+                    $imageUpload->setName($imageName);
+                                                       
                     $trick->addImage($imageUpload);                    
                 }
-            }            
-            
-
-            //Featured Image traitment
-            $featuredImageFile = $form->get('featuredImage')->getData();
+            }           
+            //test if featured is null and give first image like default featured image to the trick
             if ($featuredImageFile) {
 
                 $featuredImageName = $fileUploader->upload($featuredImageFile);
                 $trick->setFeaturedImage($featuredImageName);
             }
-            
-
+            else
+            {   
+               $trick->setFeaturedImage($trick->getImages()->first()->getName());
+            } 
             
             $now = new \DateTimeImmutable('now');
             $trick  ->setUser($this->getUser())
@@ -71,7 +75,8 @@ class TrickPageController extends AbstractController
             $slugName = $slugTrickName->slug($trick->getName());
             $trick->setSlug($slugName);          
             
-            $entityManager->persist($trick);           
+            $entityManager->persist($trick); 
+            //dd($trick);         
             $entityManager->flush();
 
             return $this->redirectToRoute('trick_detail',['slug'=>$trick->getSlug()]);
@@ -126,7 +131,8 @@ class TrickPageController extends AbstractController
             if($imagesList)
             {
                 foreach ($imagesList as $image) {
-                    if ($image->getId() === null) {
+                    
+                    if ($image->getId() === null || !empty($image->getFile())) {
                         $imageName = $fileUploader->upload($image->getFile());                    
                         $image->setName($imageName);                                      
                         $trick->addImage($image);                        
