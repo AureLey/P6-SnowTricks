@@ -16,15 +16,15 @@ class CommentFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
         //Picture
-        $tricks =["50-50","boardslide","Lipslide","Back Flip","Front Flip",
-                    "Wildcat","Tamedog","Backside Misty","Beef Carpaccio","Beef Curtains",
-                    "Bloody Dracula","Drunk Driver","Japan Air",];      
-        
-        foreach($tricks as $value)
-        {
-            
-            for($j = 0; $j <= rand(1,4);$j++)
-            {
+        $tricks = [
+            "50-50", "boardslide", "Lipslide", "Back Flip", "Front Flip",
+            "Wildcat", "Tamedog", "Backside Misty", "Beef Carpaccio", "Beef Curtains",
+            "Bloody Dracula", "Drunk Driver", "Japan Air",
+        ];
+
+        foreach ($tricks as $value) {
+
+            for ($j = 0; $j <= rand(1, 4); $j++) {
                 $now = new \DateTimeImmutable('now');
                 $comment = new Comment();
                 $comment->setContent("Lorem ipsum, dolor sit amet consectetur adipisicing elit.");
@@ -37,7 +37,7 @@ class CommentFixtures extends Fixture implements DependentFixtureInterface
         }
 
         $manager->flush();
-    } 
+    }
     public function getDependencies()
     {
         return [

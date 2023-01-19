@@ -20,23 +20,26 @@ class TrickFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class,['label' => null])            
-            ->add('content')                        
+            ->add('name', TextType::class, ['label' => null])
+            ->add('content')
             ->add('groupTrick', EntityType::class, [
-                                'class' => Group::class,
-                                'choice_label'=>'name',])            
+                'class' => Group::class,
+                'choice_label' => 'name',
+            ])
             ->add('videos', CollectionType::class, [
-                                'label' => false,
-                                'entry_type'    => VideoFormType::class,                             
-                                'allow_add'     => true,
-                                'allow_delete' => true,
-                                'by_reference'  => false,])
+                'label' => false,
+                'entry_type'    => VideoFormType::class,
+                'allow_add'     => true,
+                'allow_delete' => true,
+                'by_reference'  => false,
+            ])
             ->add('images', CollectionType::class, [
-                                'label' => false,
-                                'entry_type'    => ImageFormType::class,                                
-                                'allow_add'     => true,
-                                'allow_delete' => true,
-                                'by_reference'  => false])
+                'label' => false,
+                'entry_type'    => ImageFormType::class,
+                'allow_add'     => true,
+                'allow_delete' => true,
+                'by_reference'  => false
+            ])
             // ->add('images', FileType::class, [
             //                         'mapped' => false,
             //                         'multiple' => true,
@@ -52,26 +55,27 @@ class TrickFormType extends AbstractType
             //                                 ]),]])
 
             ->add('featuredImage', FileType::class, [
-                'label' => 'Featured Image',             
-                'mapped' => false,// unmapped fields can't define their validation using annotations
-                'required' => false,              
+                'label' => 'Featured Image',
+                'mapped' => false, // unmapped fields can't define their validation using annotations
+                'required' => false,
                 'constraints' => [
                     new File([
                         'maxSize' => '2048k',
                         'mimeTypes' => [
-                                'image/jpeg',
-                                'image/png',
+                            'image/jpeg',
+                            'image/png',
                         ],
-                        'mimeTypesMessage' => 'Please upload a valid image',])],])                              
-            
-        ;
+                        'mimeTypesMessage' => 'Please upload a valid image',
+                    ])
+                ],
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Trick::class
-            
+
         ]);
     }
 }

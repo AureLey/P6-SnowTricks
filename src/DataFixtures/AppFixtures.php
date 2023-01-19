@@ -15,6 +15,7 @@ use App\Entity\Comment;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+
 class AppFixtures extends Fixture
 {
     public const ADMIN_USER_REFERENCE = 'admin-user';
@@ -24,9 +25,9 @@ class AppFixtures extends Fixture
     {
         $this->hasher = $hasher;
     }
-    
+
     public function load(ObjectManager $manager): void
-    {         
+    {
         // USER Creation
         $admin_password = 'admin';
 
@@ -39,7 +40,7 @@ class AppFixtures extends Fixture
 
         $manager->persist($user);
         $this->addReference(self::ADMIN_USER_REFERENCE, $user);
-                
+
         $manager->flush();
-    }  
+    }
 }

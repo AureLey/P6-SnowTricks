@@ -1,33 +1,35 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="container bg-light rounded">
-        {{form_start(trickform)}}
+	<div class="container bg-light rounded">
+		{{form_start(trickform)}}
 
-            {# Include Hero & Featured Image #}
-            {% include 'trickpage/trickTemplate/_header.html.twig'with {'edit': true }  %}
-                    
-            <div class="content-trick mt-4">
-                {# --------------------Gallery names--------------------- #}            
-                <section id="gallery">
-                    <div class="row container justify-content-center">                        
-                      {% include 'trickpage/trickTemplate/_form.html.twig'with {'trickform': trickform }  %}                             
-                    </div>
-                </section>
-                {# On affiche le bouton media qui permet de load les media en responsive #}
-                <section id="see-media">
-                    <div class="button-load-more text-center mb-5">
-                        <a href="" class="btn btn-sm rounded text-light bg-dark px-5 py-3" >See media</a>
-                    </div>
-                </section>
-                {# --------------------------------  GALLERY UPDATE  ----------------------------------------- #}
+		{# Include Hero & Featured Image #}
+		{% include 'trickpage/trickTemplate/_header.html.twig'with {'edit': true }  %}
 
-                {# Section Contenu Trick && Button #}
-                <section class="row mx-auto col-8 pb-5">
-                    {# Description Field && trick group #}
-                    {% include 'trickpage/trickTemplate/_content.html.twig' with {'page': 'new' } %}                
-                </section>                    
-            </div>
-        {{form_end(trickform)}}
-    </div>
+		<div
+			class="content-trick mt-4">
+			{# --------------------Gallery names--------------------- #}
+			<section id="gallery">
+				<div class="row container justify-content-center">
+					{% include 'trickpage/trickTemplate/_form.html.twig'with {'trickform': trickform }  %}
+				</div>
+			</section>
+			{# On affiche le bouton media qui permet de load les media en responsive #}
+			<section id="see-media">
+				<div class="button-load-more text-center mb-5">
+					<a href="" class="btn btn-sm rounded text-light bg-dark px-5 py-3">See media</a>
+				</div>
+			</section>
+			{# --------------------------------  GALLERY UPDATE  ----------------------------------------- #}
+
+			{# Section Contenu Trick && Button #}
+			<section
+				class="row mx-auto col-8 pb-5">
+				{# Description Field && trick group #}
+				{% include 'trickpage/trickTemplate/_content.html.twig' with {'page': 'new' } %}
+			</section>
+		</div>
+		{{form_end(trickform)}}
+	</div>
 {% endblock %}

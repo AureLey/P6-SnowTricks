@@ -1,37 +1,43 @@
-
-{# Block Images  #}   
-{% for image in trick.images %}                
-    <div class="col-lg-3">
-        <div class="card my-4 mx-3">                    
-            <div class="img-card text-decoration-none text-dark" href="{{ path('trick_detail',{'slug' : trick.slug })}}">
-                <img src="{{asset('images/'~image.name)}}" class="card-img-top gallery-item" alt="Snowboard trick"/>                            
-                {% if update %}
-                    <div class="card-title pt-2 mx-3"> 
-                        Id : {{ image.id}}                       
-                        <a href="#" class="btn btn-outline-danger btn-sm mx-2"><i class="bi bi-trash3-fill"></i></a>
-                        <a href="{{ path('update_trick',{'slug' : trick.slug })}}" class="btn btn-outline-info btn-sm mx-2"><i class="bi bi-pencil-fill"></i></a>                          
-                    </div>  
-                {% endif %}
-            </div>
-        </div>
-    </div>
+{# Block Images  #}
+{% for image in trick.images %}
+	<div class="col-lg-3">
+		<div class="card my-4 mx-3">
+			<div class="img-card text-decoration-none text-dark" href="{{ path('trick_detail',{'slug' : trick.slug })}}">
+				<img src="{{asset('images/'~image.name)}}" class="card-img-top gallery-item" alt="Snowboard trick"/>
+				{% if update %}
+					<div class="card-title pt-2 mx-3">
+						Id :
+						{{ image.id}}
+						<a href="#" class="btn btn-outline-danger btn-sm mx-2">
+							<i class="bi bi-trash3-fill"></i>
+						</a>
+						<a href="{{ path('update_trick',{'slug' : trick.slug })}}" class="btn btn-outline-info btn-sm mx-2">
+							<i class="bi bi-pencil-fill"></i>
+						</a>
+					</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
 {% endfor %}
 
 {# --------------------------------------------------------------------------------------------------- #}
 {# --------------------------------------------------------------------------------------------------- #}
-    
+
 {# Block Vidéos  #}
-{% for video in trick.videos %}                
-    <div class="col-lg-3">
-        <div class="card my-4 mx-3">                    
-            <iframe class="w-100 rounded ratio ratio-16x9 gallery-item" src="{{video.name}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                {% if update %}
-                    <div class="card-title pt-2 mx-3">                        
-                        <a href="#" class="btn btn-outline-danger btn-sm mx-2"><i class="bi bi-trash3-fill"></i></a>
-                        <a href="{{ path('update_trick',{'slug' : trick.slug })}}" class="btn btn-outline-info btn-sm mx-2"><i class="bi bi-pencil-fill"></i></a>                          
-                    </div>  
-                {% endif %}
-            </a>
-        </div>
-    </div>
-{% endfor %}
+	{% for video in trick.videos %}
+		<div class="col-lg-3"> <div class="card my-4 mx-3">
+			<iframe class="w-100 rounded ratio ratio-16x9 gallery-item" src="{{video.name}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+			{% if update %}
+				<div class="card-title pt-2 mx-3">
+					<a href="#" class="btn btn-outline-danger btn-sm mx-2">
+						<i class="bi bi-trash3-fill"></i>
+					</a>
+					<a href="{{ path('update_trick',{'slug' : trick.slug })}}" class="btn btn-outline-info btn-sm mx-2">
+						<i class="bi bi-pencil-fill"></i>
+					</a>
+				</div>
+			{% endif %}
+		</a>
+	</div>
+</div>{% endfor %}

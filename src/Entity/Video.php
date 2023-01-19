@@ -17,7 +17,7 @@ class Video
     private ?string $name = null;
 
     #[ORM\ManyToOne(inversedBy: 'videos')]
-    #[ORM\JoinColumn(name:'trick_id',referencedColumnName:'id')]
+    #[ORM\JoinColumn(name: 'trick_id', referencedColumnName: 'id')]
     private ?Trick $trick;
 
     public function getId(): ?int

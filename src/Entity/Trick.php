@@ -14,14 +14,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
 #[UniqueEntity(
-    fields :'name',
+    fields: 'name',
     message: 'Trick already exist',
-    )]
+)]
 class Trick
-{    
-    
+{
+
     #[ORM\Id]
-    #[ORM\GeneratedValue(strategy:'AUTO')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     #[ORM\Column]
     private ?int $id = null;
 
@@ -34,11 +34,11 @@ class Trick
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
 
-    
+
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\Column]    
+    #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'groupTrick')]
@@ -50,12 +50,12 @@ class Trick
     private ?Group $groupTrick = null;
 
     #[ORM\OneToMany(mappedBy: 'commentTrick', targetEntity: Comment::class, orphanRemoval: true)]
-    private Collection $comments;    
+    private Collection $comments;
 
-    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Image::class,cascade: ['all'], orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Image::class, cascade: ['all'], orphanRemoval: true)]
     private Collection $images;
 
-    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Video::class,cascade: ['all'], orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Video::class, cascade: ['all'], orphanRemoval: true)]
     private Collection $videos;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -155,7 +155,7 @@ class Trick
         $this->groupTrick = $groupTrick;
 
         return $this;
-    }    
+    }
 
     /**
      * @return Collection<int, Comment>
@@ -187,10 +187,10 @@ class Trick
         return $this;
     }
 
-    public function __toString():string
+    public function __toString(): string
     {
         return $this->name;
-    }   
+    }
 
     /**
      * @return Collection<int, Image>
@@ -263,5 +263,4 @@ class Trick
 
         return $this;
     }
-
 }

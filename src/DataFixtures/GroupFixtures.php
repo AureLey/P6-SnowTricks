@@ -17,22 +17,21 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class GroupFixtures extends Fixture implements DependentFixtureInterface
 {
-    
+
 
     public function load(ObjectManager $manager): void
-    { 
+    {
         // GROUP CREATION
-        $group =["Flip", "Slide","Grab"];
-             
-        foreach($group as $key=>$value)
-        {   
+        $group = ["Flip", "Slide", "Grab"];
+
+        foreach ($group as $key => $value) {
             $groupItem = new Group();
             $groupItem->setName($value);
-            
+
             $manager->persist($groupItem);
             $this->addReference($value, $groupItem);
         }
-        
+
         $manager->flush();
     }
     public function getDependencies()
@@ -40,5 +39,5 @@ class GroupFixtures extends Fixture implements DependentFixtureInterface
         return [
             AppFixtures::class,
         ];
-    }  
+    }
 }

@@ -1,45 +1,47 @@
-<div id="new-media">
-                            
-    {# Block Images  #}                            
-    <div class="image-block my-3 rounded border border-info p-2 ">                                
-        Images:
-        <button type="button" class="btn btn-outline-info btn-new" data-collection="#images"><i class="bi bi-image">New image</i></button>
-        
-        {# Prototype #}
-        <div id="images" class="row"
-            data-prototype="{{ include("trickpage/trickTemplate/_image.html.twig", {form: trickform.images.vars.prototype})|e("html_attr") }}"
-            data-index="{{ trickform.images|length > 0 ? trickform.images|last.vars.name + 1 : 0 }}">
+<div
+	id="new-media">
 
-        {# Loop who create Video field #}    
-        {% for image in trickform.images %}
-            <div class="col-3">
-                <img src="{{asset('images/'~trick.images[loop.index-1].name)}}" class="card-img-top gallery-item my-3" alt="Snowboard trick"/>
-                {{ include("trickpage/trickTemplate/_image.html.twig", {form: image}) }}
-            </div>
-        {% endfor %}
-        </div>
-    </div>
-    
-    {# --------------------------------------------------------------------------------------------------- #}
-    {# --------------------------------------------------------------------------------------------------- #}
-    
-    {# Block Vidéos  #}
-    <div class="video-block my-3 rounded border border-success p-2 ">
-        Videos:
-        <button type="button" class="btn btn-outline-success btn-new" data-collection="#videos"><i class="bi bi-file-play">New video</i></button>
-        
-        {# Prototype #}
-        <div id="videos" class="row"
-            data-prototype="{{ include("trickpage/trickTemplate/_video.html.twig", {form: trickform.videos.vars.prototype})|e("html_attr") }}"
-            data-index="{{ trickform.videos|length > 0 ? trickform.videos|last.vars.name + 1 : 0 }}">
+	{# Block Images  #}
+	<div class="image-block my-3 rounded border border-info p-2 ">
+		Images:
+		<button type="button" class="btn btn-outline-info btn-new" data-collection="#images">
+			<i class="bi bi-image">New image</i>
+		</button>
 
-        {# Loop who create Video field #}    
-        {% for video in trickform.videos %}
-            <div class="col-3">
-                <iframe class="w-100 rounded ratio ratio-16x9 gallery-item my-3" src="{{trick.videos[loop.index-1].name}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                {{ include("trickpage/trickTemplate/_video.html.twig", {form: video}) }}
-            </div>
-        {% endfor %}
-        </div>
-    </div>                       
+		{# Prototype #}
+		<div
+			id="images" class="row" data-prototype="{{ include("trickpage/trickTemplate/_image.html.twig", {form: trickform.images.vars.prototype})|e(" html_attr") }}" data-index="{{ trickform.images|length > 0 ? trickform.images|last.vars.name + 1 : 0 }}">
+
+			{# Loop who create Video field #}
+			{% for image in trickform.images %}
+				<div class="col-3">
+					<img src="{{asset('images/'~trick.images[loop.index-1].name)}}" class="card-img-top gallery-item my-3" alt="Snowboard trick"/>
+					{{ include("trickpage/trickTemplate/_image.html.twig", {form: image}) }}
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+
+	{# --------------------------------------------------------------------------------------------------- #}
+	{# --------------------------------------------------------------------------------------------------- #}
+
+	{# Block Vidéos  #}
+		<div class="video-block my-3 rounded border border-success p-2 "> Videos:
+		<button type="button" class="btn btn-outline-success btn-new" data-collection="#videos">
+			<i class="bi bi-file-play">New video</i>
+		</button>
+
+		{# Prototype #}
+		<div
+			id="videos" class="row" data-prototype="{{ include("trickpage/trickTemplate/_video.html.twig", {form: trickform.videos.vars.prototype})|e(" html_attr") }}" data-index="{{ trickform.videos|length > 0 ? trickform.videos|last.vars.name + 1 : 0 }}">
+
+			{# Loop who create Video field #}
+			{% for video in trickform.videos %}
+				<div class="col-3">
+					<iframe class="w-100 rounded ratio ratio-16x9 gallery-item my-3" src="{{trick.videos[loop.index-1].name}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+					{{ include("trickpage/trickTemplate/_video.html.twig", {form: video}) }}
+				</div>
+			{% endfor %}
+		</div>
+	</div>
 </div>

@@ -19,9 +19,9 @@ class Image
     private ?string $name = null;
 
     #[ORM\ManyToOne(inversedBy: 'images')]
-    #[ORM\JoinColumn(name:'trick_id',referencedColumnName:'id')]
-    private ?Trick $trick;    
-   
+    #[ORM\JoinColumn(name: 'trick_id', referencedColumnName: 'id')]
+    private ?Trick $trick;
+
     // #[ORM\Column(type: 'string', length: 255)]
     // private ?string $imageFilename;
 
@@ -30,7 +30,7 @@ class Image
      */
     protected $file;
 
-    
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,7 +59,7 @@ class Image
 
         return $this;
     }
-    
+
     // public function getImageFilename(): string
     // {
     //     return $this->imageFilename;
@@ -72,13 +72,13 @@ class Image
     //     return $this;
     // }
 
-    
+
 
     /**
      * Get the value of file
      *
      * @return  UploadedFile
-     */ 
+     */
     public function getFile()
     {
         return $this->file;
@@ -90,7 +90,7 @@ class Image
      * @param  UploadedFile  $file
      *
      * @return  self
-     */ 
+     */
     public function setFile(UploadedFile $file)
     {
         $this->file = $file;

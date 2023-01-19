@@ -1,42 +1,49 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<div class="masthead">
-   {{ include("homepage/_hero.html.twig")}}  
-<section id="cards-tricks" class="d-flex mt-5">
-    <div class="container ">        
-        <div class="row gx-0">
-            {% for trick in tricks %}                
-                <div class="col-lg-3">
-                    <div id='card-homepage' class="card my-4 mx-3">                    
-                        <a class="img-card text-decoration-none text-dark" href="{{ path('trick_detail',{'slug' : trick.slug })}}">
-                            
-                            <img src="{{asset('images/'~trick.featuredImage)}}" class="card-img-top" alt="Snowboard trick"/>                             
-                            <div class="card-title mx-3">
-                                <h4 class="btn btn-outline-secondary">{{trick.name}}</h4>
-                                                      
-                            {% if not app.user %}                                
-                                    <a href="#" class="btn btn-outline-danger btn-sm mx-2"><i class="bi bi-trash3-fill"></i></a>
-                                    <a href="{{ path('update_trick',{'slug' : trick.slug })}}" class="btn btn-outline-info btn-sm mx-2"><i class="bi bi-pencil-fill"></i></a>                          
-                            {% endif %}
-                                
-                            </div>  
-                        </a>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>    
-        <div class="button-load-more text-center mb-5">
-            <a href="" id="#load" class="btn btn-sm rounded text-light bg-dark px-5 py-3" >Load More</a>
-        </div>            
-    </div>
-</section>
-{% set nbTrick = 17 %} {# variable de test à remplacer par le tableau des tricks #}
-{% if nbTrick > 15 %}
-    <div class="d-flex justify-content-end">
-        <a  href="#cards-tricks" class="px-5 py-3" ><i class="bi bi-file-arrow-up-fill" style='font-size:48px;color:black;'></i></a>
-    </div>           
-{% endif %}
-  
+	<div class="masthead">
+		{{ include("homepage/_hero.html.twig")}}
+		<section id="cards-tricks" class="d-flex mt-5">
+			<div class="container ">
+				<div class="row gx-0">
+					{% for trick in tricks %}
+						<div class="col-lg-3">
+							<div id='card-homepage' class="card my-4 mx-3">
+								<a class="img-card text-decoration-none text-dark" href="{{ path('trick_detail',{'slug' : trick.slug })}}">
 
-{% endblock %}
+									<img src="{{asset('images/'~trick.featuredImage)}}" class="card-img-top" alt="Snowboard trick"/>
+									<div class="card-title mx-3">
+										<h4 class="btn btn-outline-secondary">{{trick.name}}</h4>
+
+										{% if not app.user %}
+											<a href="#" class="btn btn-outline-danger btn-sm mx-2">
+												<i class="bi bi-trash3-fill"></i>
+											</a>
+											<a href="{{ path('update_trick',{'slug' : trick.slug })}}" class="btn btn-outline-info btn-sm mx-2">
+												<i class="bi bi-pencil-fill"></i>
+											</a>
+										{% endif %}
+
+									</div>
+								</a>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+				<div class="button-load-more text-center mb-5">
+					<a href="" id="#load" class="btn btn-sm rounded text-light bg-dark px-5 py-3">Load More</a>
+				</div>
+			</div>
+		</section>
+		{% set nbTrick = 17 %}
+		{# variable de test à remplacer par le tableau des tricks #}
+		{% if nbTrick > 15 %}
+			<div class="d-flex justify-content-end">
+				<a href="#cards-tricks" class="px-5 py-3">
+					<i class="bi bi-file-arrow-up-fill" style='font-size:48px;color:black;'></i>
+				</a>
+			</div>
+		{% endif %}
+
+
+	{% endblock %}
