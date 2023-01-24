@@ -1,141 +1,144 @@
-
-
 /* NAVBAR*/
-.navbar{
+.navbar {
     align-items: center;
 }
-.navbar-collapse
-{
-    justify-content:flex-end; 
+
+.navbar-collapse {
+    justify-content: flex-end;
 }
 
-.navbar-dark .navbar-toggler-icon 
-{
+.navbar-dark .navbar-toggler-icon {
     color: aliceblue;
 }
 
-footer
-{
-    background-color:#1a1717;
-    color: aliceblue !important; 
+footer {
+    background-color: #1a1717;
+    color: aliceblue !important;
 }
 
-.nav-link { 
-    color: aliceblue !important; 
+.nav-link {
+    color: aliceblue !important;
 }
 
 
 /*HOMEPAGE*/
-#mainNav
-{
-    background-color:#3E3E3E;
+#mainNav {
+    background-color: #3E3E3E;
 }
 
-.masthead 
-{
+.masthead {
     position: relative;
     width: 100%;
     height: 94vh;
     min-height: 35rem;
-    padding:0;
+    padding: 0;
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 75%, #000 100%), url("../images/homepage.jpg");
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: scroll;
-    background-size: cover;    
+    background-size: cover;
 }
-#more_content
-{
-    position : absolute;
-    bottom   : 1rem;
+
+#more_content {
+    position: absolute;
+    bottom: 1rem;
 }
-.card-img-top 
-{
+
+.card-img-top {
     height: 150px;
-    width:100%;
-    cursor: pointer;   
+    width: 100%;
+    cursor: pointer;
 }
-.card{
-    box-shadow: 0 2px 0 rgba(82, 86, 92, 0.062), 
-                0 4px 8px rgba(61, 64, 68, 0.12),
-                0 10px 10px #30363d07, 0 7px 70px rgba(90, 97, 105, 0.1);
+
+.card {
+    box-shadow: 0 2px 0 rgba(82, 86, 92, 0.062),
+        0 4px 8px rgba(61, 64, 68, 0.12),
+        0 10px 10px #30363d07, 0 7px 70px rgba(90, 97, 105, 0.1);
     transition: transform 0.2s ease;
     border-width: 0;
 }
+
 /* -----------------------------CSS MODAL----------------------- */
-img{
-	max-width: 100%;
+img {
+    max-width: 100%;
 }
-.gallery{
-	background-color: #dbddf1;
-	padding: 80px 0;
+
+.gallery {
+    background-color: #dbddf1;
+    padding: 80px 0;
 }
-.gallery img{
-	background-color: #ffffff;
-	padding: 15px;
-	width: 100%;
-	box-shadow: 0 0 15px rgba(0,0,0,0.3);
-	
+
+.gallery img {
+    background-color: #ffffff;
+    padding: 15px;
+    width: 100%;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+
 }
-#gallery .modal-img{
-	width: 100%;    
+
+#gallery .modal-img {
+    width: 100%;
 }
 
 
 /* ----------------------------------END CSS MODAL -------------------- */
 
-.img-card > h4, .card-title > a{
-    border-radius: 0px 0px 20px 20px;
+.img-card>h4,
+.card-title>a {
+    border-radius: 20px 20px 20px 20px;
 }
 
-.img-card > img{
+.img-card>img {
     border-radius: 5px 5px 0 0;
 }
-#card-homepage:hover{
+
+#card-homepage:hover {
     transform: scale(1.1);
 }
 
-i{
+i {
     font-size: 20px;
 }
 
 /* TRICKPAGE */
 
-#gallery{
+#gallery {
     visibility: visible;
-    display: block; 
+    display: block;
 }
 
-#see-media,#navicon{
+#see-media,
+#navicon {
     visibility: hidden;
     display: none;
 }
 
 
 
-.default-img-trick{    
+.default-img-trick {
     aspect-ratio: 3/1;
     width: 100%;
     height: auto;
-    background-size:cover;
-    position:relative;
-}  
+    background-size: cover;
+    position: relative;
+}
 
 
-.trick-buttons{
+.trick-buttons {
     position: absolute;
     right: 5%;
     top: 10%;
     z-index: 1;
 }
-.trick-name{
+
+.trick-name {
     position: absolute;
     left: 40%;
-    top:50%;
+    top: 50%;
     z-index: 1;
 }
 
-.overlay{
+.overlay {
     position: absolute;
     height: 100%;
     width: 100%;
@@ -143,83 +146,82 @@ i{
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.044) 30%, rgba(0, 0, 0, 0.46) 75%, #000 100%);
 }
 
-.trick-media-card{
-    transition: transform .2s;    
+.trick-media-card {
+    transition: transform .2s;
 }
 
-.trick-media-card > img{
+.trick-media-card>img {
     height: 150px;
-    width:100%;    
+    width: 100%;
 }
 
-.trick-group{
+.trick-group {
     display: flex;
     flex-wrap: nowrap;
     justify-content: space-between;
 }
 
 /* SIGN PAGE */
-.form-container{
-    height:82vh;
+.form-container {
+    height: 82vh;
 }
 
-#already-account, #register{
-    visibility: hidden; 
-    display: none;   
+#already-account,
+#register {
+    visibility: hidden;
+    display: none;
 }
 
 /**************MEDIA ***********/
 
-@media only screen and (max-width:992px)
-{
+@media only screen and (max-width:992px) {
+
     /* HOMEPAGE */
     /* trick card */
-    .card-img-top
-    {
+    .card-img-top {
         height: auto;
     }
 
-     /* TrickPage bouton   */
-    #see-media
-    {
+    /* TrickPage bouton   */
+    #see-media {
         visibility: visible;
-        display: block;       
-    } 
+        display: block;
+    }
 
     /* GALLERY TRICKPAGE AND NAVBAR */
-    #gallery,#navmenutext
-    {
+    #gallery,
+    #navmenutext {
         visibility: hidden;
-        display: none;       
+        display: none;
     }
-    .navbar{
+
+    .navbar {
         position: fixed;
         bottom: 0;
         width: 100%;
         z-index: 2;
-        
+
     }
-    .navbar-nav
-    {
-        display:flex;
+
+    .navbar-nav {
+        display: flex;
         flex-direction: row;
         justify-content: space-around;
-        
+
     }
-    .navbar-nav>li>a>i
-    {
+
+    .navbar-nav>li>a>i {
         font-size: 2rem;
     }
-    #navicon
-    {
+
+    #navicon {
         visibility: visible;
-        display: block;        
+        display: block;
     }
-    
-    
+
+
     /* FOOTER */
-    footer 
-    {
+    footer {
         visibility: hidden;
         display: none;
     }
@@ -227,55 +229,50 @@ i{
 
 
 
-@media only screen and (max-width: 750px) 
-{  
+@media only screen and (max-width: 750px) {
+
     /* HOMEPAGE */
     /* trick card */
-    .card-img-top
-    {
+    .card-img-top {
         height: 250px;
     }
-    
-    h4
-    {
+
+    h4 {
         font-size: 1.5rem;
     }
 
-    i
-    {
+    i {
         margin-left: .5rem;
         margin-right: .5rem;
         font-size: 20px
     }
-    #already-account, #register
-    {
+
+    #already-account,
+    #register {
         visibility: visible;
         display: block;
     }
-    .form-container
-    {
-        height:100vh;
-    } 
-    .trick-group
-    {        
-        flex-wrap: wrap;        
+
+    .form-container {
+        height: 100vh;
+    }
+
+    .trick-group {
+        flex-wrap: wrap;
     }
 }
 
-@media only screen and (max-width:503px)
-{
-    
-    div.card-title h4
-    {
+@media only screen and (max-width:503px) {
+
+    div.card-title h4 {
         font-size: 2rem;
     }
 
-    div.modification >a>i
-    {
+    div.modification>a>i {
         margin-left: 2rem;
         margin-right: 2rem;
         font-size: 30px
     }
 
-      
+
 }

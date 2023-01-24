@@ -10,7 +10,7 @@
 
 		{# Prototype #}
 		<div
-			id="images" class="row" data-prototype="{{ include("trickpage/trickTemplate/_image.html.twig", {form: trickform.images.vars.prototype})|e(" html_attr") }}" data-index="{{ trickform.images|length > 0 ? trickform.images|last.vars.name + 1 : 0 }}">
+			id="images" class="row" data-prototype="{{ include("trickpage/trickTemplate/_image.html.twig", {form: trickform.images.vars.prototype})|e('html_attr') }}" data-index="{{ trickform.images|length > 0 ? trickform.images|last.vars.name + 1 : 0 }}">
 
 			{# Loop who create Video field #}
 			{% for image in trickform.images %}
@@ -33,7 +33,7 @@
 
 		{# Prototype #}
 		<div
-			id="videos" class="row" data-prototype="{{ include("trickpage/trickTemplate/_video.html.twig", {form: trickform.videos.vars.prototype})|e(" html_attr") }}" data-index="{{ trickform.videos|length > 0 ? trickform.videos|last.vars.name + 1 : 0 }}">
+			id="videos" class="row" data-prototype="{{ include("trickpage/trickTemplate/_video.html.twig", {form: trickform.videos.vars.prototype})|e('html_attr') }}" data-index="{{ trickform.videos|length > 0 ? trickform.videos|last.vars.name + 1 : 0 }}">
 
 			{# Loop who create Video field #}
 			{% for video in trickform.videos %}

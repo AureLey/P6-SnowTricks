@@ -20,7 +20,7 @@ class Group
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\OneToMany(mappedBy: 'groupTrick', targetEntity: Trick::class)]
+    #[ORM\OneToMany(mappedBy: 'tricks', targetEntity: Trick::class)]
     private Collection $tricks;
 
     public function __construct()

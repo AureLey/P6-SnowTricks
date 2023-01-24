@@ -6,15 +6,14 @@ namespace App\Entity;
 use App\Entity\Image;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 use App\Repository\TrickRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
 #[UniqueEntity(
-    fields: 'name',
+    fields: ['name', 'slug'],
     message: 'Trick already exist',
 )]
 class Trick
@@ -28,7 +27,7 @@ class Trick
     #[ORM\Column(length: 255, unique: true)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     private ?string $slug = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -36,10 +35,10 @@ class Trick
 
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
+    private \DateTime $createdAt;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $updatedAt = null;
+    private \DateTime $updatedAt;
 
     #[ORM\ManyToOne(inversedBy: 'groupTrick')]
     #[ORM\JoinColumn(nullable: false)]
@@ -109,24 +108,24 @@ class Trick
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): \DateTime
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    public function setCreatedAt(\DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeImmutable
+    public function getUpdatedAt(): \DateTime
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
+    public function setUpdatedAt(\DateTime $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 
@@ -254,6 +253,10 @@ class Trick
 
     public function getFeaturedImage(): ?string
     {
+        // if ($this->images->first() instanceof Image) {
+        //     return $this->images->first()->getName();
+        // }
+        //return null;
         return $this->featuredImage;
     }
 

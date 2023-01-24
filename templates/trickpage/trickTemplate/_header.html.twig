@@ -4,7 +4,7 @@
 	{% if trick is defined %}
 		<div class="default-img-trick" style="background-image:url('{{asset('images/'~trick.featuredImage)}}');">
 		{% else %}
-			<div class="default-img-trick" style="background-image:url('{{asset(" images/default-img.jpg")}}');">
+			<div class="default-img-trick" style="background-image:url({{asset('images/default-img.jpg')}});">
 			{% endif %}
 
 			<div class="overlay">

@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -51,7 +52,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __construct()
     {
-        $this->groupTrick = new ArrayCollection();
+        $this->tricks = new ArrayCollection();
         $this->comments = new ArrayCollection();
     }
 
@@ -140,7 +141,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->tricks;
     }
 
-    public function addGroupTrick(Trick $tricks): self
+    public function addTrick(Trick $tricks): self
     {
         if (!$this->tricks->contains($tricks)) {
             $this->tricks->add($tricks);
@@ -150,7 +151,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function removeGroupTrick(Trick $tricks): self
+    public function removeTrick(Trick $tricks): self
     {
         if ($this->tricks->removeElement($tricks)) {
             // set the owning side to null (unless already changed)
