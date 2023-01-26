@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Video;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use App\Form\EventListener\VideoFormatFieldListener;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -21,7 +22,7 @@ class VideoFormType extends AbstractType
                 'invalid_message' => 'URL is not correct',
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'www.youtube.com/embed/...',
+                    'placeholder' => 'www.youtube.com/...',
                     'pattern' => '^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$'
                 ]
             ]);

@@ -35,7 +35,7 @@ class TrickPageController extends AbstractController
         $user = $repo->findBy(['email' => 'admin@admin.com']);
         $user = $user[0];
 
-        $slugTrickName = new AsciiSlugger();
+        // $slugTrickName = new AsciiSlugger();
 
         $trick = new Trick();
         $form = $this->createForm(TrickFormType::class, $trick)->handleRequest($request);
@@ -46,20 +46,23 @@ class TrickPageController extends AbstractController
             //call private function to Set and Upload images collection to the trick
             $this->SetFilesCollection($form, $trick, $fileUploader);
 
-            //call Private function to choose and set FeaturedImage to the new trick
+            //call Private function to choose and set FeaturedImage ( and Upload if necessary )to the new trick
             $this->PickFeaturedImage($form, $trick, $fileUploader);
 
+            // $oldvideos = $form->get('videos')->getData();
+            // dump($oldvideos);
+            // $videos = $this->URLChanger($form->get('videos')->getData());
+            // dd($videos);
             $now = new \DateTime('now');
             $trick->setUser($this->getUser())
-                ->setCreatedAt($now)
-                ->setUpdatedAt($now)
+                // ->setCreatedAt($now)
+                // ->setUpdatedAt($now)
                 ->setUser($user);
             //      ->setUser($this->getUser()); 
-            $slugName = $slugTrickName->slug($trick->getName());
-            $trick->setSlug($slugName);
+            // $slugName = $slugTrickName->slug($trick->getName());
+            // $trick->setSlug($slugName);
 
             $entityManager->persist($trick);
-
             $entityManager->flush();
 
             return $this->redirectToRoute('trick_detail', ['slug' => $trick->getSlug()]);
@@ -84,8 +87,14 @@ class TrickPageController extends AbstractController
     #[Route('trick/delete/{slug}', name: 'delete_trick')]
     public function deleteTrick(Trick $trick, EntityManagerInterface $entityManager, FileUploader $fileUploader): Response
     {
-        $this->deleteTrickRemoveImages($trick->getImages(), $fileUploader);
-        $this->removeImage($trick->getFeaturedImage(), $fileUploader);
+        if ($trick->getImages() !== null) {
+            $this->deleteTrickRemoveImages($trick->getImages(), $fileUploader);
+        }
+
+        if ($trick->getFeaturedImage() !== null) {
+
+            $this->removeImage($trick->getFeaturedImage(), $fileUploader);
+        }
         $entityManager->remove($trick);
         $entityManager->flush();
         return $this->RedirectToRoute('homepage');
@@ -226,7 +235,14 @@ class TrickPageController extends AbstractController
         return $trick;
     }
 
-    private function removeImage($imageName, FileUploader $fileUploader)
+    /**
+     * removeImage
+     * get images folder hard path, and remove file by his name
+     * @param  string $imageName
+     * @param  FileUploader $fileUploader
+     * @return void
+     */
+    private function removeImage(string $imageName, FileUploader $fileUploader)
     {
         //Set images Folder
         $path = $this->getParameter('kernel.project_dir');
@@ -236,21 +252,41 @@ class TrickPageController extends AbstractController
 
     private function updateTrickRemovesImagesFileToFolder($oldCollection, $newImagesCollection, FileUploader $fileUploader)
     {
-        $intersectArray = array_intersect($oldCollection, $newImagesCollection->toArray());
+        //$intersectArray = array_intersect($oldCollection, $newImagesCollection->toArray());
 
         foreach ($oldCollection as $oldImage) {
-            if (!in_array($oldImage->getName(), $intersectArray)) {
+            if (!in_array($oldImage->getName(), $newImagesCollection->toArray())) {
 
                 $this->removeImage($oldImage, $fileUploader);
             }
         }
     }
 
-    private function deleteTrickRemoveImages($imagesCollection, FileUploader $fileUploader)
+    /**
+     * deleteTrickRemoveImages
+     * remove all images from the selected trick in delete_trick route 
+     *
+     * @param  ArrayCollection $imagesCollection
+     * @param  FileUploader $fileUploader
+     * @return void
+     */
+    private function deleteTrickRemoveImages(Collection $imagesCollection, FileUploader $fileUploader)
     {
         foreach ($imagesCollection as $image) {
 
             $this->removeImage($image, $fileUploader);
         }
+    }
+
+    private function URLChanger(ArrayCollection $videos): ArrayCollection
+    {
+        $pattern = '%^ (?:https?://)? (?:www\.)? (?: youtu\.be/ | youtube\.com (?: /embed/ | /v/ | /watch\?v= ) ) ([\w-]{10,12}) $%x';
+        foreach ($videos as $video) {
+            //matches[1] return code, 0 return full url
+            preg_match($pattern, $video->getName(), $matches);
+            $newUrl = 'https://www.youtube.com/embed/' . $matches[1];
+            $video->setName($newUrl);
+        }
+        return $videos;
     }
 }
