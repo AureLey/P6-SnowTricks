@@ -1,5 +1,6 @@
 <?php
-//src/Entity/User.php
+
+// src/Entity/User.php
 
 namespace App\Entity;
 

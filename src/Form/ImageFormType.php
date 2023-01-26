@@ -15,8 +15,6 @@ class ImageFormType extends AbstractType
     {
         $builder
             ->add('file', FileType::class, [
-                // 'mapped' => false,
-                // 'data_class' => null,          
                 'required' => false,
                 'constraints' => [
                     new File([
@@ -35,7 +33,7 @@ class ImageFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Image::class,
-            'label' => false //Remove Fieldset legend ( collection index)
+            'label' => false // Remove Fieldset legend ( collection index)
         ]);
     }
 }

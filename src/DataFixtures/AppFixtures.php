@@ -4,8 +4,6 @@
 
 namespace App\DataFixtures;
 
-
-
 use App\Entity\User;
 use App\Entity\Group;
 use App\Entity\Video;
@@ -20,6 +18,7 @@ class AppFixtures extends Fixture
 {
     public const ADMIN_USER_REFERENCE = 'admin-user';
 
+    private $hasher;
 
     public function __construct(UserPasswordHasherInterface $hasher)
     {

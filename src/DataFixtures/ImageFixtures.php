@@ -1,4 +1,5 @@
 <?php
+
 //src/DataFixtures/VideoFixtures.php
 
 namespace App\DataFixtures;
@@ -13,7 +14,7 @@ class ImageFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
-        //Picture
+        // Picture
         $pictures = [
 
             "50-50" => ["50-50.jpg"],

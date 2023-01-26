@@ -1,5 +1,6 @@
 <?php
-//src/Entity/Comment.php
+
+// src/Entity/Comment.php
 
 namespace App\Entity;
 
@@ -46,12 +47,12 @@ class Comment
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    public function setCreatedAt(\DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
 

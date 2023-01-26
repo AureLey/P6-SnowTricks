@@ -1,4 +1,5 @@
 <?php
+
 //src/Entity/Image.php
 
 namespace App\Entity;
@@ -22,8 +23,6 @@ class Image
     #[ORM\JoinColumn(name: 'trick_id', referencedColumnName: 'id')]
     private ?Trick $trick;
 
-    // #[ORM\Column(type: 'string', length: 255)]
-    // private ?string $imageFilename;
 
     /**
      * @var UploadedFile
@@ -59,20 +58,6 @@ class Image
 
         return $this;
     }
-
-    // public function getImageFilename(): string
-    // {
-    //     return $this->imageFilename;
-    // }
-
-    // public function setImageFilename($imageFilename): self
-    // {
-    //     $this->imageFilename = $imageFilename;
-
-    //     return $this;
-    // }
-
-
 
     /**
      * Get the value of file

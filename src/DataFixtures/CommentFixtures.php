@@ -1,8 +1,8 @@
 <?php
+
 //src/DataFixtures/CommentFixtures.php
 
 namespace App\DataFixtures;
-
 
 use App\Entity\User;
 use App\Entity\Trick;
@@ -15,7 +15,7 @@ class CommentFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
-        //Picture
+        // Picture
         $tricks = [
             "50-50", "boardslide", "Lipslide", "Back Flip", "Front Flip",
             "Wildcat", "Tamedog", "Backside Misty", "Beef Carpaccio", "Beef Curtains",
@@ -23,9 +23,8 @@ class CommentFixtures extends Fixture implements DependentFixtureInterface
         ];
 
         foreach ($tricks as $value) {
-
             for ($j = 0; $j <= rand(1, 4); $j++) {
-                $now = new \DateTimeImmutable('now');
+                $now = new \DateTime('now');
                 $comment = new Comment();
                 $comment->setContent("Lorem ipsum, dolor sit amet consectetur adipisicing elit.");
                 $comment->setCreatedAt($now);

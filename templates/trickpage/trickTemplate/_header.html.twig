@@ -1,10 +1,10 @@
 <div
 	class="header-trick pt-5">
 	{# Test if Trick exist, if not put the default image on hero trick #}
-	{% if trick is defined %}
+	{% if trick.featuredImage is not null %}
 		<div class="default-img-trick" style="background-image:url('{{asset('images/'~trick.featuredImage)}}');">
 		{% else %}
-			<div class="default-img-trick" style="background-image:url({{asset('images/default-img.jpg')}});">
+			<div class="default-img-trick" style="background-image:url({{asset(defautlFeaturedImage)}});">
 			{% endif %}
 
 			<div class="overlay">

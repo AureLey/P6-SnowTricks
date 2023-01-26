@@ -17,7 +17,6 @@ class VideoFormType extends AbstractType
         $builder
             ->add('name', UrlType::class, [
                 'default_protocol' => 'https',
-                // 'help' =>'www.youtube.com/embed...',
                 'label' => 'URL video',
                 'invalid_message' => 'URL is not correct',
                 'attr' => [
@@ -32,7 +31,7 @@ class VideoFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Video::class,
-            'label' => false //Remove Fieldset legend ( collection index)
+            'label' => false // Remove Fieldset legend ( collection index)
         ]);
     }
 }

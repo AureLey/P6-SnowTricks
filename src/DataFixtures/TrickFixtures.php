@@ -4,8 +4,6 @@
 
 namespace App\DataFixtures;
 
-
-
 use App\Entity\User;
 use App\Entity\Group;
 use App\Entity\Video;
@@ -18,10 +16,9 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class TrickFixtures extends Fixture implements DependentFixtureInterface
 {
-
     public function load(ObjectManager $manager): void
     {
-        //Data Tricks Array,each trick get an array with property
+        // Data Tricks Array,each trick get an array with property
         $tricks = [
 
             "50-50" => [
@@ -142,10 +139,10 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface
             ],
         ];
 
-        //TRICK Creation
+        // TRICK Creation
 
         foreach ($tricks as $trickname => $trickproperty) {
-            $now = new \DateTimeImmutable('now');
+            $now = new \DateTime('now');
 
 
 

@@ -33,9 +33,9 @@ class TrickSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * setDateTimeTrick 
+     * setDateTimeTrick
      * Set both datetime in trick before Persit in DB
-     * 
+     *
      * @param  LifecycleEventArgs $args
      * @return void
      */
@@ -49,9 +49,6 @@ class TrickSubscriber implements EventSubscriberInterface
 
         $entity->setCreatedAt(new \DateTime());
         $entity->setUpdatedAt(new \DateTime());
-
-
-        // ... get the entity information and log it somehow
     }
 
     /**
@@ -92,7 +89,7 @@ class TrickSubscriber implements EventSubscriberInterface
 
     /**
      * reformatURLVideos
-     * Use Regex expression to get id's video from youtube then recreate a create URL with EMBED 
+     * Use Regex expression to get id's video from youtube then recreate a create URL with EMBED
      * @param  mixed $args
      * @return void
      */
@@ -106,7 +103,7 @@ class TrickSubscriber implements EventSubscriberInterface
 
         $pattern = '%^ (?:https?://)? (?:www\.)? (?: youtu\.be/ | youtube\.com (?: /embed/ | /v/ | /watch\?v= ) ) ([\w-]{10,12}) $%x';
         foreach ($entity->getVideos() as $video) {
-            //matches[1] return code, 0 return full url
+            // matches[1] return code, 0 return full url
 
             preg_match($pattern, $video->getName(), $matches);
             dump($matches);

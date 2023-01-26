@@ -41,8 +41,7 @@ class UserController extends AbstractController
     }
 
     #[Route('/', name: 'logout')]
-    public function logout(): Response
+    public function logout()
     {
-        
     }
 }

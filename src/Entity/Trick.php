@@ -1,5 +1,6 @@
 <?php
-//src/Entity/Trick.php
+
+// src/Entity/Trick.php
 
 namespace App\Entity;
 
@@ -18,7 +19,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 )]
 class Trick
 {
-
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     #[ORM\Column]
@@ -253,11 +253,11 @@ class Trick
 
     public function getFeaturedImage(): ?string
     {
-        // if ($this->images->first() instanceof Image) {
-        //     return $this->images->first()->getName();
-        // }
-        //return null;
-        return $this->featuredImage;
+        if ($this->featuredImage !== null) {
+            return $this->featuredImage;
+        }
+
+        return null;
     }
 
     public function setFeaturedImage(?string $featuredImage): self
