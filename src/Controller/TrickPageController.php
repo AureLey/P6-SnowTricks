@@ -24,6 +24,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class TrickPageController extends AbstractController
 {
     #[Route('/trick/new', name: 'new_trick')]
+    /**
+     * newTrick
+     * creation trick function
+     *
+     * @param  mixed $request
+     * @param  mixed $entityManager
+     * @param  mixed $repo
+     * @param  mixed $fileUploader
+     * @return Response
+     */
     public function newTrick(Request $request, EntityManagerInterface $entityManager, UserRepository $repo, FileUploader $fileUploader): Response
     {
         // CREATE USER
@@ -62,6 +72,12 @@ class TrickPageController extends AbstractController
     }
 
     #[Route('/trick/details/{slug}', name: 'trick_detail')]
+    /**
+     * showTrick
+     *
+     * @param  Trick $trick
+     * @return Response
+     */
     public function showTrick(Trick $trick): Response
     {
         return $this->render('trickpage/trickpage.html.twig', [
@@ -72,6 +88,14 @@ class TrickPageController extends AbstractController
 
 
     #[Route('trick/delete/{slug}', name: 'delete_trick')]
+    /**
+     * deleteTrick
+     *
+     * @param  mixed $trick
+     * @param  mixed $entityManager
+     * @param  mixed $fileUploader
+     * @return Response
+     */
     public function deleteTrick(Trick $trick, EntityManagerInterface $entityManager, FileUploader $fileUploader): Response
     {
         if ($trick->getImages() !== null) {
@@ -88,6 +112,17 @@ class TrickPageController extends AbstractController
 
 
     #[Route('/trick/update/{slug}', name: 'update_trick')]
+    /**
+     * updateTrick
+     *
+     * @param  mixed $trick
+     * @param  mixed $request
+     * @param  mixed $entityManager
+     * @param  mixed $repoUser
+     * @param  mixed $repoImage
+     * @param  mixed $fileUploader
+     * @return Response
+     */
     public function updateTrick(Trick $trick, Request $request, EntityManagerInterface $entityManager, UserRepository $repoUser, ImageRepository $repoImage, FileUploader $fileUploader): Response
     {
         // Set a var to compare if Featured change and then delete the file if needed
