@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of ...
+ * This file is part of Snowtricks
  *
  * (c)
  *
@@ -65,77 +65,148 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->tricks = new ArrayCollection();
         $this->comments = new ArrayCollection();
     }
-
+    
+    /**
+     * getId
+     *
+     * @return int
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
-
+    
+    /**
+     * getUsername
+     *
+     * @return string
+     */
     public function getUsername(): ?string
     {
         return $this->username;
     }
-
+    
+    /**
+     * setUsername
+     *
+     * @param  string $username
+     * @return self
+     */
     public function setUsername(string $username): self
     {
         $this->username = $username;
 
         return $this;
     }
-
+    
+    /**
+     * getEmail
+     *
+     * @return string
+     */
     public function getEmail(): ?string
     {
         return $this->email;
     }
-
+    
+    /**
+     * setEmail
+     *
+     * @param  string $email
+     * @return self
+     */
     public function setEmail(string $email): self
     {
         $this->email = $email;
 
         return $this;
     }
-
+    
+    /**
+     * getPassword
+     *
+     * @return string
+     */
     public function getPassword(): ?string
     {
         return $this->password;
     }
-
+    
+    /**
+     * setPassword
+     *
+     * @param  string $password
+     * @return self
+     */
     public function setPassword(string $password): self
     {
         $this->password = $password;
 
         return $this;
     }
-
+    
+    /**
+     * getPicturePath
+     *
+     * @return string
+     */
     public function getPicturePath(): ?string
     {
         return $this->picturePath;
     }
-
+    
+    /**
+     * setPicturePath
+     *
+     * @param  string $picturePath
+     * @return self
+     */
     public function setPicturePath(?string $picturePath): self
     {
         $this->picturePath = $picturePath;
 
         return $this;
     }
-
+    
+    /**
+     * getToken
+     *
+     * @return string
+     */
     public function getToken(): ?string
     {
         return $this->token;
     }
-
+    
+    /**
+     * setToken
+     *
+     * @param  string $token
+     * @return self
+     */
     public function setToken(?string $token): self
     {
         $this->token = $token;
 
         return $this;
     }
-
+    
+    /**
+     * getTokenValidation
+     *
+     * @return string
+     */
     public function getTokenValidation(): ?string
     {
         return $this->tokenValidation;
     }
-
+    
+    /**
+     * setTokenValidation
+     *
+     * @param  string $tokenValidation
+     * @return self
+     */
     public function setTokenValidation(?string $tokenValidation): self
     {
         $this->tokenValidation = $tokenValidation;
@@ -150,7 +221,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->tricks;
     }
-
+    
+    /**
+     * addTrick
+     *
+     * @param  Trick $tricks
+     * @return self
+     */
     public function addTrick(Trick $tricks): self
     {
         if (!$this->tricks->contains($tricks)) {
@@ -160,7 +237,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
+    
+    /**
+     * removeTrick
+     *
+     * @param  Trick $tricks
+     * @return self
+     */
     public function removeTrick(Trick $tricks): self
     {
         if ($this->tricks->removeElement($tricks)) {
@@ -180,7 +263,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->comments;
     }
-
+    
+    /**
+     * addComment
+     *
+     * @param  Comment $comment
+     * @return self
+     */
     public function addComment(Comment $comment): self
     {
         if (!$this->comments->contains($comment)) {
@@ -190,7 +279,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
+    
+    /**
+     * removeComment
+     *
+     * @param  Comment $comment
+     * @return self
+     */
     public function removeComment(Comment $comment): self
     {
         if ($this->comments->removeElement($comment)) {
@@ -224,7 +319,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
+    
+    /**
+     * getUserIdentifier
+     *
+     * @return string
+     */
     public function getUserIdentifier(): string
     {
         return $this->email;

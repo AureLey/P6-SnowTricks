@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of ...
+ * This file is part of Snowtricks
  *
  * (c)
  *
@@ -20,7 +20,12 @@ use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 
 class TrickSubscriber implements EventSubscriberInterface
-{
+{    
+    /**
+     * getSubscribedEvents
+     *
+     * @return array
+     */
     public function getSubscribedEvents(): array
     {
         return [
@@ -88,8 +93,8 @@ class TrickSubscriber implements EventSubscriberInterface
         }
 
         $slugTrickName = new AsciiSlugger();
-        $slugName = $slugTrickName->slug($entity->getName());
-        $entity->setSlug($slugName);
+        $slugName = $slugTrickName->slug($entity->getName());        
+        $entity->setSlug((string)$slugName);
     }
 
     /**
@@ -111,7 +116,7 @@ class TrickSubscriber implements EventSubscriberInterface
             // matches[1] return code, 0 return full url
 
             preg_match($pattern, $video->getName(), $matches);
-            dump($matches);
+
             $id = $matches[1] ?? ''; // condition necessary bug undefinied array Key
             $newUrl = 'https://www.youtube.com/embed/'.$id;
             $video->setName($newUrl);

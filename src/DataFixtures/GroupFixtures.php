@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of ...
+ * This file is part of Snowtricks
  *
  * (c)
  *
@@ -19,7 +19,13 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
 class GroupFixtures extends Fixture implements DependentFixtureInterface
-{
+{    
+    /**
+     * load
+     *
+     * @param  ObjectManager $manager
+     * @return void
+     */
     public function load(ObjectManager $manager): void
     {
         // GROUP CREATION
@@ -35,7 +41,12 @@ class GroupFixtures extends Fixture implements DependentFixtureInterface
 
         $manager->flush();
     }
-
+    
+    /**
+     * getDependencies
+     *
+     * @return void
+     */
     public function getDependencies()
     {
         return [

@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of ...
+ * This file is part of Snowtricks
  *
  * (c)
  *
@@ -20,7 +20,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HomepageController extends AbstractController
 {
-    #[Route('/', name: 'homepage')]
+    #[Route('/', name: 'homepage')]    
+    /**
+     * index
+     *
+     * @param  TrickRepository $repo
+     * @return Response
+     */
     public function index(TrickRepository $repo): Response
     {
         $tricks = $repo->findAll();

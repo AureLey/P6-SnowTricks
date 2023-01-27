@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of ...
+ * This file is part of Snowtricks
  *
  * (c)
  *
@@ -54,7 +54,7 @@ class FileUploader
     /**
      * removeFile,function who remove the file (image) from the images folder
      * FileSystem injected in FileUploader Class.
-     *
+     * @param string $pathFileName
      * @return void
      */
     public function removeFile(string $pathFileName)

@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of ...
+ * This file is part of Snowtricks
  *
  * (c)
  *
@@ -37,10 +37,10 @@ class TrickPageController extends AbstractController
      * newTrick
      * creation trick function.
      *
-     * @param mixed $request
-     * @param mixed $entityManager
-     * @param mixed $repo
-     * @param mixed $fileUploader
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param UserRepository $repo
+     * @param FileUploader $fileUploader
      */
     public function newTrick(Request $request, EntityManagerInterface $entityManager, UserRepository $repo, FileUploader $fileUploader): Response
     {
@@ -92,9 +92,9 @@ class TrickPageController extends AbstractController
     /**
      * deleteTrick.
      *
-     * @param mixed $trick
-     * @param mixed $entityManager
-     * @param mixed $fileUploader
+     * @param Trick $trick
+     * @param EntityManagerInterface $entityManager
+     * @param FileUploader $fileUploader
      */
     public function deleteTrick(Trick $trick, EntityManagerInterface $entityManager, FileUploader $fileUploader): Response
     {
@@ -115,12 +115,12 @@ class TrickPageController extends AbstractController
     /**
      * updateTrick.
      *
-     * @param mixed $trick
-     * @param mixed $request
-     * @param mixed $entityManager
-     * @param mixed $repoUser
-     * @param mixed $repoImage
-     * @param mixed $fileUploader
+     * @param Trick $trick
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param UserRepository $repoUser
+     * @param ImageRepository $repoImage
+     * @param FileUploader $fileUploader
      */
     public function updateTrick(Trick $trick, Request $request, EntityManagerInterface $entityManager, UserRepository $repoUser, ImageRepository $repoImage, FileUploader $fileUploader): Response
     {

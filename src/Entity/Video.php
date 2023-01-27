@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of ...
+ * This file is part of Snowtricks
  *
  * (c)
  *
@@ -30,29 +30,56 @@ class Video
     #[ORM\ManyToOne(inversedBy: 'videos')]
     #[ORM\JoinColumn(name: 'trick_id', referencedColumnName: 'id')]
     private ?Trick $trick;
-
+    
+    /**
+     * getId
+     *
+     * @return int
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
-
+    
+    /**
+     * getName
+     *
+     * @return string
+     */
     public function getName(): ?string
     {
         return $this->name;
     }
-
+    
+    /**
+     * setName
+     *
+     * @param  string $name
+     * @return self
+     */
     public function setName(string $name): self
     {
         $this->name = $name;
 
         return $this;
     }
-
+    
+    /**
+     * getTrick
+     *
+     * @return Trick
+     */
     public function getTrick(): Trick
     {
         return $this->trick;
     }
-
+    
+    /**
+     * setTrick
+     *
+     * @param  Trick $trick
+     * @return self
+     */
     public function setTrick(?Trick $trick): self
     {
         $this->trick = $trick;

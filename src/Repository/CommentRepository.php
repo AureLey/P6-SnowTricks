@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of ...
+ * This file is part of Snowtricks
  *
  * (c)
  *
@@ -31,7 +31,14 @@ class CommentRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Comment::class);
     }
-
+    
+    /**
+     * save
+     *
+     * @param  Comment $entity
+     * @param  bool $flush
+     * @return void
+     */
     public function save(Comment $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
@@ -40,7 +47,14 @@ class CommentRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-
+    
+    /**
+     * remove
+     *
+     * @param  Comment $entity
+     * @param  bool $flush
+     * @return void
+     */
     public function remove(Comment $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);

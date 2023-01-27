@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of ...
+ * This file is part of Snowtricks
  *
  * (c)
  *
@@ -31,7 +31,14 @@ class ImageRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Image::class);
     }
-
+    
+    /**
+     * save
+     *
+     * @param  Image $entity
+     * @param  bool $flush
+     * @return void
+     */
     public function save(Image $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
@@ -40,7 +47,14 @@ class ImageRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-
+    
+    /**
+     * remove
+     *
+     * @param  Image $entity
+     * @param  bool $flush
+     * @return void
+     */
     public function remove(Image $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);

@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of ...
+ * This file is part of Snowtricks
  *
  * (c)
  *
@@ -18,6 +18,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+
+/**
+ * Group
+ */
 #[ORM\Entity(repositoryClass: GroupRepository::class)]
 #[ORM\Table(name: '`group`')]
 class Group
@@ -37,17 +41,33 @@ class Group
     {
         $this->tricks = new ArrayCollection();
     }
-
+    
+    /**
+     * getId
+     *
+     * @return int
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
-
+    
+    /**
+     * getName
+     *
+     * @return string
+     */
     public function getName(): ?string
     {
         return $this->name;
     }
-
+    
+    /**
+     * setName
+     *
+     * @param  string $name
+     * @return self
+     */
     public function setName(string $name): self
     {
         $this->name = $name;
@@ -62,7 +82,13 @@ class Group
     {
         return $this->tricks;
     }
-
+    
+    /**
+     * addTrick
+     *
+     * @param  Trick $trick
+     * @return self
+     */
     public function addTrick(Trick $trick): self
     {
         if (!$this->tricks->contains($trick)) {
@@ -72,7 +98,13 @@ class Group
 
         return $this;
     }
-
+    
+    /**
+     * removeTrick
+     *
+     * @param  Trick $trick
+     * @return self
+     */
     public function removeTrick(Trick $trick): self
     {
         if ($this->tricks->removeElement($trick)) {
@@ -84,7 +116,12 @@ class Group
 
         return $this;
     }
-
+    
+    /**
+     * __toString
+     *
+     * @return string
+     */
     public function __toString(): string
     {
         return $this->name;

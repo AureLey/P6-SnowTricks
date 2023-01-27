@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of ...
+ * This file is part of Snowtricks
  *
  * (c)
  *
@@ -31,7 +31,14 @@ class TrickRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Trick::class);
     }
-
+    
+    /**
+     * save
+     *
+     * @param  Trick $entity
+     * @param  bool $flush
+     * @return void
+     */
     public function save(Trick $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
@@ -40,7 +47,14 @@ class TrickRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-
+    
+    /**
+     * remove
+     *
+     * @param  Trick $entity
+     * @param  bool $flush
+     * @return void
+     */
     public function remove(Trick $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);

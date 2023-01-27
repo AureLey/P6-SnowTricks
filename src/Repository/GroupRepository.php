@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of ...
+ * This file is part of Snowtricks
  *
  * (c)
  *
@@ -31,7 +31,14 @@ class GroupRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Group::class);
     }
-
+    
+    /**
+     * save
+     *
+     * @param  Group $entity
+     * @param  bool $flush
+     * @return void
+     */
     public function save(Group $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
@@ -40,7 +47,14 @@ class GroupRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-
+    
+    /**
+     * remove
+     *
+     * @param  Group $entity
+     * @param  bool $flush
+     * @return void
+     */
     public function remove(Group $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);

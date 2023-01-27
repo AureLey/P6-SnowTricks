@@ -1,7 +1,7 @@
 <?php
 
 $fileHeaderComment = <<<COMMENT
-This file is part of ...
+This file is part of Snowtricks
 
 (c)
 

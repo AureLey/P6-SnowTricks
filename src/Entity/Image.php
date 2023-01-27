@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of ...
+ * This file is part of Snowtricks
  *
  * (c)
  *
@@ -36,29 +36,56 @@ class Image
      * @var UploadedFile
      */
     protected $file;
-
+    
+    /**
+     * getId
+     *
+     * @return int
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
-
+    
+    /**
+     * getName
+     *
+     * @return string
+     */
     public function getName(): ?string
     {
         return $this->name;
     }
-
+    
+    /**
+     * setName
+     *
+     * @param  string $name
+     * @return self
+     */
     public function setName(string $name): self
     {
         $this->name = $name;
 
         return $this;
     }
-
+    
+    /**
+     * getTrick
+     *
+     * @return Trick
+     */
     public function getTrick(): Trick
     {
         return $this->trick;
     }
-
+    
+    /**
+     * setTrick
+     *
+     * @param  Trick $trick
+     * @return self
+     */
     public function setTrick(?Trick $trick): self
     {
         $this->trick = $trick;
@@ -87,7 +114,12 @@ class Image
 
         return $this;
     }
-
+    
+    /**
+     * __toString
+     *
+     * @return void
+     */
     public function __toString()
     {
         return $this->getName();
