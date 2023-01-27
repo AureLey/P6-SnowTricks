@@ -1,15 +1,23 @@
 <?php
 
-// src/Entity/Trick.php
+declare(strict_types=1);
+
+/*
+ * This file is part of ...
+ *
+ * (c)
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace App\Entity;
 
-use App\Entity\Image;
+use App\Repository\TrickRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\TrickRepository;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
@@ -32,7 +40,6 @@ class Trick
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
-
 
     #[ORM\Column]
     private \DateTime $createdAt;
@@ -253,7 +260,7 @@ class Trick
 
     public function getFeaturedImage(): ?string
     {
-        if ($this->featuredImage !== null) {
+        if (null !== $this->featuredImage) {
             return $this->featuredImage;
         }
 

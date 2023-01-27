@@ -1,17 +1,21 @@
 <?php
 
-//src/DataFixtures/AppFixtures.php
+declare(strict_types=1);
+
+/*
+ * This file is part of ...
+ *
+ * (c)
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace App\DataFixtures;
 
 use App\Entity\User;
-use App\Entity\Group;
-use App\Entity\Video;
-use App\Entity\Image;
-use App\Entity\Trick;
-use App\Entity\Comment;
-use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
@@ -33,7 +37,7 @@ class AppFixtures extends Fixture
         $user = new User();
         $user->setUsername('admin');
         $user->setEmail('admin@admin.com');
-        $user->setRoles(["ROLE_ADMIN"]);
+        $user->setRoles(['ROLE_ADMIN']);
         $password = $this->hasher->hashPassword($user, $admin_password);
         $user->setPassword($password);
 

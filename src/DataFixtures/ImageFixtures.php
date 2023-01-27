@@ -1,14 +1,22 @@
 <?php
 
-//src/DataFixtures/VideoFixtures.php
+declare(strict_types=1);
+
+/*
+ * This file is part of ...
+ *
+ * (c)
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace App\DataFixtures;
 
 use App\Entity\Image;
-use App\Entity\Trick;
-use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Doctrine\Persistence\ObjectManager;
 
 class ImageFixtures extends Fixture implements DependentFixtureInterface
 {
@@ -16,38 +24,36 @@ class ImageFixtures extends Fixture implements DependentFixtureInterface
     {
         // Picture
         $pictures = [
+            '50-50' => ['50-50.jpg'],
 
-            "50-50" => ["50-50.jpg"],
+            'boardslide' => ['boardslide.jpg'],
 
-            "boardslide" => ["boardslide.jpg"],
+            'Lipslide' => ['lipslide.jpg'],
 
-            "Lipslide" => ["lipslide.jpg"],
+            'Back Flip' => ['backflip.jpg'],
 
-            "Back Flip" => ["backflip.jpg"],
+            'Front Flip' => ['frontflip.jpg'],
 
-            "Front Flip" => ["frontflip.jpg"],
+            'Wildcat' => ['wildcat.jpg'],
 
-            "Wildcat" => ["wildcat.jpg"],
+            'Tamedog' => ['tamedog.jpg'],
 
-            "Tamedog" => ["tamedog.jpg"],
+            'Backside Misty' => ['misty.jpg'],
 
-            "Backside Misty" => ["misty.jpg"],
+            'Beef Carpaccio' => ['beefcarpaccio.jpg'],
 
-            "Beef Carpaccio" => ["beefcarpaccio.jpg"],
+            'Beef Curtains' => ['beefcurtains.jpg'],
 
-            "Beef Curtains" => ["beefcurtains.jpg"],
+            'Bloody Dracula' => ['bloodydracula.jpg'],
 
-            "Bloody Dracula" => ["bloodydracula.jpg"],
+            'Drunk Driver' => ['drunk.jpg'],
 
-            "Drunk Driver" => ["drunk.jpg"],
-
-            "Japan Air" => ["japan.jpg"],
+            'Japan Air' => ['japan.jpg'],
         ];
         foreach ($pictures as $trickname => $image_path) {
             $image = new Image();
             $image->setName($image_path[0]);
             $image->setTrick($this->getReference($trickname));
-
 
             $manager->persist($image);
         }

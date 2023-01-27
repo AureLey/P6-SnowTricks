@@ -1,13 +1,22 @@
 <?php
 
-// src/Service/FileUploader.php
+declare(strict_types=1);
+
+/*
+ * This file is part of ...
+ *
+ * (c)
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace App\Service;
 
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
-use Symfony\Component\Filesystem\Filesystem;
 
 class FileUploader
 {
@@ -24,9 +33,9 @@ class FileUploader
 
     public function upload(UploadedFile $file)
     {
-        $originalFilename = \pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        $originalFilename = pathinfo($file->getClientOriginalName(), \PATHINFO_FILENAME);
         $safeFilename = $this->slugger->slug($originalFilename);
-        $fileName = $safeFilename . '-' . uniqid() . '.' . $file->guessExtension();
+        $fileName = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
 
         try {
             $file->move($this->getTargetDirectory(), $fileName);
@@ -42,12 +51,10 @@ class FileUploader
         return $this->targetDirectory;
     }
 
-
     /**
      * removeFile,function who remove the file (image) from the images folder
-     * FileSystem injected in FileUploader Class
+     * FileSystem injected in FileUploader Class.
      *
-     * @param  string $fileName
      * @return void
      */
     public function removeFile(string $pathFileName)

@@ -1,22 +1,28 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of ...
+ *
+ * (c)
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Form;
 
 use App\Entity\Group;
 use App\Entity\Trick;
-use App\Form\ImageFormType;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\All;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Validator\Constraints\File;
-use App\Form\EventListener\VideoFormatFieldListener;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 
 class TrickFormType extends AbstractType
 {
@@ -31,19 +37,18 @@ class TrickFormType extends AbstractType
             ])
             ->add('videos', CollectionType::class, [
                 'label' => false,
-                'entry_type'    => VideoFormType::class,
-                'allow_add'     => true,
+                'entry_type' => VideoFormType::class,
+                'allow_add' => true,
                 'allow_delete' => true,
-                'by_reference'  => false,
+                'by_reference' => false,
             ])
             ->add('images', CollectionType::class, [
                 'label' => false,
-                'entry_type'    => ImageFormType::class,
-                'allow_add'     => true,
+                'entry_type' => ImageFormType::class,
+                'allow_add' => true,
                 'allow_delete' => true,
-                'by_reference'  => false
+                'by_reference' => false,
             ])
-
 
             ->add('featuredImage', FileType::class, [
                 'label' => 'Featured Image',
@@ -57,7 +62,7 @@ class TrickFormType extends AbstractType
                             'image/png',
                         ],
                         'mimeTypesMessage' => 'Please upload a valid image',
-                    ])
+                    ]),
                 ],
             ]);
     }
@@ -65,8 +70,7 @@ class TrickFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Trick::class
-
+            'data_class' => Trick::class,
         ]);
     }
 }

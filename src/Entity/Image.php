@@ -1,11 +1,20 @@
 <?php
 
-//src/Entity/Image.php
+declare(strict_types=1);
+
+/*
+ * This file is part of ...
+ *
+ * (c)
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ImageRepository;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 #[ORM\Entity(repositoryClass: ImageRepository::class)]
@@ -23,12 +32,10 @@ class Image
     #[ORM\JoinColumn(name: 'trick_id', referencedColumnName: 'id')]
     private ?Trick $trick;
 
-
     /**
      * @var UploadedFile
      */
     protected $file;
-
 
     public function getId(): ?int
     {
@@ -60,9 +67,9 @@ class Image
     }
 
     /**
-     * Get the value of file
+     * Get the value of file.
      *
-     * @return  UploadedFile
+     * @return UploadedFile
      */
     public function getFile()
     {
@@ -70,11 +77,9 @@ class Image
     }
 
     /**
-     * Set the value of file
+     * Set the value of file.
      *
-     * @param  UploadedFile  $file
-     *
-     * @return  self
+     * @return self
      */
     public function setFile(UploadedFile $file)
     {

@@ -1,24 +1,29 @@
 <?php
 
-//src/DataFixtures/GroupFixtures.php
+declare(strict_types=1);
+
+/*
+ * This file is part of ...
+ *
+ * (c)
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace App\DataFixtures;
 
-use App\Entity\User;
 use App\Entity\Group;
-use App\Entity\Video;
-use App\Entity\Trick;
-use App\Entity\Comment;
-use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Doctrine\Persistence\ObjectManager;
 
 class GroupFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
         // GROUP CREATION
-        $group = ["Flip", "Slide", "Grab"];
+        $group = ['Flip', 'Slide', 'Grab'];
 
         foreach ($group as $value) {
             $groupItem = new Group();
@@ -30,6 +35,7 @@ class GroupFixtures extends Fixture implements DependentFixtureInterface
 
         $manager->flush();
     }
+
     public function getDependencies()
     {
         return [
