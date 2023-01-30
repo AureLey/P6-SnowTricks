@@ -31,13 +31,9 @@ class TrickRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Trick::class);
     }
-    
+
     /**
-     * save
-     *
-     * @param  Trick $entity
-     * @param  bool $flush
-     * @return void
+     * save.
      */
     public function save(Trick $entity, bool $flush = false): void
     {
@@ -47,13 +43,9 @@ class TrickRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-    
+
     /**
-     * remove
-     *
-     * @param  Trick $entity
-     * @param  bool $flush
-     * @return void
+     * remove.
      */
     public function remove(Trick $entity, bool $flush = false): void
     {

@@ -65,9 +65,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->tricks = new ArrayCollection();
         $this->comments = new ArrayCollection();
     }
-    
+
     /**
-     * getId
+     * getId.
      *
      * @return int
      */
@@ -75,9 +75,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->id;
     }
-    
+
     /**
-     * getUsername
+     * getUsername.
      *
      * @return string
      */
@@ -85,12 +85,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->username;
     }
-    
+
     /**
-     * setUsername
-     *
-     * @param  string $username
-     * @return self
+     * setUsername.
      */
     public function setUsername(string $username): self
     {
@@ -98,9 +95,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-    
+
     /**
-     * getEmail
+     * getEmail.
      *
      * @return string
      */
@@ -108,12 +105,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->email;
     }
-    
+
     /**
-     * setEmail
-     *
-     * @param  string $email
-     * @return self
+     * setEmail.
      */
     public function setEmail(string $email): self
     {
@@ -121,9 +115,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-    
+
     /**
-     * getPassword
+     * getPassword.
      *
      * @return string
      */
@@ -131,12 +125,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->password;
     }
-    
+
     /**
-     * setPassword
-     *
-     * @param  string $password
-     * @return self
+     * setPassword.
      */
     public function setPassword(string $password): self
     {
@@ -144,9 +135,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-    
+
     /**
-     * getPicturePath
+     * getPicturePath.
      *
      * @return string
      */
@@ -154,12 +145,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->picturePath;
     }
-    
+
     /**
-     * setPicturePath
+     * setPicturePath.
      *
-     * @param  string $picturePath
-     * @return self
+     * @param string $picturePath
      */
     public function setPicturePath(?string $picturePath): self
     {
@@ -167,9 +157,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-    
+
     /**
-     * getToken
+     * getToken.
      *
      * @return string
      */
@@ -177,12 +167,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->token;
     }
-    
+
     /**
-     * setToken
+     * setToken.
      *
-     * @param  string $token
-     * @return self
+     * @param string $token
      */
     public function setToken(?string $token): self
     {
@@ -190,9 +179,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-    
+
     /**
-     * getTokenValidation
+     * getTokenValidation.
      *
      * @return string
      */
@@ -200,12 +189,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->tokenValidation;
     }
-    
+
     /**
-     * setTokenValidation
+     * setTokenValidation.
      *
-     * @param  string $tokenValidation
-     * @return self
+     * @param string $tokenValidation
      */
     public function setTokenValidation(?string $tokenValidation): self
     {
@@ -221,12 +209,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->tricks;
     }
-    
+
     /**
-     * addTrick
-     *
-     * @param  Trick $tricks
-     * @return self
+     * addTrick.
      */
     public function addTrick(Trick $tricks): self
     {
@@ -237,12 +222,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-    
+
     /**
-     * removeTrick
-     *
-     * @param  Trick $tricks
-     * @return self
+     * removeTrick.
      */
     public function removeTrick(Trick $tricks): self
     {
@@ -263,12 +245,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->comments;
     }
-    
+
     /**
-     * addComment
-     *
-     * @param  Comment $comment
-     * @return self
+     * addComment.
      */
     public function addComment(Comment $comment): self
     {
@@ -279,12 +258,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-    
+
     /**
-     * removeComment
-     *
-     * @param  Comment $comment
-     * @return self
+     * removeComment.
      */
     public function removeComment(Comment $comment): self
     {
@@ -319,11 +295,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-    
+
     /**
-     * getUserIdentifier
-     *
-     * @return string
+     * getUserIdentifier.
      */
     public function getUserIdentifier(): string
     {

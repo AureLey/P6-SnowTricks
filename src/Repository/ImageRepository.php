@@ -31,13 +31,9 @@ class ImageRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Image::class);
     }
-    
+
     /**
-     * save
-     *
-     * @param  Image $entity
-     * @param  bool $flush
-     * @return void
+     * save.
      */
     public function save(Image $entity, bool $flush = false): void
     {
@@ -47,13 +43,9 @@ class ImageRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-    
+
     /**
-     * remove
-     *
-     * @param  Image $entity
-     * @param  bool $flush
-     * @return void
+     * remove.
      */
     public function remove(Image $entity, bool $flush = false): void
     {

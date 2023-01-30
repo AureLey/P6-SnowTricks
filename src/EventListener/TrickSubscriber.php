@@ -20,11 +20,9 @@ use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 
 class TrickSubscriber implements EventSubscriberInterface
-{    
+{
     /**
-     * getSubscribedEvents
-     *
-     * @return array
+     * getSubscribedEvents.
      */
     public function getSubscribedEvents(): array
     {
@@ -93,8 +91,8 @@ class TrickSubscriber implements EventSubscriberInterface
         }
 
         $slugTrickName = new AsciiSlugger();
-        $slugName = $slugTrickName->slug($entity->getName());        
-        $entity->setSlug((string)$slugName);
+        $slugName = $slugTrickName->slug($entity->getName());
+        $entity->setSlug((string) $slugName);
     }
 
     /**

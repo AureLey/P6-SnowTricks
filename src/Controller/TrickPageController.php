@@ -36,11 +36,6 @@ class TrickPageController extends AbstractController
     /**
      * newTrick
      * creation trick function.
-     *
-     * @param Request $request
-     * @param EntityManagerInterface $entityManager
-     * @param UserRepository $repo
-     * @param FileUploader $fileUploader
      */
     public function newTrick(Request $request, EntityManagerInterface $entityManager, UserRepository $repo, FileUploader $fileUploader): Response
     {
@@ -91,10 +86,6 @@ class TrickPageController extends AbstractController
     #[Route('trick/delete/{slug}', name: 'delete_trick')]
     /**
      * deleteTrick.
-     *
-     * @param Trick $trick
-     * @param EntityManagerInterface $entityManager
-     * @param FileUploader $fileUploader
      */
     public function deleteTrick(Trick $trick, EntityManagerInterface $entityManager, FileUploader $fileUploader): Response
     {
@@ -114,13 +105,6 @@ class TrickPageController extends AbstractController
     #[Route('/trick/update/{slug}', name: 'update_trick')]
     /**
      * updateTrick.
-     *
-     * @param Trick $trick
-     * @param Request $request
-     * @param EntityManagerInterface $entityManager
-     * @param UserRepository $repoUser
-     * @param ImageRepository $repoImage
-     * @param FileUploader $fileUploader
      */
     public function updateTrick(Trick $trick, Request $request, EntityManagerInterface $entityManager, UserRepository $repoUser, ImageRepository $repoImage, FileUploader $fileUploader): Response
     {

@@ -19,7 +19,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
 /**
- * Comment
+ * Comment.
  */
 class Comment
 {
@@ -41,9 +41,9 @@ class Comment
     #[ORM\ManyToOne(inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]
     private ?user $commentUser = null;
-    
+
     /**
-     * getId
+     * getId.
      *
      * @return int
      */
@@ -51,9 +51,9 @@ class Comment
     {
         return $this->id;
     }
-    
+
     /**
-     * getContent
+     * getContent.
      *
      * @return string
      */
@@ -61,12 +61,9 @@ class Comment
     {
         return $this->content;
     }
-    
+
     /**
-     * setContent
-     *
-     * @param  string $content
-     * @return self
+     * setContent.
      */
     public function setContent(string $content): self
     {
@@ -74,9 +71,9 @@ class Comment
 
         return $this;
     }
-    
+
     /**
-     * getCreatedAt
+     * getCreatedAt.
      *
      * @return DateTime
      */
@@ -84,12 +81,11 @@ class Comment
     {
         return $this->createdAt;
     }
-    
+
     /**
-     * setCreatedAt
+     * setCreatedAt.
      *
-     * @param  DateTime $createdAt
-     * @return self
+     * @param DateTime $createdAt
      */
     public function setCreatedAt(\DateTime $createdAt): self
     {
@@ -97,9 +93,9 @@ class Comment
 
         return $this;
     }
-    
+
     /**
-     * getCommentTrick
+     * getCommentTrick.
      *
      * @return trick
      */
@@ -107,12 +103,11 @@ class Comment
     {
         return $this->commentTrick;
     }
-    
+
     /**
-     * setCommentTrick
+     * setCommentTrick.
      *
-     * @param  Trick $commentTrick
-     * @return self
+     * @param Trick $commentTrick
      */
     public function setCommentTrick(?trick $commentTrick): self
     {
@@ -120,9 +115,9 @@ class Comment
 
         return $this;
     }
-    
+
     /**
-     * getCommentUser
+     * getCommentUser.
      *
      * @return user
      */
@@ -130,12 +125,11 @@ class Comment
     {
         return $this->commentUser;
     }
-    
+
     /**
-     * setCommentUser
+     * setCommentUser.
      *
-     * @param  User $commentUser
-     * @return self
+     * @param User $commentUser
      */
     public function setCommentUser(?user $commentUser): self
     {

@@ -31,13 +31,9 @@ class CommentRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Comment::class);
     }
-    
+
     /**
-     * save
-     *
-     * @param  Comment $entity
-     * @param  bool $flush
-     * @return void
+     * save.
      */
     public function save(Comment $entity, bool $flush = false): void
     {
@@ -47,13 +43,9 @@ class CommentRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-    
+
     /**
-     * remove
-     *
-     * @param  Comment $entity
-     * @param  bool $flush
-     * @return void
+     * remove.
      */
     public function remove(Comment $entity, bool $flush = false): void
     {

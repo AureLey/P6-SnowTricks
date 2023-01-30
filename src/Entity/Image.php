@@ -36,9 +36,9 @@ class Image
      * @var UploadedFile
      */
     protected $file;
-    
+
     /**
-     * getId
+     * getId.
      *
      * @return int
      */
@@ -46,9 +46,9 @@ class Image
     {
         return $this->id;
     }
-    
+
     /**
-     * getName
+     * getName.
      *
      * @return string
      */
@@ -56,12 +56,9 @@ class Image
     {
         return $this->name;
     }
-    
+
     /**
-     * setName
-     *
-     * @param  string $name
-     * @return self
+     * setName.
      */
     public function setName(string $name): self
     {
@@ -69,22 +66,19 @@ class Image
 
         return $this;
     }
-    
+
     /**
-     * getTrick
-     *
-     * @return Trick
+     * getTrick.
      */
     public function getTrick(): Trick
     {
         return $this->trick;
     }
-    
+
     /**
-     * setTrick
+     * setTrick.
      *
-     * @param  Trick $trick
-     * @return self
+     * @param Trick $trick
      */
     public function setTrick(?Trick $trick): self
     {
@@ -114,9 +108,9 @@ class Image
 
         return $this;
     }
-    
+
     /**
-     * __toString
+     * __toString.
      *
      * @return void
      */

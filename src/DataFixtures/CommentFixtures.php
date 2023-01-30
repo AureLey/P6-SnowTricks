@@ -19,12 +19,9 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
 class CommentFixtures extends Fixture implements DependentFixtureInterface
-{    
+{
     /**
-     * load
-     *
-     * @param  ObjectManager $manager
-     * @return void
+     * load.
      */
     public function load(ObjectManager $manager): void
     {
@@ -50,9 +47,9 @@ class CommentFixtures extends Fixture implements DependentFixtureInterface
 
         $manager->flush();
     }
-    
+
     /**
-     * getDependencies
+     * getDependencies.
      *
      * @return void
      */

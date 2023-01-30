@@ -30,9 +30,9 @@ class Video
     #[ORM\ManyToOne(inversedBy: 'videos')]
     #[ORM\JoinColumn(name: 'trick_id', referencedColumnName: 'id')]
     private ?Trick $trick;
-    
+
     /**
-     * getId
+     * getId.
      *
      * @return int
      */
@@ -40,9 +40,9 @@ class Video
     {
         return $this->id;
     }
-    
+
     /**
-     * getName
+     * getName.
      *
      * @return string
      */
@@ -50,12 +50,9 @@ class Video
     {
         return $this->name;
     }
-    
+
     /**
-     * setName
-     *
-     * @param  string $name
-     * @return self
+     * setName.
      */
     public function setName(string $name): self
     {
@@ -63,22 +60,19 @@ class Video
 
         return $this;
     }
-    
+
     /**
-     * getTrick
-     *
-     * @return Trick
+     * getTrick.
      */
     public function getTrick(): Trick
     {
         return $this->trick;
     }
-    
+
     /**
-     * setTrick
+     * setTrick.
      *
-     * @param  Trick $trick
-     * @return self
+     * @param Trick $trick
      */
     public function setTrick(?Trick $trick): self
     {

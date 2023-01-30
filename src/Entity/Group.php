@@ -18,9 +18,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-
 /**
- * Group
+ * Group.
  */
 #[ORM\Entity(repositoryClass: GroupRepository::class)]
 #[ORM\Table(name: '`group`')]
@@ -41,9 +40,9 @@ class Group
     {
         $this->tricks = new ArrayCollection();
     }
-    
+
     /**
-     * getId
+     * getId.
      *
      * @return int
      */
@@ -51,9 +50,9 @@ class Group
     {
         return $this->id;
     }
-    
+
     /**
-     * getName
+     * getName.
      *
      * @return string
      */
@@ -61,12 +60,9 @@ class Group
     {
         return $this->name;
     }
-    
+
     /**
-     * setName
-     *
-     * @param  string $name
-     * @return self
+     * setName.
      */
     public function setName(string $name): self
     {
@@ -82,12 +78,9 @@ class Group
     {
         return $this->tricks;
     }
-    
+
     /**
-     * addTrick
-     *
-     * @param  Trick $trick
-     * @return self
+     * addTrick.
      */
     public function addTrick(Trick $trick): self
     {
@@ -98,12 +91,9 @@ class Group
 
         return $this;
     }
-    
+
     /**
-     * removeTrick
-     *
-     * @param  Trick $trick
-     * @return self
+     * removeTrick.
      */
     public function removeTrick(Trick $trick): self
     {
@@ -116,11 +106,9 @@ class Group
 
         return $this;
     }
-    
+
     /**
-     * __toString
-     *
-     * @return string
+     * __toString.
      */
     public function __toString(): string
     {

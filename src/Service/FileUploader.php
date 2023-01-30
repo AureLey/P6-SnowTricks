@@ -54,7 +54,7 @@ class FileUploader
     /**
      * removeFile,function who remove the file (image) from the images folder
      * FileSystem injected in FileUploader Class.
-     * @param string $pathFileName
+     *
      * @return void
      */
     public function removeFile(string $pathFileName)

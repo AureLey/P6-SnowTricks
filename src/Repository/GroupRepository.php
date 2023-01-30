@@ -31,13 +31,9 @@ class GroupRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Group::class);
     }
-    
+
     /**
-     * save
-     *
-     * @param  Group $entity
-     * @param  bool $flush
-     * @return void
+     * save.
      */
     public function save(Group $entity, bool $flush = false): void
     {
@@ -47,13 +43,9 @@ class GroupRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-    
+
     /**
-     * remove
-     *
-     * @param  Group $entity
-     * @param  bool $flush
-     * @return void
+     * remove.
      */
     public function remove(Group $entity, bool $flush = false): void
     {

@@ -73,9 +73,9 @@ class Trick
         $this->images = new ArrayCollection();
         $this->videos = new ArrayCollection();
     }
-    
+
     /**
-     * getId
+     * getId.
      *
      * @return int
      */
@@ -83,9 +83,9 @@ class Trick
     {
         return $this->id;
     }
-    
+
     /**
-     * getName
+     * getName.
      *
      * @return string
      */
@@ -93,12 +93,9 @@ class Trick
     {
         return $this->name;
     }
-    
+
     /**
-     * setName
-     *
-     * @param  string $name
-     * @return self
+     * setName.
      */
     public function setName(string $name): self
     {
@@ -106,9 +103,9 @@ class Trick
 
         return $this;
     }
-    
+
     /**
-     * getSlug
+     * getSlug.
      *
      * @return string
      */
@@ -116,12 +113,9 @@ class Trick
     {
         return $this->slug;
     }
-    
+
     /**
-     * setSlug
-     *
-     * @param  string $slug
-     * @return self
+     * setSlug.
      */
     public function setSlug(string $slug): self
     {
@@ -129,9 +123,9 @@ class Trick
 
         return $this;
     }
-    
+
     /**
-     * getContent
+     * getContent.
      *
      * @return string
      */
@@ -139,12 +133,9 @@ class Trick
     {
         return $this->content;
     }
-    
+
     /**
-     * setContent
-     *
-     * @param  string $content
-     * @return self
+     * setContent.
      */
     public function setContent(string $content): self
     {
@@ -152,9 +143,9 @@ class Trick
 
         return $this;
     }
-    
+
     /**
-     * getCreatedAt
+     * getCreatedAt.
      *
      * @return DateTime
      */
@@ -162,12 +153,11 @@ class Trick
     {
         return $this->createdAt;
     }
-    
+
     /**
-     * setCreatedAt
+     * setCreatedAt.
      *
-     * @param  DateTime $createdAt
-     * @return self
+     * @param DateTime $createdAt
      */
     public function setCreatedAt(\DateTime $createdAt): self
     {
@@ -175,9 +165,9 @@ class Trick
 
         return $this;
     }
-    
+
     /**
-     * getUpdatedAt
+     * getUpdatedAt.
      *
      * @return DateTime
      */
@@ -185,12 +175,11 @@ class Trick
     {
         return $this->updatedAt;
     }
-    
+
     /**
-     * setUpdatedAt
+     * setUpdatedAt.
      *
-     * @param  DateTime $updatedAt
-     * @return self
+     * @param DateTime $updatedAt
      */
     public function setUpdatedAt(\DateTime $updatedAt): self
     {
@@ -198,9 +187,9 @@ class Trick
 
         return $this;
     }
-    
+
     /**
-     * getUser
+     * getUser.
      *
      * @return user
      */
@@ -208,12 +197,11 @@ class Trick
     {
         return $this->user;
     }
-    
+
     /**
-     * setUser
+     * setUser.
      *
-     * @param  User $user
-     * @return self
+     * @param User $user
      */
     public function setUser(?user $user): self
     {
@@ -221,9 +209,9 @@ class Trick
 
         return $this;
     }
-    
+
     /**
-     * getGroupTrick
+     * getGroupTrick.
      *
      * @return group
      */
@@ -231,12 +219,11 @@ class Trick
     {
         return $this->groupTrick;
     }
-    
+
     /**
-     * setGroupTrick
+     * setGroupTrick.
      *
-     * @param  group $groupTrick
-     * @return self
+     * @param group $groupTrick
      */
     public function setGroupTrick(?group $groupTrick): self
     {
@@ -252,12 +239,9 @@ class Trick
     {
         return $this->comments;
     }
-    
+
     /**
-     * addComment
-     *
-     * @param  Comment $comment
-     * @return self
+     * addComment.
      */
     public function addComment(Comment $comment): self
     {
@@ -268,12 +252,9 @@ class Trick
 
         return $this;
     }
-    
+
     /**
-     * removeComment
-     *
-     * @param  Comment $comment
-     * @return self
+     * removeComment.
      */
     public function removeComment(Comment $comment): self
     {
@@ -286,11 +267,9 @@ class Trick
 
         return $this;
     }
-    
+
     /**
-     * __toString
-     *
-     * @return string
+     * __toString.
      */
     public function __toString(): string
     {
@@ -304,12 +283,9 @@ class Trick
     {
         return $this->images;
     }
-    
+
     /**
-     * addImage
-     *
-     * @param  Image $image
-     * @return self
+     * addImage.
      */
     public function addImage(Image $image): self
     {
@@ -320,12 +296,9 @@ class Trick
 
         return $this;
     }
-    
+
     /**
-     * removeImage
-     *
-     * @param  Image $image
-     * @return self
+     * removeImage.
      */
     public function removeImage(Image $image): self
     {
@@ -346,12 +319,9 @@ class Trick
     {
         return $this->videos;
     }
-    
+
     /**
-     * addVideo
-     *
-     * @param  Video $video
-     * @return self
+     * addVideo.
      */
     public function addVideo(Video $video): self
     {
@@ -362,12 +332,9 @@ class Trick
 
         return $this;
     }
-    
+
     /**
-     * removeVideo
-     *
-     * @param  Video $video
-     * @return self
+     * removeVideo.
      */
     public function removeVideo(Video $video): self
     {
@@ -380,9 +347,9 @@ class Trick
 
         return $this;
     }
-    
+
     /**
-     * getFeaturedImage
+     * getFeaturedImage.
      *
      * @return string
      */
@@ -394,12 +361,11 @@ class Trick
 
         return null;
     }
-    
+
     /**
-     * setFeaturedImage
+     * setFeaturedImage.
      *
-     * @param  string $featuredImage
-     * @return self
+     * @param string $featuredImage
      */
     public function setFeaturedImage(?string $featuredImage): self
     {

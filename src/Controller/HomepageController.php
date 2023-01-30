@@ -20,12 +20,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HomepageController extends AbstractController
 {
-    #[Route('/', name: 'homepage')]    
+    #[Route('/', name: 'homepage')]
     /**
-     * index
-     *
-     * @param  TrickRepository $repo
-     * @return Response
+     * index.
      */
     public function index(TrickRepository $repo): Response
     {
