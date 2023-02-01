@@ -215,7 +215,7 @@ class TrickPageController extends AbstractController
     private function updateTrickRemovesImagesFileToFolder(array $oldCollection, Collection $newImagesCollection)
     {
         foreach ($oldCollection as $oldImage) {
-            $present = \in_array($oldImage->getName(), $newImagesCollection->toArray(), true);
+            $present = \in_array($oldImage->getName(), $newImagesCollection->toArray(), false);
 
             if (true !== $present) {
                 $this->removeImageFile($oldImage->getName());
