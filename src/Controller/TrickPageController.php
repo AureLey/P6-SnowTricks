@@ -32,6 +32,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class TrickPageController extends AbstractController
 {
+    private FileUploader $fileUploader;
+
+    public function __construct(FileUploader $fileUploader)
+    {
+        $this->fileUploader = $fileUploader;
+    }
+
     #[Route('/trick/new', name: 'new_trick')]
     /**
      * newTrick
@@ -44,17 +51,16 @@ class TrickPageController extends AbstractController
         $user = $repo->findBy(['email' => 'admin@admin.com']);
         $user = $user[0];
 
-        // $slugTrickName = new AsciiSlugger();
-
         $trick = new Trick();
         $form = $this->createForm(TrickFormType::class, $trick)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             // call private function to Set and Upload images collection to the trick
-            $this->SetFilesCollection($form, $trick, $fileUploader);
+            $this->setImagesCollection($form->get('images')->getData(), $trick);
 
-            // call Private function to choose and set FeaturedImage ( and Upload if necessary )to the new trick
-            $this->PickFeaturedImage($form, $trick, $fileUploader);
+            // call Private function  set FeaturedImage to the trick
+            $this->SetFeaturedImageFile($form->get('featuredImage')->getData(), $trick);
+
             $trick->setUser($user);
             // $trick  ->setUser($this->getUser());
 
@@ -94,7 +100,7 @@ class TrickPageController extends AbstractController
         }
 
         if (null !== $trick->getFeaturedImage()) {
-            $this->removeImage($trick->getFeaturedImage(), $fileUploader);
+            $this->removeImageFile($trick->getFeaturedImage(), $fileUploader);
         }
         $entityManager->remove($trick);
         $entityManager->flush();
@@ -108,8 +114,7 @@ class TrickPageController extends AbstractController
      */
     public function updateTrick(Trick $trick, Request $request, EntityManagerInterface $entityManager, UserRepository $repoUser, ImageRepository $repoImage, FileUploader $fileUploader): Response
     {
-        // Set a var to compare if Featured change and then delete the file if needed
-        $oldFeaturedImage = $trick->getFeaturedImage();
+        // get Images Collection to compare with new one and delete file if necessary
         $oldImagesCollection = $repoImage->findBy(['trick' => $trick]);
 
         // CREATE USER
@@ -121,21 +126,18 @@ class TrickPageController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             // call private function to Set and Upload images collection to the trick
-            $this->SetFilesCollection($form, $trick, $fileUploader);
+            $this->setImagesCollection($form->get('images')->getData(), $trick);
 
-            // call Private function to choose and set FeaturedImage to the new trick
-            $this->PickFeaturedImage($form, $trick, $fileUploader);
+            $this->updateTrickRemovesImagesFileToFolder($oldImagesCollection, $trick->getImages());
+
+            // call Private function  set FeaturedImage to the trick
+            $this->SetFeaturedImageFile($form->get('featuredImage')->getData(), $trick);
+
             $trick->setUser($user);
             // $trick->setUser($this->getUser());
 
             $entityManager->persist($trick);
             $entityManager->flush();
-
-            $this->updateTrickRemovesImagesFileToFolder($oldImagesCollection, $trick->getImages(), $fileUploader);
-
-            if ($oldFeaturedImage !== $trick->getFeaturedImage()) {
-                $this->removeImage($oldFeaturedImage, $fileUploader);
-            }
 
             return $this->RedirectToRoute('trick_detail', ['slug' => $trick->getSlug()]);
         }
@@ -147,62 +149,57 @@ class TrickPageController extends AbstractController
         ]);
     }
 
+    #[Route('trick/{slug}/remove/featuredImage', name: 'delete_featuredImage')]
     /**
-     * AddFile import the file from the trick form, return string filename.
-     *
-     * @return string fileName
+     * deleteFeaturedImage.
      */
-    private function AddFile(FileUploader $fileUploader, UploadedFile $file): string
+    public function deleteFeaturedImage(Trick $trick, EntityManagerInterface $entityManager): Response
     {
-        $fileName = $fileUploader->upload($file);
+        // remove image file and Set to null in the trick
+        // test if featuredImage and 1st element of collections are identical, if they are != remove the file
+        if ($trick->getImages()->first()) {
+            if ($trick->getFeaturedImage() !== $trick->getImages()->first()->getName()) {
+                $this->removeImageFile($trick->getFeaturedImage());
+                $trick->setFeaturedImage(null);
+            }
+        } else {
+            $this->removeImageFile($trick->getFeaturedImage());
+            $trick->setFeaturedImage(null);
+        }
 
-        return $fileName;
+        $entityManager->persist($trick);
+        $entityManager->flush();
+
+        return $this->RedirectToRoute('update_trick', ['slug' => $trick->getSlug()]);
     }
 
     /**
-     * PickFeaturedImage
-     * Choose which name will be set to the featured Image. Featured image field OR 1st images collection element  OR default in twig.
+     * SetFeaturedImageFile
+     * If form not null, upload featured image file and set it.
      */
-    private function PickFeaturedImage(Form $form, Trick $trick, FileUploader $fileUploader): Trick
+    private function SetFeaturedImageFile(?UploadedFile $featuredFormFile, Trick $trick): Trick
     {
-        $featuredFormFile = $form->get('featuredImage')->getData();
-
-        // Test if FeaturedImage is empty not already in DB and form File field is empty
-        if (null === $trick->getFeaturedImage() && null === $featuredFormFile) {
-            // Then Test is trick images Collection is not empty/null
-            if (null !== $trick->getImages()->first()) {
-                // Set Featured Image with 1st element en images collection
-                $trick->setFeaturedImage($trick->getImages()->first()->getName());
-            }
-        // If all element are empty, twig will set a default Featured Image
-        } else {
-            if (null !== $featuredFormFile) {
-                // Set Featured Image with the form element
-                $featuredName = $this->AddFile($fileUploader, $featuredFormFile);
-                $trick->setFeaturedImage($featuredName);
-            } else {
-                $trick->setFeaturedImage(null);
-            }
+        if (null !== $featuredFormFile) {
+            // Set Featured Image with the form element
+            $featuredName = $this->fileUploader->AddFile($featuredFormFile);
+            $trick->setFeaturedImage($featuredName);
         }
 
         return $trick;
     }
 
     /**
-     * SetFilesCollection
+     * setImagesCollection
      * Get collection from form collection and Set images collection in trick.
      */
-    private function SetFilesCollection(Form $form, Trick $trick, FileUploader $fileUploader): Trick
+    private function setImagesCollection($imagesListUpload, Trick $trick): Trick
     {
-        // Get UploadedListFile and add it to the trick as Image object
-        $imagesListUpload = $form->get('images')->getData();
-
         if ($imagesListUpload) {
             // Test collection if image's id is null so no registered and field File not empty, upload and set the file and name
             foreach ($imagesListUpload as $imageUpload) {
                 if (null === $imageUpload->getId() || !empty($imageUpload->getFile())) {
-                    $FileNamne = $fileUploader->upload($imageUpload->getFile());
-                    $imageUpload->setName($FileNamne);
+                    $fileName = $this->fileUploader->upload($imageUpload->getFile());
+                    $imageUpload->setName($fileName);
                     $trick->addImage($imageUpload);
                 }
             }
@@ -212,28 +209,16 @@ class TrickPageController extends AbstractController
     }
 
     /**
-     * removeImage
-     * get images folder hard path, and remove file by his name.
-     *
-     * @param string $imageName
-     *
-     * @return void
+     * updateTrickRemovesImagesFileToFolder.
+     * Compare oldArray and new collection and remove files unused.
      */
-    private function removeImage(?string $imageName, FileUploader $fileUploader)
-    {
-        // Set images Folder
-        $path = $this->getParameter('kernel.project_dir');
-        $path = $path.'/public/images/'.$imageName;
-        if (null !== $imageName) {
-            $fileUploader->removeFile($path);
-        }
-    }
-
-    private function updateTrickRemovesImagesFileToFolder($oldCollection, $newImagesCollection, FileUploader $fileUploader)
+    private function updateTrickRemovesImagesFileToFolder(array $oldCollection, Collection $newImagesCollection)
     {
         foreach ($oldCollection as $oldImage) {
-            if (!\in_array($oldImage->getName(), $newImagesCollection->toArray(), true)) {
-                $this->removeImage($oldImage, $fileUploader);
+            $present = \in_array($oldImage->getName(), $newImagesCollection->toArray(), true);
+
+            if (true !== $present) {
+                $this->removeImageFile($oldImage->getName());
             }
         }
     }
@@ -246,10 +231,25 @@ class TrickPageController extends AbstractController
      *
      * @return void
      */
-    private function deleteTrickRemoveImages(Collection $imagesCollection, FileUploader $fileUploader)
+    private function deleteTrickRemoveImages(Collection $imagesCollection)
     {
         foreach ($imagesCollection as $image) {
-            $this->removeImage($image, $fileUploader);
+            $this->removeImageFile($image->getName());
+        }
+    }
+
+    /**
+     * removeImageFile
+     * get images folder hard path, and remove file by his name.
+     *
+     * @param string $imageName
+     *
+     * @return void
+     */
+    private function removeImageFile(?string $imageName)
+    {
+        if (null !== $imageName) {
+            $this->fileUploader->removeFile($imageName);
         }
     }
 }

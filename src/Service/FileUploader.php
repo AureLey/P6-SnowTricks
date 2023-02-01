@@ -59,6 +59,19 @@ class FileUploader
      */
     public function removeFile(string $pathFileName)
     {
-        $this->fileSystem->remove($pathFileName);
+        $pathFileName = $this->getTargetDirectory().'/'.$pathFileName;
+        $this->fileSystem->remove($pathFileName, $this->getTargetDirectory());
+    }
+
+    /**
+     * AddFile import the file from the trick form, return string filename.
+     *
+     * @return string fileName
+     */
+    public function AddFile(UploadedFile $file): string
+    {
+        $fileName = $this->upload($file);
+
+        return $fileName;
     }
 }

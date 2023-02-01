@@ -359,13 +359,15 @@ class Trick
             return $this->featuredImage;
         }
 
+        if (false !== $this->getImages()->first()) {
+            return $this->getImages()->first()->getName();
+        }
+
         return null;
     }
 
     /**
      * setFeaturedImage.
-     *
-     * @param string $featuredImage
      */
     public function setFeaturedImage(?string $featuredImage): self
     {
