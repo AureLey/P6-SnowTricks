@@ -3,7 +3,7 @@ const newItem = e => {
 	const collectionHolder = document.querySelector(e.currentTarget.dataset.collection);
 
 	const item = document.createElement('div');
-	item.classList.add('col-3');
+	item.classList.add('col-sm-4');
 	item.innerHTML = collectionHolder
 		.dataset
 		.prototype
@@ -21,7 +21,7 @@ const newItem = e => {
 
 document
 	.querySelectorAll('.btn-remove')
-	.forEach(btn => btn.addEventListener('click', e => e.currentTarget.closest('.col-3').remove()));
+	.forEach(btn => btn.addEventListener('click', e => e.currentTarget.closest('.col-sm-4').remove()));
 
 document
 	.querySelectorAll('.btn-new')

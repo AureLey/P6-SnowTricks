@@ -1,4 +1,4 @@
-/* NAVBAR */
+/* ----------------------NAVBAR-------------------------------- */
 .navbar {
   align-items: center;
 }
@@ -20,10 +20,23 @@ footer {
   color: aliceblue !important;
 }
 
-/* HOMEPAGE */
+/*---------------------------- HOMEPAGE ------------------------------*/
+
+
+
 #mainNav {
   background-color: #3e3e3e;
 }
+
+#card-homepage {
+  display:none;
+  padding-bottom: 0.3rem;
+}
+
+#card-homepage:nth-child(-n+8) {
+  display:block;
+}
+
 
 .masthead {
   position: relative;
@@ -43,7 +56,7 @@ footer {
   bottom: 1rem;
 }
 
-.card-img-top {
+.card-img-top{
   height: 150px;
   width: 100%;
   cursor: pointer;
@@ -99,14 +112,9 @@ i {
   font-size: 20px;
 }
 
-/* TRICKPAGE */
+/* -------------------------TRICKPAGE------------------------- */
 
-#gallery {
-  visibility: visible;
-  display: block;
-}
 
-#see-media,
 #navicon {
   visibility: hidden;
   display: none;
@@ -132,6 +140,7 @@ i {
   left: 40%;
   top: 50%;
   z-index: 1;
+  text-transform: uppercase;
 }
 
 .overlay {
@@ -151,11 +160,16 @@ i {
   width: 100%;
 }
 
-.trick-group {
+.trick-group,.trick-content, .trick-comment {
   display: flex;
   flex-wrap: nowrap;
-  justify-content: space-between;
+  justify-content: space-around;  
 }
+.gallery-card {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 
 /* SIGN PAGE */
 .form-container {
@@ -182,10 +196,13 @@ i {
   #see-media {
     visibility: visible;
     display: block;
-  }
+  }  
 
+  .trick-name {    
+    left: 10%;
+  }
   /* GALLERY TRICKPAGE AND NAVBAR */
-  #gallery,
+ 
   #navmenutext {
     visibility: hidden;
     display: none;
@@ -213,6 +230,20 @@ i {
     display: block;
   }
 
+  #collapseExample >div {
+    flex-direction: column;
+  }
+
+  .gallery-card {
+    display: block;
+    align-items: center;
+  }
+
+  .video { 
+    
+    min-height:300px;    
+  }
+
   /* FOOTER */
   footer {
     visibility: hidden;
@@ -224,6 +255,11 @@ i {
   /* HOMEPAGE */
 
   /* trick card */
+  #images {
+    flex-direction: column;
+    width: 100%;
+ }
+
   .card-img-top {
     height: 250px;
   }
@@ -248,8 +284,26 @@ i {
     height: 100vh;
   }
 
+  .trick-name {
+    top: unset;
+    left: 20%;    
+    bottom: 5%;
+  }
+
+  .default-img-trick {
+    aspect-ratio: 2/1;
+  }
+
   .trick-group {
     flex-wrap: wrap;
+  }
+
+  .trick-content,.trick-comment  {
+    flex-direction: column;    
+  }
+
+  .trick-comment > a {
+    margin: 1rem;    
   }
 }
 
@@ -262,5 +316,18 @@ i {
     margin-left: 2rem;
     margin-right: 2rem;
     font-size: 30px;
+  }  
+
+  .default-img-trick {
+    aspect-ratio: 1/1;
+  }  
+  
+  .trick-name > h1 {
+    text-transform: lowercase;
   }
+
+  .btn-sm {
+    font-size: x-large;
+  }
+
 }

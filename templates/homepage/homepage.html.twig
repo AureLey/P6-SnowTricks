@@ -34,7 +34,7 @@
 					{% endfor %}
 				</div>
 				<div class="button-load-more text-center mb-5">
-					<a href="" id="#load" class="btn btn-sm rounded text-light bg-dark px-5 py-3">Load More</a>
+					<button id="load" class="btn btn-sm rounded text-light bg-dark px-5 py-3">Load More</button>
 				</div>
 			</div>
 		</section>
@@ -48,5 +48,21 @@
 			</div>
 		{% endif %}
 
-
-	{% endblock %}
+<script>
+  var wraper = document.querySelectorAll('#card-homepage');
+  var button = document.querySelector('#load');
+  var currentimg = 4
+  button.addEventListener('click',
+    function(){
+        for(var i = currentimg; i < currentimg +4; i++) {
+              if(wraper[i]) {
+                wraper[i].style.display = 'block';
+              }
+        }
+        currentimg += 4;
+        if(currentimg >=wraper.length){
+          event.target.style.display ='none';
+        }
+    });
+</script>
+{% endblock %}

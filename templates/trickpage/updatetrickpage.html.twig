@@ -5,26 +5,19 @@
 		{{form_start(trickform)}}
 
 		{# Include Hero & Featured Image #}
-		{% include 'trickpage/trickTemplate/_header.html.twig'with {'edit': true }  %}
+		{% include 'trickpage/trickTemplate/_header.html.twig' with {'edit': true }  %}
 
 		<div
 			class="content-trick mt-4">
 			{# --------------------Gallery links--------------------- #}
 			<section id="gallery">
 				<div class="row container justify-content-center">
-					{% include 'trickpage/trickTemplate/_form.html.twig'with {'trickform': trickform }  %}
+					{% include 'trickpage/trickTemplate/_form.html.twig' with {'trickform': trickform }  %}
 				</div>
 			</section>
 
 			{# Modal pour afficher les images #}
 			{{ include("trickpage/trickTemplate/_modal.html.twig")}}
-
-			{# On affiche le bouton media qui permet de load les media en responsive #}
-			<section id="see-media">
-				<div class="button-load-more text-center mb-5">
-					<a href="" class="btn btn-sm rounded text-light bg-dark px-5 py-3">See media</a>
-				</div>
-			</section>
 			{# --------------------------------  GALLERY UPDATE  ----------------------------------------- #}
 
 

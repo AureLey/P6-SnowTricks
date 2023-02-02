@@ -10,23 +10,28 @@
 		<div
 			class="content-trick mt-4">
 			{# --------------------Gallery links--------------------- #}
+			
+			{# On affiche le bouton media qui permet de load les media en responsive #}
+			<section id="see-media">
+				<div class="button-load-more text-center mb-5">
+					<a class="btn btn-sm rounded text-light bg-dark px-5 py-3" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+						See media
+					</a>
+				</div>
+			</section>
 			<section id="gallery">
 				<div
 					class="row  justify-content-center">
 					{# Gallery of Media #}
-					{% include 'trickpage/trickTemplate/_gallery.html.twig' with {'update': false }  %}
+					<div class="collapse" id="collapseExample">
+						<div class="gallery-card">{% include 'trickpage/trickTemplate/_gallery.html.twig' with {'update': false }  %}</div>
+					</div>
 				</div>
 			</section>
 
 			{# Modal pour afficher les images #}
 			{{ include("trickpage/trickTemplate/_modal.html.twig")}}
 
-			{# On affiche le bouton media qui permet de load les media en responsive #}
-			<section id="see-media">
-				<div class="button-load-more text-center mb-5">
-					<a href="" class="btn btn-sm rounded text-light bg-dark px-5 py-3">See media</a>
-				</div>
-			</section>
 			{# --------------------------------END  GALLERY  ----------------------------------------- #}
 
 			{# Section Contenu Trick && Button #}

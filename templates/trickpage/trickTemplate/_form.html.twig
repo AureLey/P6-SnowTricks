@@ -14,7 +14,7 @@
 
 			{# Loop who create Video field #}
 			{% for image in trickform.images %}
-				<div class="col-3">
+				<div class="col-sm-4">
 					<img src="{{asset('images/'~trick.images[loop.index-1].name)}}" class="card-img-top gallery-item my-3" alt="Snowboard trick"/>
 					{{ include("trickpage/trickTemplate/_image.html.twig", {form: image}) }}
 				</div>
@@ -37,7 +37,7 @@
 
 			{# Loop who create Video field #}
 			{% for video in trickform.videos %}
-				<div class="col-3">
+				<div class="col-sm-4">
 					<iframe class="w-100 rounded ratio ratio-16x9 gallery-item my-3" src="{{trick.videos[loop.index-1].name}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 					{{ include("trickpage/trickTemplate/_video.html.twig", {form: video}) }}
 				</div>
