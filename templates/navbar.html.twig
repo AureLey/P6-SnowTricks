@@ -1,48 +1,53 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-dark text-white">
-  <div class="container">
-    <a id="navmenutext" class="navbar-brand text-white" href="{{path('homepage')}}">SnowTricks</a>    
-    <div class="navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        {# responsive menu #}
-        <li id="navicon" class="nav-item">
-          <a class="nav-link" href="{{path('homepage')}}"><i class="bi bi-house-fill"></i></a>
-        </li>
-        <li id="navicon" class="nav-item">
-          <a class="nav-link" href="{{path('trickpagedetail')}}"><i class="bi bi-bookmark-fill"></i></a>
-        </li>
-        {# endresponsive menu #}
-        <li id="navmenutext" class="nav-item active">
-          <a class="nav-link" href="{{path('homepage')}}">Home</a>
-        </li>
-        <li id="navmenutext" class="nav-item">
-          <a class="nav-link" href="{{path('trickpagedetail')}}"> Trick</a>
-        </li>
-        {% if not app.user %}
-        {# responsive logout #}
-          <li id="navicon" class="nav-item">
-            <a class="nav-link" href="{{path('signin')}}"><i class="bi bi-box-arrow-in-right"></i></a>
-          </li>{# endresponsive logout #}
-          <li id="navmenutext" class="nav-item">
-            <a class="nav-link" href="{{path('signin')}}">Signin</a>
-          </li>
-          <li id="navmenutext" class="nav-item">
-            <a class="nav-link" href="{{path('signup')}}">Signup</a>
-          </li>
-          <li id="navmenutext" class="nav-item">
-            <a class="nav-link" href="{{path('newtrickpagedetail')}}">New Trick</a>
-          </li>
-        
-        {% else %}
-          <li id="navmenutext" class="nav-item">
-            <a class="nav-link" href="{{path('logout')}}">Logout</a>
-          </li>{# end responsive logout #}
-          <li id="navicon" class="nav-item">
-            <a class="nav-link" href="{{path('signin')}}"><i class="bi bi-box-arrow-right"></i></a>
-          </li>        
-        {% endif %}
-      </ul>    
-    </div>
-  </div>
+	<div class="container">
+		<a id="navmenutext" class="navbar-brand text-white" href="{{path('homepage')}}">SnowTricks</a>
+		<div class="navbar-collapse" id="navbarSupportedContent">
+			<ul
+				class="navbar-nav mr-auto">
+				{# responsive menu #}
+				<li id="navicon" class="nav-item">
+					<a class="nav-link" href="{{path('homepage')}}">
+						<i class="bi bi-house-fill"></i>
+					</a>
+				</li>
+				<li id="navicon" class="nav-item">
+					<a class="nav-link" href="#">
+						<i class="bi bi-bookmark-fill"></i>
+					</a>
+				</li>
+				{# endresponsive menu #}
+				<li id="navmenutext" class="nav-item active">
+					<a class="nav-link" href="{{path('homepage')}}">Home</a>
+				</li>
+				{% if  app.user %}
+					{# responsive logout #}
+					<li id="navicon" class="nav-item">
+						<a class="nav-link" href="{{path('signin')}}">
+							<i class="bi bi-box-arrow-in-right"></i>
+						</a>
+					</li>
+					{# endresponsive logout #}
+					<li id="navmenutext" class="nav-item">
+						<a class="nav-link" href="{{path('signin')}}">Signin</a>
+					</li>
+					<li id="navmenutext" class="nav-item">
+						<a class="nav-link" href="{{path('signup')}}">Signup</a>
+					</li>
+				{% else %}
+					<li id="navmenutext" class="nav-item">
+						<a class="nav-link" href="{{path('new_trick')}}">New Trick</a>
+					</li>
+					<li id="navmenutext" class="nav-item">
+						<a class="nav-link" href="{{path('logout')}}">Logout</a>
+					</li>
+					{# end responsive logout #}
+					<li id="navicon" class="nav-item">
+						<a class="nav-link" href="{{path('signin')}}">
+							<i class="bi bi-box-arrow-right"></i>
+						</a>
+					</li>
+				{% endif %}
+			</ul>
+		</div>
+	</div>
 </nav>
-
-
