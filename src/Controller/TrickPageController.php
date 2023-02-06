@@ -44,7 +44,7 @@ class TrickPageController extends AbstractController
      * newTrick
      * creation trick function.
      */
-    public function newTrick(Request $request, EntityManagerInterface $entityManager, UserRepository $repo, FileUploader $fileUploader): Response
+    public function newTrick(Request $request, EntityManagerInterface $entityManager, UserRepository $repo): Response
     {
         // CREATE USER
         $user = new User();
@@ -93,14 +93,14 @@ class TrickPageController extends AbstractController
     /**
      * deleteTrick.
      */
-    public function deleteTrick(Trick $trick, EntityManagerInterface $entityManager, FileUploader $fileUploader): Response
+    public function deleteTrick(Trick $trick, EntityManagerInterface $entityManager): Response
     {
         if (null !== $trick->getImages()) {
-            $this->deleteTrickRemoveImages($trick->getImages(), $fileUploader);
+            $this->deleteTrickRemoveImages($trick->getImages());
         }
 
         if (null !== $trick->getFeaturedImage()) {
-            $this->removeImageFile($trick->getFeaturedImage(), $fileUploader);
+            $this->removeImageFile($trick->getFeaturedImage());
         }
         $entityManager->remove($trick);
         $entityManager->flush();
@@ -112,7 +112,7 @@ class TrickPageController extends AbstractController
     /**
      * updateTrick.
      */
-    public function updateTrick(Trick $trick, Request $request, EntityManagerInterface $entityManager, UserRepository $repoUser, ImageRepository $repoImage, FileUploader $fileUploader): Response
+    public function updateTrick(Trick $trick, Request $request, EntityManagerInterface $entityManager, UserRepository $repoUser, ImageRepository $repoImage): Response
     {
         // get Images Collection to compare with new one and delete file if necessary
         $oldImagesCollection = $repoImage->findBy(['trick' => $trick]);

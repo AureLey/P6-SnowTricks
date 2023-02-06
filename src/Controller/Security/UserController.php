@@ -22,7 +22,7 @@ class UserController extends AbstractController
     #[Route('/signin', name: 'signin')]
     public function signin(): Response
     {
-        return $this->render('formpage/signin.html.twig', [
+        return $this->render('formPage/signin.html.twig', [
             'controller_name' => 'UserController',
         ]);
     }
@@ -30,7 +30,7 @@ class UserController extends AbstractController
     #[Route('/forgot_password', name: 'forgotpassword')]
     public function forgotPassword(): Response
     {
-        return $this->render('formpage/forgotpassword.html.twig', [
+        return $this->render('formPage/forgotpassword.html.twig', [
             'controller_name' => 'UserController',
         ]);
     }
@@ -38,7 +38,7 @@ class UserController extends AbstractController
     #[Route('/reset_password', name: 'resetpassword')]
     public function resetPassword(): Response
     {
-        return $this->render('formpage/resetpassword.html.twig', [
+        return $this->render('formPage/resetpassword.html.twig', [
             'controller_name' => 'UserController',
         ]);
     }
@@ -46,7 +46,7 @@ class UserController extends AbstractController
     #[Route('/signup', name: 'signup')]
     public function signup(): Response
     {
-        return $this->render('formpage/signup.html.twig', [
+        return $this->render('formPage/signup.html.twig', [
             'controller_name' => 'UserController',
         ]);
     }

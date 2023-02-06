@@ -25,34 +25,8 @@ class VideoFixtures extends Fixture implements DependentFixtureInterface
      */
     public function load(ObjectManager $manager): void
     {
-        // VIDEOS
-        $videos = [
-            '50-50' => ['https://www.youtube.com/embed/kxZbQGjSg4w'],
-
-            'boardslide' => ['https://www.youtube.com/embed/R3OG9rNDIcs'],
-
-            'Lipslide' => ['https://www.youtube.com/embed/LSVn5aI56aU'],
-
-            'Back Flip' => ['https://www.youtube.com/embed/0sehBOkD01Q'],
-
-            'Front Flip' => ['https://www.youtube.com/embed/qvnsjVJCbA0'],
-
-            'Wildcat' => ['https://www.youtube.com/embed/7KUpodSrZqI'],
-
-            'Tamedog' => ['https://www.youtube.com/embed/qvnsjVJCbA0'],
-
-            'Backside Misty' => ['https://www.youtube.com/embed/yMvDA7FEWjk'],
-
-            'Beef Carpaccio' => ['https://www.youtube.com/embed/5ylWnm4rF1o'],
-
-            'Beef Curtains' => ['https://www.youtube.com/embed/5ylWnm4rF1o'],
-
-            'Bloody Dracula' => ['https://www.youtube.com/embed/UU9iKINvlyU'],
-
-            'Drunk Driver' => ['https://www.youtube.com/embed/f9FjhCt_w2U'],
-
-            'Japan Air' => ['https://www.youtube.com/embed/YAElDqyD-3I'],
-        ];
+        // Files with data in array
+        require 'DataTricks.php';
 
         foreach ($videos as $trickname => $video_path) {
             $video = new Video();

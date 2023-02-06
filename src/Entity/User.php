@@ -22,12 +22,13 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
-#[UniqueEntity(
-    fields: 'email',
-    message: 'Email already used',
-)]
+#[UniqueEntity(fields: 'email', message: 'Email already used', )]
+#[UniqueEntity(fields: 'username', message: 'Username already used', )]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    // Value in hours, represents the token validation time
+    public const TOKEN_DURATION = 24;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -51,14 +52,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $token = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $tokenValidation = null;
+    #[ORM\Column]
+    private ?\DateTime $tokenValidation = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Trick::class)]
     private Collection $tricks;
 
     #[ORM\OneToMany(mappedBy: 'commentUser', targetEntity: Comment::class)]
     private Collection $comments;
+
+    #[ORM\Column(type: 'boolean', options: ['default' => false])]
+    private bool $isVerified = false;
 
     public function __construct()
     {
@@ -183,9 +187,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * getTokenValidation.
      *
-     * @return string
+     * @return \DateTime
      */
-    public function getTokenValidation(): ?string
+    public function getTokenValidation(): ?\DateTime
     {
         return $this->tokenValidation;
     }
@@ -193,9 +197,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * setTokenValidation.
      *
-     * @param string $tokenValidation
+     * @param \DateTime $tokenValidation
      */
-    public function setTokenValidation(?string $tokenValidation): self
+    public function setTokenValidation(?\DateTime $tokenValidation): self
     {
         $this->tokenValidation = $tokenValidation;
 
@@ -274,6 +278,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function isIsVerified(): ?bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): self
+    {
+        $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
     /**
      * @see UserInterface
      */
@@ -301,7 +317,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return $this->email;
+        return (string) $this->email;
     }
 
     /**
@@ -322,5 +338,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function tokenCreation(string $username): string
+    {
+        $date = new \DateTime('now');
+        $date = $date->format('Y-m-d H:i:s');
+        $key = $date.$username;
+        $key = md5($key);
+
+        return $key;
+    }
+
+    public function verificationTokenTime(\DateTime $maildatetime, \DateTime $tokenDatime): bool
+    {
+        // Calc value between account creation and mail validation
+        $diff = date_diff($tokenDatime, $maildatetime);
+
+        // Format in hours
+        $hours = $diff->format('%h');
+        $days = $diff->format('%d');
+
+        $duration = $days * 24 + $hours;
+
+        if ($duration <= self::TOKEN_DURATION) {
+            return true;
+        }
+
+        return false;
     }
 }
