@@ -32,18 +32,27 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class TrickPageController extends AbstractController
 {
+    // Inject Service FileUploader
     private FileUploader $fileUploader;
+
 
     public function __construct(FileUploader $fileUploader)
     {
         $this->fileUploader = $fileUploader;
     }
 
+
     #[Route('/trick/new', name: 'new_trick')]
     /**
      * newTrick
      * creation trick function.
+     * @param  Request $request
+     * @param  EntityManagerInterface $entityManager
+     * @param  UserRepository $repo
+     * @return Response
      */
+
+
     public function newTrick(Request $request, EntityManagerInterface $entityManager, UserRepository $repo): Response
     {
         // CREATE USER
@@ -55,10 +64,10 @@ class TrickPageController extends AbstractController
         $form = $this->createForm(TrickFormType::class, $trick)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // call private function to Set and Upload images collection to the trick
+            // Call private function to Set and Upload images collection to the trick
             $this->setImagesCollection($form->get('images')->getData(), $trick);
 
-            // call Private function  set FeaturedImage to the trick
+            // Call Private function  set FeaturedImage to the trick
             $this->SetFeaturedImageFile($form->get('featuredImage')->getData(), $trick);
 
             $trick->setUser($user);
@@ -75,6 +84,7 @@ class TrickPageController extends AbstractController
             'trick' => $trick,
             'trickform' => $form->createView(),
         ]);
+
     }
 
     #[Route('/trick/details/{slug}', name: 'trick_detail')]
@@ -93,6 +103,8 @@ class TrickPageController extends AbstractController
     /**
      * deleteTrick.
      */
+
+
     public function deleteTrick(Trick $trick, EntityManagerInterface $entityManager): Response
     {
         if (null !== $trick->getImages()) {
@@ -112,9 +124,11 @@ class TrickPageController extends AbstractController
     /**
      * updateTrick.
      */
+
+
     public function updateTrick(Trick $trick, Request $request, EntityManagerInterface $entityManager, UserRepository $repoUser, ImageRepository $repoImage): Response
     {
-        // get Images Collection to compare with new one and delete file if necessary
+        // Get Images Collection to compare with new one and delete file if necessary
         $oldImagesCollection = $repoImage->findBy(['trick' => $trick]);
 
         // CREATE USER
@@ -125,12 +139,12 @@ class TrickPageController extends AbstractController
         $form = $this->createForm(TrickFormType::class, $trick)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // call private function to Set and Upload images collection to the trick
+            // Call private function to Set and Upload images collection to the trick
             $this->setImagesCollection($form->get('images')->getData(), $trick);
 
             $this->updateTrickRemovesImagesFileToFolder($oldImagesCollection, $trick->getImages());
 
-            // call Private function  set FeaturedImage to the trick
+            // Call Private function  set FeaturedImage to the trick
             $this->SetFeaturedImageFile($form->get('featuredImage')->getData(), $trick);
 
             $trick->setUser($user);
@@ -153,10 +167,12 @@ class TrickPageController extends AbstractController
     /**
      * deleteFeaturedImage.
      */
+
+
     public function deleteFeaturedImage(Trick $trick, EntityManagerInterface $entityManager): Response
     {
-        // remove image file and Set to null in the trick
-        // test if featuredImage and 1st element of collections are identical, if they are != remove the file
+        // Remove image file and Set to null in the trick
+        // Test if featuredImage and 1st element of collections are identical, if they are != remove the file
         if ($trick->getImages()->first()) {
             if ($trick->getFeaturedImage() !== $trick->getImages()->first()->getName()) {
                 $this->removeImageFile($trick->getFeaturedImage());
@@ -177,6 +193,8 @@ class TrickPageController extends AbstractController
      * SetFeaturedImageFile
      * If form not null, upload featured image file and set it.
      */
+
+
     private function SetFeaturedImageFile(?UploadedFile $featuredFormFile, Trick $trick): Trick
     {
         if (null !== $featuredFormFile) {
@@ -192,6 +210,8 @@ class TrickPageController extends AbstractController
      * setImagesCollection
      * Get collection from form collection and Set images collection in trick.
      */
+
+
     private function setImagesCollection($imagesListUpload, Trick $trick): Trick
     {
         if ($imagesListUpload) {
@@ -208,10 +228,16 @@ class TrickPageController extends AbstractController
         return $trick;
     }
 
+        
     /**
      * updateTrickRemovesImagesFileToFolder.
      * Compare oldArray and new collection and remove files unused.
+     * @param  array $oldCollection
+     * @param  Collection $newImagesCollection
+     * @return void
      */
+
+
     private function updateTrickRemovesImagesFileToFolder(array $oldCollection, Collection $newImagesCollection)
     {
         foreach ($oldCollection as $oldImage) {
@@ -226,12 +252,11 @@ class TrickPageController extends AbstractController
     /**
      * deleteTrickRemoveImages
      * remove all images from the selected trick in delete_trick route.
-     *
-     * @param ArrayCollection $imagesCollection
-     *
      * @return void
      */
-    private function deleteTrickRemoveImages(Collection $imagesCollection)
+
+
+    private function deleteTrickRemoveImages($imagesCollection)
     {
         foreach ($imagesCollection as $image) {
             $this->removeImageFile($image->getName());
@@ -246,6 +271,8 @@ class TrickPageController extends AbstractController
      *
      * @return void
      */
+
+
     private function removeImageFile(?string $imageName)
     {
         if (null !== $imageName) {

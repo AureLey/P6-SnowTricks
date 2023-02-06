@@ -339,12 +339,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
-
-    public function tokenCreation(string $username): string
+    
+    /**
+     * tokenCreation
+     *
+     * @param  int $id
+     * @return string
+     */
+    public function tokenCreation(int $id): string
     {
         $date = new \DateTime('now');
         $date = $date->format('Y-m-d H:i:s');
-        $key = $date.$username;
+        $key = $date.$id;
         $key = md5($key);
 
         return $key;

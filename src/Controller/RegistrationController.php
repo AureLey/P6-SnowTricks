@@ -38,8 +38,11 @@ class RegistrationController extends AbstractController
     {
         $user = new User();
 
+        // form creation and handleRequest
         $formRegistration = $this->createForm(RegistrationFormType::class, $user);
         $formRegistration->handleRequest($request);
+
+        // get password
         $plaintextPassword = $formRegistration->get('password')->getData();
 
         if ($formRegistration->isSubmitted() && $formRegistration->isValid()) {
@@ -50,15 +53,18 @@ class RegistrationController extends AbstractController
             );
             $user->setPassword($hashedPassword);
             // Token Creation method in User
-            $token = $user->tokenCreation($user->getUsername());
+            $token = $user->tokenCreation($user->getId());
             // set TokenValidation time;
             $date = new \DateTime('now');
 
-            // Set Token paramters in user
+            // Set Token parameters in user
             $user->setTokenValidation($date);
             $user->setToken($token);
 
+            // call service MailerService
             $this->mailer->sendConfirmation($user);
+
+            // Persist and flush
             $entityManager->persist($user);
             $entityManager->flush();
 
@@ -71,6 +77,10 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/email-verified', name: 'app_verified_mail')]
+    /**
+     * verifiedEmail.
+     * Function who check if User exist then set to 1 User field isVerified by the mail confirmation.
+     */
     public function verifiedEmail(Request $request, UserRepository $userRepo, EntityManagerInterface $entityManager): Response
     {
         // get username from URL request
@@ -79,8 +89,6 @@ class RegistrationController extends AbstractController
 
         // test if null and return to homepage
         if (null === $name) {
-            dd($name);
-
             return $this->redirectToRoute('homepage');
         }
 
@@ -94,19 +102,22 @@ class RegistrationController extends AbstractController
             // should return message dont' exist
             return $this->redirectToRoute('homepage');
         }
-        // convertir le tableau existing en object User
 
+        // set a datatime to compare it with the datetime's token
         $dateValidation = new \DateTime('now');
-        
 
         if ($existingUser->verificationTokenTime($existingUser->getTokenValidation(), $dateValidation)) {
-            
+            // set and persist new status of isVerified in User ExistingUser
             $existingUser->setIsVerified(true);
+
             $entityManager->persist($existingUser);
             $entityManager->flush();
+
+            // return to the login page if everything works
             return $this->redirectToRoute('signin');
         }
 
+        // back to signup page if something wrong
         return $this->redirectToRoute('signup');
     }
 }
