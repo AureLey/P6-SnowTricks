@@ -27,13 +27,19 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class TrickRepository extends ServiceEntityRepository
 {
+
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Trick::class);
     }
 
+
     /**
      * save.
+     * 
+     * @param Trick $entity
+     * @return void
      */
     public function save(Trick $entity, bool $flush = false): void
     {
@@ -46,6 +52,9 @@ class TrickRepository extends ServiceEntityRepository
 
     /**
      * remove.
+     *  
+     * @param Trick $entity
+     * @return void
      */
     public function remove(Trick $entity, bool $flush = false): void
     {
@@ -55,29 +64,5 @@ class TrickRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-
-    //    /**
-    //     * @return Trick[] Returns an array of Trick objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('t')
-    //            ->andWhere('t.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('t.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?Trick
-    //    {
-    //        return $this->createQueryBuilder('t')
-    //            ->andWhere('t.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    
 }

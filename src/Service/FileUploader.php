@@ -20,10 +20,12 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class FileUploader
 {
-    private string $targetDirectory;
-    private $slugger;
-    private $fileSystem;
 
+    private string $targetDirectory;// Represent the image directory in serivces.yaml.
+    private $slugger;// Represent the function slug.
+    private $fileSystem;// Represent FileSystem from symfony.
+
+    
     public function __construct(string $targetDirectory, SluggerInterface $slugger, Filesystem $fileSystem)
     {
         $this->targetDirectory = $targetDirectory;
