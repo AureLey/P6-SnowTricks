@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Entity\User;
-use Symfony\Component\Mime\Email;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
 
@@ -30,15 +29,15 @@ class MailerService
     public function sendConfirmation(User $user)
     {
         $email = (new TemplatedEmail())
-            ->from("SnowTricks@delaneige.com")
+            ->from('SnowTricks@delaneige.com')
             ->to($user->getEmail())
-            ->subject("Registration Confirmation")
-            ->htmlTemplate("registration/_mailVerified.html.twig")
+            ->subject('Registration Confirmation')
+            ->htmlTemplate('registration/_mailVerified.html.twig')
             ->context([
-                'user' => $user,                
+                'user' => $user,
             ]);
 
         // On envoie le mail
-        $this->mailer->send($email);       
+        $this->mailer->send($email);
     }
 }
