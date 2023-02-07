@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Entity\Image;
 use App\Entity\Trick;
 use App\Entity\User;
 use App\Form\TrickFormType;
@@ -43,8 +42,7 @@ class TrickPageController extends AbstractController
 
 
     #[Route('/trick/new', name: 'new_trick')]
-    /**
-     * newTrick
+    /**    
      * creation trick function.
      * 
      * @param  Request $request
@@ -230,7 +228,6 @@ class TrickPageController extends AbstractController
     }
         
     /**
-     * updateTrickRemovesImagesFileToFolder.
      * Compare oldArray and new collection and remove files unused.
      * 
      * @param  array $oldCollection

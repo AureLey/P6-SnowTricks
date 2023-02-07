@@ -14,13 +14,17 @@ declare(strict_types=1);
 namespace App\EventListener;
 
 use App\Entity\Trick;
+use App\Entity\Video;
 use Doctrine\Bundle\DoctrineBundle\EventSubscriber\EventSubscriberInterface;
+use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Events;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 
 class TrickSubscriber implements EventSubscriberInterface
 {
+
+    
     /**
      * getSubscribedEvents.
      */
@@ -29,21 +33,68 @@ class TrickSubscriber implements EventSubscriberInterface
         return [
             Events::prePersist,
             Events::preUpdate,
+            Events::onFlush,
         ];
     }
-
+    
+    /**
+     * prePersist
+     *
+     * @param  LifecycleEventArgs $args
+     * @return void
+     */
     public function prePersist(LifecycleEventArgs $args): void
     {
         $this->setDateTimeTrick($args);
         $this->setSlugTrick($args);
-        $this->reformatURLVideos($args);
     }
-
+    
+    /**
+     * preUpdate
+     *
+     * @param  LifecycleEventArgs $args
+     * @return void
+     */
     public function preUpdate(LifecycleEventArgs $args): void
     {
         $this->setUpdatedAtTrick($args);
         $this->setSlugTrick($args);
-        $this->reformatURLVideos($args);
+    }
+    
+    /**
+     * onFlush
+     *
+     * @param  OnFlushEventArgs $eventArgs
+     * @return void
+     */
+    public function onFlush(OnFlushEventArgs $eventArgs)
+    {
+        // Get entityManager from EventArgs.
+        $em = $eventArgs->getObjectManager();
+
+        // Call getUnitOfWork method to modify the collection of images.
+        $uow = $em->getUnitOfWork();
+
+        // Method return all collection modified.
+        foreach ($uow->getScheduledCollectionUpdates() as $col) {
+            // Pattern to rewrite youtube URL with Embed.
+            $pattern = '%^ (?:https?://)? (?:www\.)? (?: youtu\.be/ | youtube\.com (?: /embed/ | /v/ | /watch\?v= ) ) ([\w-]{10,12}) $%x';
+
+            // Test if $value is Video entity then set the new value.
+            foreach ($col as $value) {
+                if ($value instanceof Video) {
+                    // dump($value->getName());
+                    preg_match($pattern, $value->getName(), $matches);
+
+                    $id = $matches[1] ?? ''; // condition necessary bug undefinied array Key
+                    $newUrl = 'https://www.youtube.com/embed/'.$id;
+                    $value->setName($newUrl);
+
+                    // Changing primitive fields or associations requires you to explicitly trigger a re-computation of the changeset of the affected entity.
+                    $uow->recomputeSingleEntityChangeSet($col->getTypeClass(), $value);
+                }
+            }
+        }
     }
 
     /**
@@ -93,31 +144,5 @@ class TrickSubscriber implements EventSubscriberInterface
         $slugTrickName = new AsciiSlugger();
         $slugName = $slugTrickName->slug($entity->getName());
         $entity->setSlug((string) $slugName);
-    }
-
-    /**
-     * reformatURLVideos
-     * Use Regex expression to get id's video from youtube then recreate a create URL with EMBED.
-     *
-     * @param mixed $args
-     */
-    private function reformatURLVideos(LifecycleEventArgs $args): void
-    {
-        $entity = $args->getObject();
-
-        if (!$entity instanceof Trick) {
-            return;
-        }
-
-        $pattern = '%^ (?:https?://)? (?:www\.)? (?: youtu\.be/ | youtube\.com (?: /embed/ | /v/ | /watch\?v= ) ) ([\w-]{10,12}) $%x';
-        foreach ($entity->getVideos() as $video) {
-            // matches[1] return code, 0 return full url
-
-            preg_match($pattern, $video->getName(), $matches);
-
-            $id = $matches[1] ?? ''; // condition necessary bug undefinied array Key
-            $newUrl = 'https://www.youtube.com/embed/'.$id;
-            $video->setName($newUrl);
-        }
     }
 }

@@ -80,6 +80,7 @@ class RegistrationController extends AbstractController
     /**
      * verifiedEmail.
      * Function who check if User exist then set to 1 User field isVerified by the mail confirmation.
+     * 
      * @param  Request $request
      * @param  UserRepository $userRepo
      * @param  EntityManagerInterface $entityManager
