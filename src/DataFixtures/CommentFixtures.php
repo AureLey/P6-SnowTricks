@@ -25,21 +25,17 @@ class CommentFixtures extends Fixture implements DependentFixtureInterface
      */
     public function load(ObjectManager $manager): void
     {
-        // Picture
-        $tricks = [
-            '50-50', 'boardslide', 'Lipslide', 'Back Flip', 'Front Flip',
-            'Wildcat', 'Tamedog', 'Backside Misty', 'Beef Carpaccio', 'Beef Curtains',
-            'Bloody Dracula', 'Drunk Driver', 'Japan Air',
-        ];
+        // Files with data in array
+        require 'DataTricks.php';
 
-        foreach ($tricks as $value) {
+        foreach ($tricks as $key => $value) {
             for ($j = 0; $j <= rand(1, 4); ++$j) {
                 $now = new \DateTime('now');
                 $comment = new Comment();
                 $comment->setContent('Lorem ipsum, dolor sit amet consectetur adipisicing elit.');
                 $comment->setCreatedAt($now);
                 $comment->setCommentUser($this->getReference(AppFixtures::ADMIN_USER_REFERENCE));
-                $comment->setCommentTrick($this->getReference($value));
+                $comment->setCommentTrick($this->getReference($key));
 
                 $manager->persist($comment);
             }

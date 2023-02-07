@@ -33,10 +33,6 @@ footer {
   padding-bottom: 0.3rem;
 }
 
-#card-homepage:nth-child(-n+8) {
-  display:block;
-}
-
 
 .masthead {
   position: relative;

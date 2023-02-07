@@ -49,20 +49,23 @@
 		{% endif %}
 
 <script>
-  var wraper = document.querySelectorAll('#card-homepage');
-  var button = document.querySelector('#load');
-  var currentimg = 4
-  button.addEventListener('click',
-    function(){
-        for(var i = currentimg; i < currentimg +4; i++) {
-              if(wraper[i]) {
-                wraper[i].style.display = 'block';
-              }
-        }
-        currentimg += 4;
-        if(currentimg >=wraper.length){
-          event.target.style.display ='none';
-        }
-    });
+document.addEventListener("DOMContentLoaded", function() {
+	var wraper = document.querySelectorAll('#card-homepage');
+	var button = document.querySelector('#load');
+	var currentimg = 0
+	var displayer = function(){
+			for(var i = currentimg; i < currentimg +4; i++) {
+				if(wraper[i]) {
+					wraper[i].style.display = 'block';
+				}
+			}
+			currentimg += 4;
+			if(currentimg >=wraper.length){
+			event.target.style.display ='none';
+			}
+		}
+	displayer();
+	button.addEventListener('click',displayer);
+	});
 </script>
 {% endblock %}

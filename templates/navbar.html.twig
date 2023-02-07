@@ -19,7 +19,7 @@
 				<li id="navmenutext" class="nav-item active">
 					<a class="nav-link" href="{{path('homepage')}}">Home</a>
 				</li>
-				{% if  app.user %}
+				{% if not app.user %}
 					{# responsive logout #}
 					<li id="navicon" class="nav-item">
 						<a class="nav-link" href="{{path('signin')}}">
@@ -31,7 +31,10 @@
 						<a class="nav-link" href="{{path('signin')}}">Signin</a>
 					</li>
 					<li id="navmenutext" class="nav-item">
-						<a class="nav-link" href="{{path('signup')}}">Signup</a>
+						<a class="nav-link" href="{{path('app_signup')}}">Signup</a>
+					</li>
+					<li id="navmenutext" class="nav-item">
+						<a class="nav-link" href="{{path('new_trick')}}">New Trick</a>
 					</li>
 				{% else %}
 					<li id="navmenutext" class="nav-item">
