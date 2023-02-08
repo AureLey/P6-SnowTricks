@@ -18,14 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends AbstractController
-{
-    #[Route('/signin', name: 'signin')]
-    public function signin(): Response
-    {
-        return $this->render('formPage/signin.html.twig', [
-            'controller_name' => 'UserController',
-        ]);
-    }
+{   
 
     #[Route('/forgot_password', name: 'forgotpassword')]
     public function forgotPassword(): Response
@@ -41,18 +34,5 @@ class UserController extends AbstractController
         return $this->render('formPage/resetpassword.html.twig', [
             'controller_name' => 'UserController',
         ]);
-    }
-
-    #[Route('/signup', name: 'signup')]
-    public function signup(): Response
-    {
-        return $this->render('formPage/signup.html.twig', [
-            'controller_name' => 'UserController',
-        ]);
-    }
-
-    #[Route('/', name: 'logout')]
-    public function logout()
-    {
     }
 }

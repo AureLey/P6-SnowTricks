@@ -4,29 +4,25 @@
 			class="card-body">
 			<!-- Comment form-->
 			{% if app.user %}
-				<form class="mb-4">
-					<textarea class="form-control" rows="3" placeholder="Join the discussion and leave a comment!"></textarea>
+				{{form_start(commentForm)}}
+					{{form_row(commentForm.content, 
+						{'label' : 'Comment',
+						 			'attr':{'class' :  'form-control',
+											'rows'  : '3',
+						}})}}
 					<button class="btn btn-success mt-3" type="submit">Envoyez</button>
-				</form>
+				{{form_end(commentForm)}}
 			{% else %}
 				<div class="btn-comment trick-comment border-bottom pb-3">
-					<a href="{{path('signin')}}" class="btn btn-success btn-sm">
-						<h3>Sign-in</h3>
+					<a href="{{path('app_login')}}" class="btn btn-success btn-sm">
+						<h3>Login</h3>
 					</a>
-					<a href="{{path('signup')}}" class="btn btn-success btn-sm">
+					<a href="{{path('app_signup')}}" class="btn btn-success btn-sm">
 						<h3>Sign-up</h3>
 					</a>
 				</div>
 			{% endif %}
-			<!-- Comment with nested comments-->
-			<div
-				class="d-flex my-4">{# <!-- Parent comment-->
-					            <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..."></div>
-					            <div class="ms-3">
-					                <div class="fw-bold">Commenter Name</div>
-					                If you're going to lead a space frontier, it has to be government; it'll never be private enterprise. Because the space frontier is dangerous, and it's expensive, and it has unquantified risks.
-					            </div> #}
-			</div>
+			<!-- Comment with nested comments-->			
 			{% for comment in trick.comments %}
 				<!-- Single comment-->
 				<div class="d-flex my-3">

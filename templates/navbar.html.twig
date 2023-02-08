@@ -22,13 +22,13 @@
 				{% if not app.user %}
 					{# responsive logout #}
 					<li id="navicon" class="nav-item">
-						<a class="nav-link" href="{{path('signin')}}">
+						<a class="nav-link" href="{{path('app_login')}}">
 							<i class="bi bi-box-arrow-in-right"></i>
 						</a>
 					</li>
 					{# endresponsive logout #}
 					<li id="navmenutext" class="nav-item">
-						<a class="nav-link" href="{{path('signin')}}">Signin</a>
+						<a class="nav-link" href="{{path('app_login')}}">Signin</a>
 					</li>
 					<li id="navmenutext" class="nav-item">
 						<a class="nav-link" href="{{path('app_signup')}}">Signup</a>
@@ -41,11 +41,11 @@
 						<a class="nav-link" href="{{path('new_trick')}}">New Trick</a>
 					</li>
 					<li id="navmenutext" class="nav-item">
-						<a class="nav-link" href="{{path('logout')}}">Logout</a>
+						<a class="nav-link" href="{{path('app_logout')}}">Logout</a>
 					</li>
 					{# end responsive logout #}
 					<li id="navicon" class="nav-item">
-						<a class="nav-link" href="{{path('signin')}}">
+						<a class="nav-link" href="{{path('app_signup')}}">
 							<i class="bi bi-box-arrow-right"></i>
 						</a>
 					</li>

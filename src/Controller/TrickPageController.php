@@ -13,21 +13,22 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Entity\Trick;
+use DateTime;
 use App\Entity\User;
+use App\Entity\Trick;
+use App\Entity\Comment;
+use App\Form\CommentFormType;
 use App\Form\TrickFormType;
-use App\Repository\ImageRepository;
-use App\Repository\UserRepository;
 use App\Service\FileUploader;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Repository\UserRepository;
+use App\Repository\ImageRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Form;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Routing\Annotation\Route;;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class TrickPageController extends AbstractController
 {
@@ -52,12 +53,8 @@ class TrickPageController extends AbstractController
      */
 
 
-    public function newTrick(Request $request, EntityManagerInterface $entityManager, UserRepository $repo): Response
-    {
-        // CREATE USER
-        $user = new User();
-        $user = $repo->findBy(['email' => 'admin@admin.com']);
-        $user = $user[0];
+    public function newTrick(Request $request, EntityManagerInterface $entityManager): Response
+    {        
 
         $trick = new Trick();
         $form = $this->createForm(TrickFormType::class, $trick)->handleRequest($request);
@@ -69,8 +66,8 @@ class TrickPageController extends AbstractController
             // Call Private function  set FeaturedImage to the trick.
             $this->SetFeaturedImageFile($form->get('featuredImage')->getData(), $trick);
 
-            $trick->setUser($user);
-            // $trick  ->setUser($this->getUser());
+            // Link Trick to the trick.
+            $trick->setUser($this->getUser());
 
             $entityManager->persist($trick);
             $entityManager->flush();
@@ -90,11 +87,28 @@ class TrickPageController extends AbstractController
     /**
      * showTrick.
      */
-    public function showTrick(Trick $trick): Response
+    public function showTrick(Trick $trick,Request $request, EntityManagerInterface $entityManager): Response
     {
+
+        // Create comment object.
+        $comment = new Comment();
+
+        // Create the form and handle the request
+        $form = $this->createForm(CommentFormType::class)->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $comment = $form->getData();
+            $comment->setCommentUser($this->getUser());
+            $comment->setCommentTrick($trick);            
+            
+            $entityManager->persist($comment);
+            $entityManager->flush();
+            return $this->redirectToRoute('trick_detail', ['slug' => $trick->getSlug()]);
+        }
         return $this->render('trickpage/trickpage.html.twig', [
             'controller_name' => 'TrickPageController',
             'trick' => $trick,
+            'commentForm' => $form->createView(),
         ]);
     }
 
@@ -130,11 +144,6 @@ class TrickPageController extends AbstractController
         // Get Images Collection to compare with new one and delete file if necessary.
         $oldImagesCollection = $repoImage->findBy(['trick' => $trick]);
 
-        // CREATE USER
-        $user = new User();
-        $user = $repoUser->findBy(['email' => 'admin@admin.com']);
-        $user = $user[0];
-
         $form = $this->createForm(TrickFormType::class, $trick)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -145,9 +154,9 @@ class TrickPageController extends AbstractController
 
             // Call Private function  set FeaturedImage to the trick.
             $this->SetFeaturedImageFile($form->get('featuredImage')->getData(), $trick);
-
-            $trick->setUser($user);
-            // $trick->setUser($this->getUser());
+            
+            // Link Trick to the trick.
+            $trick->setUser($this->getUser());
 
             $entityManager->persist($trick);
             $entityManager->flush();

@@ -11,7 +11,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace App\Controller;
+namespace App\Controller\Security;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
@@ -53,7 +53,7 @@ class RegistrationController extends AbstractController
             );
             $user->setPassword($hashedPassword);
             // Token Creation method in User.
-            $token = $user->tokenCreation($user->getId());
+            $token = $user->tokenCreation($user->getUsername());
             // set TokenValidation time.
             $date = new \DateTime('now');
 
@@ -119,10 +119,10 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
 
             // Return to the login page if everything works.
-            return $this->redirectToRoute('signin');
+            return $this->redirectToRoute('app_login');
         }
 
         // Back to signup page if something wrong.
-        return $this->redirectToRoute('signup');
+        return $this->redirectToRoute('app_signup');
     }
 }

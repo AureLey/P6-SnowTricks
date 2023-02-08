@@ -15,13 +15,14 @@ namespace App\EventListener;
 
 use App\Entity\Trick;
 use App\Entity\Video;
-use Doctrine\Bundle\DoctrineBundle\EventSubscriber\EventSubscriberInterface;
-use Doctrine\ORM\Event\OnFlushEventArgs;
+use App\Entity\Comment;
 use Doctrine\ORM\Events;
+use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Symfony\Component\String\Slugger\AsciiSlugger;
+use Doctrine\Bundle\DoctrineBundle\EventSubscriber\EventSubscriberInterface;
 
-class TrickSubscriber implements EventSubscriberInterface
+class EntitySubscriber implements EventSubscriberInterface
 {
 
     
@@ -47,6 +48,7 @@ class TrickSubscriber implements EventSubscriberInterface
     {
         $this->setDateTimeTrick($args);
         $this->setSlugTrick($args);
+        $this->setDateTimeComment($args);
     }
     
     /**
@@ -95,6 +97,22 @@ class TrickSubscriber implements EventSubscriberInterface
                 }
             }
         }
+    }
+    
+
+    /**
+     * setDateTimeComment
+     * Set createdAt to Comment.
+     */
+    private function setDateTimeComment(LifecycleEventArgs $args): void
+    {
+        $entity = $args->getObject();
+
+        if (!$entity instanceof Comment) {
+            return;
+        }
+
+        $entity->setCreatedAt(new \DateTime());        
     }
 
     /**
