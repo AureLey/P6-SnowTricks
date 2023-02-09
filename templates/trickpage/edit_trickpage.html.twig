@@ -24,8 +24,8 @@
 			{# Section Contenu Trick && Button #}
 			<section
 				class="row mx-auto col-8 pb-5">
-				{# Description Field && trick group #}
-				{% include 'trickpage/trickTemplate/_content.html.twig' with {'page': 'new' } %}
+				{# Description Field && trick group || Form field #}				
+				{% include 'trickpage/trickTemplate/_content.html.twig' with {'edit': true, 'update' : false } %}
 			</section>
 		</div>
 		{{form_end(trickform)}}

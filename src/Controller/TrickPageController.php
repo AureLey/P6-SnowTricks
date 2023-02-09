@@ -51,8 +51,7 @@ class TrickPageController extends AbstractController
      * @param  UserRepository $repo
      * @return Response
      */
-
-
+    
     public function newTrick(Request $request, EntityManagerInterface $entityManager): Response
     {        
 
@@ -75,7 +74,7 @@ class TrickPageController extends AbstractController
             return $this->redirectToRoute('trick_detail', ['slug' => $trick->getSlug()]);
         }
 
-        return $this->render('trickpage/newtrickpage.html.twig', [
+        return $this->render('trickpage/edit_trickpage.html.twig', [
             'controller_name' => 'TrickPageController',
             'trick' => $trick,
             'trickform' => $form->createView(),
@@ -87,16 +86,18 @@ class TrickPageController extends AbstractController
     /**
      * showTrick.
      */
+
     public function showTrick(Trick $trick,Request $request, EntityManagerInterface $entityManager): Response
     {
 
         // Create comment object.
         $comment = new Comment();
 
-        // Create the form and handle the request
+        // Create the form and handle the request about the comment.
         $form = $this->createForm(CommentFormType::class)->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
+            // Set link with User and Trick
             $comment = $form->getData();
             $comment->setCommentUser($this->getUser());
             $comment->setCommentTrick($trick);            
@@ -112,18 +113,23 @@ class TrickPageController extends AbstractController
         ]);
     }
 
-    #[Route('trick/delete/{slug}', name: 'delete_trick')]
+    #[Route('trick/delete/{id}', name: 'delete_trick')]
     /**
      * deleteTrick.
      */
 
-
     public function deleteTrick(Trick $trick, EntityManagerInterface $entityManager): Response
     {
+
+        // Check permission to delete via Voter function.
+        $this->denyAccessUnlessGranted('TRICK_DELETE', $trick);
+
+        // Check if the collection is not null and delete all files.
         if (null !== $trick->getImages()) {
             $this->deleteTrickRemoveImages($trick->getImages());
         }
 
+        // Check if the field FeaturedImage is not null and delete the file.
         if (null !== $trick->getFeaturedImage()) {
             $this->removeImageFile($trick->getFeaturedImage());
         }
@@ -138,9 +144,11 @@ class TrickPageController extends AbstractController
      * updateTrick.
      */
 
-
-    public function updateTrick(Trick $trick, Request $request, EntityManagerInterface $entityManager, UserRepository $repoUser, ImageRepository $repoImage): Response
+    public function updateTrick(Trick $trick, Request $request, EntityManagerInterface $entityManager, ImageRepository $repoImage): Response
     {
+
+        // Check permission to edit via Voter function.
+        $this->denyAccessUnlessGranted('TRICK_EDIT', $trick);
         // Get Images Collection to compare with new one and delete file if necessary.
         $oldImagesCollection = $repoImage->findBy(['trick' => $trick]);
 
@@ -164,7 +172,7 @@ class TrickPageController extends AbstractController
             return $this->RedirectToRoute('trick_detail', ['slug' => $trick->getSlug()]);
         }
 
-        return $this->render('trickpage/updatetrickpage.html.twig', [
+        return $this->render('trickpage/edit_trickpage.html.twig', [
             'controller_name' => 'TrickPageController',
             'trick' => $trick,
             'trickform' => $form->createView(),

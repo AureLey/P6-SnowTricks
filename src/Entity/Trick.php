@@ -26,6 +26,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class Trick
 {
+    /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="commentTrick")
+     * @ORM\OrderBy({"createdAt" = "DESC"})
+     */
+
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     #[ORM\Column]

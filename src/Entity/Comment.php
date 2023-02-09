@@ -16,9 +16,12 @@ namespace App\Entity;
 use App\Repository\CommentRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToMany;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
+
 /**
  * Comment.
  */
@@ -33,7 +36,7 @@ class Comment
     #[Assert\NotBlank(message: 'Too short comment')]
     private ?string $content = null;
 
-    #[ORM\Column]
+    #[ORM\Column]       
     private ?\DateTime $createdAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'comments')]

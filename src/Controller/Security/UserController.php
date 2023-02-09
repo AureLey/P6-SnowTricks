@@ -23,7 +23,7 @@ class UserController extends AbstractController
     #[Route('/forgot_password', name: 'forgotpassword')]
     public function forgotPassword(): Response
     {
-        return $this->render('formPage/forgotpassword.html.twig', [
+        return $this->render('form_user/forgotpassword.html.twig', [
             'controller_name' => 'UserController',
         ]);
     }
@@ -31,7 +31,7 @@ class UserController extends AbstractController
     #[Route('/reset_password', name: 'resetpassword')]
     public function resetPassword(): Response
     {
-        return $this->render('formPage/resetpassword.html.twig', [
+        return $this->render('form_user/resetpassword.html.twig', [
             'controller_name' => 'UserController',
         ]);
     }
