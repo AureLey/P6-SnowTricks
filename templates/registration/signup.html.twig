@@ -6,10 +6,10 @@
 			<div class="card cascading-right col-6 mx-auto text-center border">
 				<!--Gestion des erreurs -->
 				{# {% if error != empty %}<div class="alert alert-danger">{{ error }}</div>{% endif %} #}
-				<!--END Gestion des erreurs --><h2 class="fw-bold my-5"> Registration</h2>
+				<!--END Gestion des erreurs --><h2 class="fw-bold my-3"> Registration</h2>
 				{{form_start(formRegistration)}}
 					<!-- Username input -->
-					<div class="form-outline mb-4">
+					<div class="form-outline mb-2">
 						{{form_row(formRegistration.username, 
 						{'label' : 'Username',
 							'label_attr':{'class' :' text-white '},
@@ -17,7 +17,7 @@
 						<label class="form-label" for="Username">Username</label>
 					</div>
 					<!-- Email input -->
-					<div class="form-outline mb-4">
+					<div class="form-outline mb-2">
 						{{form_row(formRegistration.email, 
 						{'label' : 'Email',
 							'label_attr':{'class' :' text-white '},
@@ -26,7 +26,7 @@
 					</div>
 
 					<!-- Password input -->
-					<div class="form-outline mb-4">
+					<div class="form-outline mb-3">
 						{{form_row(formRegistration.password, 
 						{'label' : 'Password',
 							'label_attr':{'class' :' text-white '},
@@ -35,12 +35,12 @@
 					</div>
 
 					<!-- Submit button -->
-					<button type="submit" class="btn btn-primary btn-block mb-2">
+					<button type="submit" class="btn btn-primary btn-block mb-3">
 						Create an account
 					</button>
 				{{form_end(formRegistration)}}
 				<div id="already-account" class="mb-2">
-					<a href="{{path('signin')}}" class="fw-semibold fs-4">
+					<a href="{{path('app_login')}}" class="fw-semibold fs-4">
 						Already an account?</a>
 				</div>
 			</div>

@@ -5,50 +5,55 @@
 			<ul
 				class="navbar-nav mr-auto">
 				{# responsive menu #}
+				{# house icone to homepage #}
 				<li id="navicon" class="nav-item">
 					<a class="nav-link" href="{{path('homepage')}}">
 						<i class="bi bi-house-fill"></i>
 					</a>
 				</li>
+				{# bookmark icone to create new trick if connected #}
+				{% if is_granted('ROLE_USER') %}
 				<li id="navicon" class="nav-item">
-					<a class="nav-link" href="#">
+					<a class="nav-link" href="{{path('new_trick')}}">
 						<i class="bi bi-bookmark-fill"></i>
 					</a>
 				</li>
+				{# responsive logout #}
+				<li id="navicon" class="nav-item">
+					<a class="nav-link" href="{{path('app_logout')}}">
+						<i class="bi bi-box-arrow-in-right"></i>
+					</a>
+				</li>
+				{# endresponsive logout #}
+				{% else %}
+					<li id="navicon" class="nav-item">
+					<a class="nav-link" href="{{path('app_signup')}}">
+						<i class="bi bi-box-arrow-in-right"></i>
+					</a>
+				</li>
+				{% endif %}
+					
+
 				{# endresponsive menu #}
+				{# NavBar top #}
 				<li id="navmenutext" class="nav-item active">
 					<a class="nav-link" href="{{path('homepage')}}">Home</a>
 				</li>
-				{% if not app.user %}
-					{# responsive logout #}
-					<li id="navicon" class="nav-item">
-						<a class="nav-link" href="{{path('signin')}}">
-							<i class="bi bi-box-arrow-in-right"></i>
-						</a>
-					</li>
-					{# endresponsive logout #}
+				{% if is_granted('ROLE_USER')  %}
 					<li id="navmenutext" class="nav-item">
-						<a class="nav-link" href="{{path('signin')}}">Signin</a>
+						<a class="nav-link" href="{{path('new_trick')}}">New Trick</a>
+					</li>
+					<li id="navmenutext" class="nav-item">
+						<a class="nav-link" href="{{path('app_logout')}}">Logout</a>
+					</li>
+										
+				{% else %}
+					<li id="navmenutext" class="nav-item">
+						<a class="nav-link" href="{{path('app_login')}}">Login</a>
 					</li>
 					<li id="navmenutext" class="nav-item">
 						<a class="nav-link" href="{{path('app_signup')}}">Signup</a>
-					</li>
-					<li id="navmenutext" class="nav-item">
-						<a class="nav-link" href="{{path('new_trick')}}">New Trick</a>
-					</li>
-				{% else %}
-					<li id="navmenutext" class="nav-item">
-						<a class="nav-link" href="{{path('new_trick')}}">New Trick</a>
-					</li>
-					<li id="navmenutext" class="nav-item">
-						<a class="nav-link" href="{{path('logout')}}">Logout</a>
-					</li>
-					{# end responsive logout #}
-					<li id="navicon" class="nav-item">
-						<a class="nav-link" href="{{path('signin')}}">
-							<i class="bi bi-box-arrow-right"></i>
-						</a>
-					</li>
+					</li>					
 				{% endif %}
 			</ul>
 		</div>

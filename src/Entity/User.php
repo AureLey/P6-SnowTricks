@@ -20,6 +20,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: 'email', message: 'Email already used', )]
@@ -34,13 +35,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
+    #[Assert\NotBlank(message: 'Too short Username')]
     private ?string $username = null;
 
     #[ORM\Column(length: 255, unique: true)]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(min: 6, minMessage: 'Your password is too short')]
     private ?string $password = null;
 
     #[ORM\Column(type: 'json')]
@@ -343,14 +346,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * tokenCreation
      *
-     * @param  int $id
+     * @param  string $username
      * @return string
      */
-    public function tokenCreation(int $id): string
+    public function tokenCreation(string $username): string
     {
         $date = new \DateTime('now');
         $date = $date->format('Y-m-d H:i:s');
-        $key = $date.$id;
+        $key = $date.$username;
         $key = md5($key);
 
         return $key;

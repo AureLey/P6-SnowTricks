@@ -15,7 +15,7 @@ class UserControllerTest extends WebTestCase
         $client = static::createClient();        
         
         // Request a specific page
-        $client->request('GET', '/signin');
+        $client->request('GET', '/app_login');
 
         $this->assertResponseStatusCodeSame(Response::HTTP_OK);
         // $this->assertTrue(true);

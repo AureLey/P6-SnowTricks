@@ -29,7 +29,7 @@ services:
             $targetDirectory: '%images_directory%'
     
 
-    App\EventListener\TrickSubscriber:
+    App\EventListener\EntitySubscriber:
         tags:
             - name: 'doctrine.event_subscriber'
 

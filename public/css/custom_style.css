@@ -166,6 +166,9 @@ i {
   flex-wrap: wrap;
 }
 
+#comment {
+  display:none;  
+}
 
 /* SIGN PAGE */
 .form-container {
@@ -226,6 +229,12 @@ i {
     display: block;
   }
 
+  #already-account,
+  #register {
+    visibility: visible;
+    display: block;
+  }
+
   #collapseExample >div {
     flex-direction: column;
   }
@@ -268,12 +277,6 @@ i {
     margin-left: 0.5rem;
     margin-right: 0.5rem;
     font-size: 20px;
-  }
-
-  #already-account,
-  #register {
-    visibility: visible;
-    display: block;
   }
 
   .form-container {

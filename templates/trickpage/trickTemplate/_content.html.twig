@@ -1,9 +1,27 @@
-{% if page == 'show' %}
+{% if edit %}
+	{# --------------------------------------NEW Trick------------------------------------------------------------- #}
+	<div class="form-floating my-4">
+		{{form_row(trickform.content, {'label' : false,'attr':{'class' :  'form-control' }})}}
+	</div>
+	<div class="trick-group">
+		<div class="form-floating col-6 my-3">
+			{{ form_row(trickform.groupTrick,{'label' : false,'attr':{'class' :  'form-select'} })}}
+		</div>
+		<div class="my-3">
+			<button type="submit" class="btn btn-success btn-sm mx-2">Save</button>
+			{# In Update modification add Delete Button #}
+			{% if update %}
+				<a href="{{path('delete_trick',{'id' : trick.id })}}" class="btn btn-danger btn-sm mx-2" onclick="return window.confirm('Do you want to delete this trick permanently?')">
+					Delete
+				</a>
+			{% endif %}
+		</div>
+	</div>
+{% else %}
 	{# --------------------------------------SHOW Trick------------------------------------------------------------- #}
 	{# Field Content #}
-		<div class="content my-4"> <p class="fw-bold">
-			<h3>Trick description :</h3>
-		</p>
+	<div class="content my-4"> 
+		<p class="fw-bold"><h3>Trick description :</h3></p>
 		<p>{{trick.content}}</p>
 	</div>
 	{# Field Group && Date #}
@@ -17,43 +35,4 @@
 		</div>
 	</div>
 
-{% endif %}
-{% if page =='new' %}
-	{# --------------------------------------NEW Trick------------------------------------------------------------- #}
-	<div class="form-floating my-4">
-		{{form_row(trickform.content, {'label' : false,'attr':{'class' :  'form-control' }})}}
-	</div>
-	<div class="trick-group">
-		<div class="form-floating col-6 my-3">
-			{{ form_row(trickform.groupTrick,{'label' : false,'attr':{'class' :  'form-select'} })}}
-		</div>
-		<div class="my-3">
-			<button type="submit" class="btn btn-success btn-sm mx-2">Save</button>
-		</div>
-	</div>
-
-
-{% endif %}
-
-{% if page == 'update' %}
-	{# --------------------------------------UPDATE Trick------------------------------------------------------------- #}
-	{# Update Field Content && Group #}
-		<div
-		class="form-floating my-4"> {# Description content of trick #}
-		{{form_row(trickform.content, {'label' : false,'attr':{'class' :  'form-control' }})}}
-	</div>
-	<div class="trick-group">
-		<div class="form-floating col-6">
-			{{ form_row(trickform.groupTrick,{'label' : false,'attr':{'class' :  'form-select'} })}}
-		</div>
-		<div
-			class="my-3">
-			{# Button Save Delete #}
-			<button type="submit" class="btn btn-success btn-sm mx-2">Save</button>
-
-			<a href="{{path('delete_trick',{'slug' : trick.slug })}}" class="btn btn-danger btn-sm mx-2" onclick="return window.confirm('Do you want to delete this trick permanently?')">
-				Delete
-			</a>
-		</div>
-	</div>
 {% endif %}

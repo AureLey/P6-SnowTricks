@@ -14,9 +14,13 @@
 			{# On affiche le bouton media qui permet de load les media en responsive #}
 			<section id="see-media">
 				<div class="button-load-more text-center mb-5">
-					<a class="btn btn-sm rounded text-light bg-dark px-5 py-3" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-						See media
-					</a>
+					{% if trick.videos is empty and trick.images is empty %}
+						<p class="fw-bold"><h3>No Media </h3></p>
+					{% else %}
+						<a class="btn btn-sm rounded text-light bg-dark px-5 py-3" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+							See media
+						</a>
+					{% endif %}
 				</div>
 			</section>
 			<section id="gallery">
@@ -38,7 +42,8 @@
 			<section
 				class="row mx-auto col-10 pb-5">
 				{# Description Field && trick group #}
-				{% include 'trickpage/trickTemplate/_content.html.twig' with {'page': 'show' } %}
+				{# {% include 'trickpage/trickTemplate/_content.html.twig' with {'page': 'show' } %} #}
+				{% include 'trickpage/trickTemplate/_content.html.twig' with {'edit': false, 'update' : false } %}
 			</section>
 		</div>
 
@@ -47,4 +52,24 @@
 			{% include 'comment/comment_trick.html.twig' %}
 		</section>
 	</div>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+	var wraperComment = document.querySelectorAll('#comment');
+	var button = document.querySelector('#load-more');
+	var currentimg = 5
+	var displayer = function(){
+			for(var i = currentimg; i < currentimg +5; i++) {
+				if(wraperComment[i]) {
+					wraperComment[i].style.display = 'block';
+				}
+			}
+			currentimg += 5;
+			if(currentimg >=wraperComment.length){
+			event.target.style.display ='none';
+			}
+		}
+	displayer();
+	button.addEventListener('click',displayer);
+	});
+</script>
 {% endblock %}

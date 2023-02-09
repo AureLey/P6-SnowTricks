@@ -9,7 +9,7 @@
 
 		<div
 			class="content-trick mt-4">
-			{# --------------------Gallery links--------------------- #}
+			{# --------------------Gallery --------------------- #}
 			<section id="gallery">
 				<div class="row container justify-content-center">
 					{% include 'trickpage/trickTemplate/_formMedia.html.twig' with {'trickform': trickform }  %}
@@ -17,15 +17,15 @@
 			</section>
 
 			{# Modal pour afficher les images #}
-			{{ include("trickpage/trickTemplate/_modal.html.twig")}}
+			{{ include("trickpage/trickTemplate/_modal.html.twig")}}			
 			{# --------------------------------  GALLERY UPDATE  ----------------------------------------- #}
 
 
 			{# Section Contenu Trick && Button #}
 			<section
 				class="row mx-auto col-8 pb-5">
-				{# Description Field && trick group #}
-				{% include 'trickpage/trickTemplate/_content.html.twig' with {'page': 'update' } %}
+				{# Description Field && trick group || Form field #}				
+				{% include 'trickpage/trickTemplate/_content.html.twig' with {'edit': true, 'update' : false } %}
 			</section>
 		</div>
 		{{form_end(trickform)}}
