@@ -40,4 +40,19 @@ class MailerService
         // On envoie le mail
         $this->mailer->send($email);
     }
+
+    public function sendReset(User $user)
+    {
+        $email = (new TemplatedEmail())
+            ->from('SnowTricks@delaneige.com')
+            ->to($user->getEmail())
+            ->subject('Reset password')
+            ->htmlTemplate('form_user/_mail_reset.html.twig')
+            ->context([
+                'user' => $user,
+            ]);
+
+        // On envoie le mail
+        $this->mailer->send($email);
+    }
 }

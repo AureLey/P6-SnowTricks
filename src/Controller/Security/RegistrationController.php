@@ -53,7 +53,7 @@ class RegistrationController extends AbstractController
             );
             $user->setPassword($hashedPassword);
             // Token Creation method in User.
-            $token = $user->tokenCreation($user->getUsername());
+            $token = $user->tokenRegistration($user->getUsername());
             // set TokenValidation time.
             $date = new \DateTime('now');
 
@@ -113,8 +113,10 @@ class RegistrationController extends AbstractController
 
         if ($existingUser->verificationTokenTime($existingUser->getTokenValidation(), $dateValidation)) {
             // Set and persist new status of isVerified in User ExistingUser.
-            $existingUser->setIsVerified(true);
-
+            $existingUser->setIsVerified(true)
+                         ->setTokenValidation(null)
+                         ->setToken(null);
+            // Set token field to null.
             $entityManager->persist($existingUser);
             $entityManager->flush();
 

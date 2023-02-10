@@ -344,18 +344,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
     
     /**
-     * tokenCreation
+     * tokenRegistration
      *
      * @param  string $username
      * @return string
      */
-    public function tokenCreation(string $username): string
+    public function tokenRegistration(string $username): string
     {
         $date = new \DateTime('now');
         $date = $date->format('Y-m-d H:i:s');
         $key = $date.$username;
         $key = md5($key);
 
+        return $key;
+    }
+
+    /**
+     * tokenReset
+     *
+     * @param  string $username
+     * @return string
+     */
+    public function tokenReset(int $id): string
+    {
+        // Pick datetime to multiple with $id then take the result andconvert it into md5.
+        $date = new \DateTime('now');        
+        $date = $date->format('Y-m-d H:i:s');
+        $key = strtotime($date) * $id;        
+        $key = md5((string)$key);
+        
         return $key;
     }
 
