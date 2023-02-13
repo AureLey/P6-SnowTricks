@@ -18,7 +18,7 @@
 							'label_attr':{'class' :' text-white '},
 							'attr':{'class' :  'form-control'}})}}
 							{# set remove button if Image not null #}
-							{% if trick.featuredImage is not null %}
+							{% if trick.featuredImage is not null %}							
 							<div class="input-group-lg text-bold text-light"> 
 								Remove Featured Image : 
 								<a href="{{ path('delete_featuredImage',{'slug' : trick.slug })}}" class="btn btn-danger btn-sm mx-2">

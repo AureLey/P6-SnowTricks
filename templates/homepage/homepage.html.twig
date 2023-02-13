@@ -1,6 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+	
+	{% for label, messages in app.flashes() %}
+		{% for message in messages %}
+			<div class="alert alert-{{ label }} flash flash-homepage" role="alert">
+				{{ message }}
+			</div>
+		{% endfor %}
+	{% endfor %}
 	<div class="masthead">
 		{{ include("homepage/_hero.html.twig")}}
 		<section id="cards-tricks" class="d-flex mt-5">
@@ -8,7 +16,7 @@
 				<div class="row gx-0">
 					{% for trick in tricks %}
 						<div class="col-lg-3">
-							<div id='card-homepage' class="card my-4 mx-3">
+							<div  class="card-homepage card my-4 mx-3">
 								<a class="img-card text-decoration-none text-dark" href="{{ path('trick_detail',{'slug' : trick.slug })}}">
 									{% if trick.featuredImage is not null %}
 										<img src="{{asset('images/'~trick.featuredImage)}}" class="card-img-top mb-3" alt="Snowboard trick"/>
@@ -52,7 +60,7 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-	var wraper = document.querySelectorAll('#card-homepage');
+	var wraper = document.querySelectorAll('.card-homepage');
 	var button = document.querySelector('#load');
 	var currentimg = 0
 	var displayer = function(){

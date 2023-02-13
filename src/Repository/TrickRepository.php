@@ -27,19 +27,13 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class TrickRepository extends ServiceEntityRepository
 {
-
-
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Trick::class);
     }
 
-
     /**
      * save.
-     * 
-     * @param Trick $entity
-     * @return void
      */
     public function save(Trick $entity, bool $flush = false): void
     {
@@ -52,9 +46,6 @@ class TrickRepository extends ServiceEntityRepository
 
     /**
      * remove.
-     *  
-     * @param Trick $entity
-     * @return void
      */
     public function remove(Trick $entity, bool $flush = false): void
     {
@@ -64,5 +55,4 @@ class TrickRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-    
 }

@@ -9,7 +9,14 @@
 				<!--END Gestion des erreurs -->
 				{% if error %}
 					<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-				{% endif %}
+				{% endif %}	
+				{% for label, messages in app.flashes() %}
+					{% for message in messages %}
+						<div class="alert alert-{{ label }} flash" role="alert">
+							{{ message }}
+						</div>
+					{% endfor %}
+				{% endfor %}			
 				<h2 class="fw-bold my-5">Login</h2>
 				<form
 					action="{{ path('app_login') }}" method="post">
@@ -38,7 +45,7 @@
 
 					<!-- Submit button -->
 					<button type="submit" class="btn btn-primary btn-block my-2">
-						Se connecter
+						Login
 					</button>
 				</form>
 			</div>

@@ -23,14 +23,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
 #[UniqueEntity(fields: 'name', message: 'Trick already exist', )]
-
 class Trick
 {
     /**
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="commentTrick")
      * @ORM\OrderBy({"createdAt" = "DESC"})
      */
-
     #[ORM\Id]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     #[ORM\Column]
@@ -62,6 +60,7 @@ class Trick
     private ?Group $groupTrick = null;
 
     #[ORM\OneToMany(mappedBy: 'commentTrick', targetEntity: Comment::class, orphanRemoval: true)]
+    #[ORM\OrderBy(['createdAt' => 'DESC'])]
     private Collection $comments;
 
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Image::class, cascade: ['all'], orphanRemoval: true)]

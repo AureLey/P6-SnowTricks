@@ -29,7 +29,6 @@ class MailerService
     public function sendConfirmation(User $user)
     {
         $email = (new TemplatedEmail())
-            ->from('SnowTricks@delaneige.com')
             ->to($user->getEmail())
             ->subject('Registration Confirmation')
             ->htmlTemplate('registration/_mailVerified.html.twig')
@@ -44,7 +43,6 @@ class MailerService
     public function sendReset(User $user)
     {
         $email = (new TemplatedEmail())
-            ->from('SnowTricks@delaneige.com')
             ->to($user->getEmail())
             ->subject('Reset password')
             ->htmlTemplate('form_user/_mail_reset.html.twig')

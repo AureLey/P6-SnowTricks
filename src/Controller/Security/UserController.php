@@ -14,16 +14,16 @@ declare(strict_types=1);
 namespace App\Controller\Security;
 
 use App\Entity\User;
-use App\Service\MailerService;
-use App\Repository\UserRepository;
-use App\Form\ResetPasswordFormType;
 use App\Form\ForgotPasswordFormType;
+use App\Form\ResetPasswordFormType;
+use App\Repository\UserRepository;
+use App\Service\MailerService;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends AbstractController
 {
@@ -48,7 +48,7 @@ class UserController extends AbstractController
             // If user exist continue
             if ($user) {
                 // Token Creation method in User.
-                $token = $user->tokenReset($user->getId());
+                $token = $user->creationTokenReset($user->getId());
                 // set TokenValidation time.
                 $date = new \DateTime('now');
 
@@ -62,14 +62,10 @@ class UserController extends AbstractController
                 // Persist and flush.
                 $entityManager->persist($user);
                 $entityManager->flush();
-
-                return $this->redirectToRoute('homepage');
             }
+            $this->addFlash('success', 'Check your Mailbox!');
 
-            // Return error and redirect to Login page.
-            $this->addFlash('danger', 'Wrong informations');
-
-            return $this->redirectToRoute('app_login');
+            return $this->redirectToRoute('homepage');
         }
 
         return $this->render('form_user/forgotpassword.html.twig', [
@@ -85,7 +81,7 @@ class UserController extends AbstractController
         UserRepository $userRepo,
         UserPasswordHasherInterface $passwordHasher,
         EntityManagerInterface $entityManager): Response
-    {        
+    {
         // Query with username parameters and set existingUser var.
         $user = $userRepo->findOneBy(['token' => $token]);
 
@@ -95,29 +91,39 @@ class UserController extends AbstractController
             return $this->redirectToRoute('homepage');
         }
 
-        if($user){
-            // Form creation and handleRequest.
-            $formReset = $this->createForm(ResetPasswordFormType::class)->handleRequest($request);
+        if ($user) {
+            // set TokenValidation time.
+            $date = new \DateTime('now');
+            if ($user->verificationTokenTime($date, $user->getTokenValidation())) {
+                // Form creation and handleRequest.
+                $formReset = $this->createForm(ResetPasswordFormType::class)->handleRequest($request);
 
-            if ($formReset->isSubmitted() && $formReset->isValid()) {
-                // Get password
-                $plaintextPassword = $formReset->get('password')->getData();
-                // Hash the password (based on the security.yaml config for the $user class).
-                $hashedPassword = $passwordHasher->hashPassword($user, $plaintextPassword);
+                if ($formReset->isSubmitted() && $formReset->isValid()) {
+                    // Get password
+                    $plaintextPassword = $formReset->get('password')->getData();
+                    // Hash the password (based on the security.yaml config for the $user class).
+                    $hashedPassword = $passwordHasher->hashPassword($user, $plaintextPassword);
 
-                $user->setToken(null)
-                    ->setTokenValidation(null)
-                    ->setPassword($hashedPassword);
+                    $user->setToken(null)
+                        ->setTokenValidation(null)
+                        ->setPassword($hashedPassword);
 
-                $entityManager->persist($user);
-                $entityManager->flush();
-                return $this->redirectToRoute('homepage');
+                    $entityManager->persist($user);
+                    $entityManager->flush();
+
+                    $this->addFlash('success', 'Password is reset!');
+
+                    return $this->redirectToRoute('homepage');
+                }
+
+                return $this->render('form_user/resetpassword.html.twig', [
+                    'controller_name' => 'UserController',
+                    'formReset' => $formReset->createView(),
+                    ]);
             }
-            return $this->render('form_user/resetpassword.html.twig', [
-            'controller_name' => 'UserController',
-            'formReset' => $formReset->createView(),
-            ]);
+            $this->addFlash('danger', 'Token not valid');
+            // Should return message dont' exist.
+            return $this->redirectToRoute('homepage');
         }
-        
     }
 }

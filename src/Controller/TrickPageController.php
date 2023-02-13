@@ -13,48 +13,37 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use DateTime;
-use App\Entity\User;
-use App\Entity\Trick;
 use App\Entity\Comment;
+use App\Entity\Trick;
+use App\Entity\User;
 use App\Form\CommentFormType;
 use App\Form\TrickFormType;
-use App\Service\FileUploader;
-use App\Repository\UserRepository;
 use App\Repository\ImageRepository;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Service\FileUploader;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\Routing\Annotation\Route;;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Annotation\Route;
 
 class TrickPageController extends AbstractController
 {
     // Inject Service FileUploader.
     private FileUploader $fileUploader;
 
-
     public function __construct(FileUploader $fileUploader)
     {
         $this->fileUploader = $fileUploader;
     }
 
-
     #[Route('/trick/new', name: 'new_trick')]
-    /**    
+    /**
      * creation trick function.
-     * 
-     * @param  Request $request
-     * @param  EntityManagerInterface $entityManager
-     * @param  UserRepository $repo
-     * @return Response
      */
-    
     public function newTrick(Request $request, EntityManagerInterface $entityManager): Response
-    {        
-
+    {
         $trick = new Trick();
         $form = $this->createForm(TrickFormType::class, $trick)->handleRequest($request);
 
@@ -70,8 +59,9 @@ class TrickPageController extends AbstractController
 
             $entityManager->persist($trick);
             $entityManager->flush();
+            $this->addFlash('success', 'Trick created!');
 
-            return $this->redirectToRoute('trick_detail', ['slug' => $trick->getSlug()]);
+            return $this->redirectToRoute('homepage');
         }
 
         return $this->render('trickpage/edit_trickpage.html.twig', [
@@ -79,33 +69,32 @@ class TrickPageController extends AbstractController
             'trick' => $trick,
             'trickform' => $form->createView(),
         ]);
-
     }
 
     #[Route('/trick/details/{slug}', name: 'trick_detail')]
     /**
      * showTrick.
      */
-
-    public function showTrick(Trick $trick,Request $request, EntityManagerInterface $entityManager): Response
+    public function showTrick(Trick $trick, Request $request, EntityManagerInterface $entityManager): Response
     {
-
         // Create comment object.
         $comment = new Comment();
 
         // Create the form and handle the request about the comment.
         $form = $this->createForm(CommentFormType::class)->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-
             // Set link with User and Trick
             $comment = $form->getData();
             $comment->setCommentUser($this->getUser());
-            $comment->setCommentTrick($trick);            
-            
+            $comment->setCommentTrick($trick);
+
             $entityManager->persist($comment);
             $entityManager->flush();
+            $this->addFlash('success', 'Comment posted!');
+
             return $this->redirectToRoute('trick_detail', ['slug' => $trick->getSlug()]);
         }
+
         return $this->render('trickpage/trickpage.html.twig', [
             'controller_name' => 'TrickPageController',
             'trick' => $trick,
@@ -117,10 +106,8 @@ class TrickPageController extends AbstractController
     /**
      * deleteTrick.
      */
-
     public function deleteTrick(Trick $trick, EntityManagerInterface $entityManager): Response
     {
-
         // Check permission to delete via Voter function.
         $this->denyAccessUnlessGranted('TRICK_DELETE', $trick);
 
@@ -135,6 +122,7 @@ class TrickPageController extends AbstractController
         }
         $entityManager->remove($trick);
         $entityManager->flush();
+        $this->addFlash('danger', 'Trick deleted!');
 
         return $this->RedirectToRoute('homepage');
     }
@@ -143,10 +131,8 @@ class TrickPageController extends AbstractController
     /**
      * updateTrick.
      */
-
     public function updateTrick(Trick $trick, Request $request, EntityManagerInterface $entityManager, ImageRepository $repoImage): Response
     {
-
         // Check permission to edit via Voter function.
         $this->denyAccessUnlessGranted('TRICK_EDIT', $trick);
         // Get Images Collection to compare with new one and delete file if necessary.
@@ -162,12 +148,13 @@ class TrickPageController extends AbstractController
 
             // Call Private function  set FeaturedImage to the trick.
             $this->SetFeaturedImageFile($form->get('featuredImage')->getData(), $trick);
-            
+
             // Link Trick to the trick.
             $trick->setUser($this->getUser());
 
             $entityManager->persist($trick);
             $entityManager->flush();
+            $this->addFlash('success', 'Trick updated!');
 
             return $this->RedirectToRoute('trick_detail', ['slug' => $trick->getSlug()]);
         }
@@ -183,8 +170,6 @@ class TrickPageController extends AbstractController
     /**
      * deleteFeaturedImage.
      */
-
-
     public function deleteFeaturedImage(Trick $trick, EntityManagerInterface $entityManager): Response
     {
         // Remove image file and Set to null in the trick.
@@ -193,7 +178,9 @@ class TrickPageController extends AbstractController
             if ($trick->getFeaturedImage() !== $trick->getImages()->first()->getName()) {
                 $this->removeImageFile($trick->getFeaturedImage());
                 $trick->setFeaturedImage(null);
+                $this->addFlash('danger', 'Featured Image deleted!');
             }
+            $this->addFlash('danger', 'Featured Image is the first image of the images');
         } else {
             $this->removeImageFile($trick->getFeaturedImage());
             $trick->setFeaturedImage(null);
@@ -209,8 +196,6 @@ class TrickPageController extends AbstractController
      * SetFeaturedImageFile
      * If form not null, upload featured image file and set it.
      */
-
-
     private function SetFeaturedImageFile(?UploadedFile $featuredFormFile, Trick $trick): Trick
     {
         if (null !== $featuredFormFile) {
@@ -226,8 +211,6 @@ class TrickPageController extends AbstractController
      * setImagesCollection
      * Get collection from form collection and Set images collection in trick.
      */
-
-
     private function setImagesCollection($imagesListUpload, Trick $trick): Trick
     {
         if ($imagesListUpload) {
@@ -243,16 +226,12 @@ class TrickPageController extends AbstractController
 
         return $trick;
     }
-        
+
     /**
      * Compare oldArray and new collection and remove files unused.
-     * 
-     * @param  array $oldCollection
-     * @param  Collection $newImagesCollection
+     *
      * @return void
      */
-
-
     private function updateTrickRemovesImagesFileToFolder(array $oldCollection, Collection $newImagesCollection)
     {
         foreach ($oldCollection as $oldImage) {
@@ -267,10 +246,9 @@ class TrickPageController extends AbstractController
     /**
      * deleteTrickRemoveImages
      * remove all images from the selected trick in delete_trick route.
+     *
      * @return void
      */
-
-
     private function deleteTrickRemoveImages($imagesCollection)
     {
         foreach ($imagesCollection as $image) {
@@ -286,8 +264,6 @@ class TrickPageController extends AbstractController
      *
      * @return void
      */
-
-
     private function removeImageFile(?string $imageName)
     {
         if (null !== $imageName) {

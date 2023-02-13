@@ -2,7 +2,11 @@
 
 {% block body %}
 	<div class="container bg-light rounded">
-
+		{% for message in app.flashes('success') %}
+            <div class="alert alert-success my-3">
+                {{ message }}
+            </div>
+        {% endfor %}
 		{# Include Hero & Featured Image #}
 		{% include 'trickpage/trickTemplate/_header.html.twig'with {'edit': false }  %}
 
@@ -53,13 +57,13 @@
 	</div>
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-	var wraperComment = document.querySelectorAll('#comment');
+	var wraperComment = document.querySelectorAll('.comment');
 	var button = document.querySelector('#load-more');
-	var currentimg = 5
+	var currentimg = 0
 	var displayer = function(){
 			for(var i = currentimg; i < currentimg +5; i++) {
 				if(wraperComment[i]) {
-					wraperComment[i].style.display = 'block';
+					wraperComment[i].style.display = 'flex';
 				}
 			}
 			currentimg += 5;

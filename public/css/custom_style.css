@@ -22,13 +22,19 @@ footer {
 
 /*---------------------------- HOMEPAGE ------------------------------*/
 
-
+.flash-homepage {
+  
+  position: absolute;
+  z-index: 1000;
+  min-width: 100%;
+  border-radius: 0;
+}
 
 #mainNav {
   background-color: #3e3e3e;
 }
 
-#card-homepage {
+.card-homepage {
   display:none;
   padding-bottom: 0.3rem;
 }
@@ -100,7 +106,7 @@ img {
   border-radius: 5px 5px 0 0;
 }
 
-#card-homepage:hover {
+.card-homepage:hover {
   transform: scale(1.1);
 }
 
@@ -166,7 +172,7 @@ i {
   flex-wrap: wrap;
 }
 
-#comment {
+.card-body .comment {
   display:none;  
 }
 

@@ -342,12 +342,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
-    
+
     /**
-     * tokenRegistration
-     *
-     * @param  string $username
-     * @return string
+     * tokenRegistration.
      */
     public function tokenRegistration(string $username): string
     {
@@ -360,19 +357,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * tokenReset
-     *
-     * @param  string $username
-     * @return string
+     * creationTokenReset.
      */
-    public function tokenReset(int $id): string
+    public function creationTokenReset(int $id): string
     {
         // Pick datetime to multiple with $id then take the result andconvert it into md5.
-        $date = new \DateTime('now');        
+        $date = new \DateTime('now');
         $date = $date->format('Y-m-d H:i:s');
-        $key = strtotime($date) * $id;        
-        $key = md5((string)$key);
-        
+        $key = strtotime($date) * $id;
+        $key = md5((string) $key);
+
         return $key;
     }
 
@@ -386,9 +380,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $days = $diff->format('%d');
 
         $duration = $days * 24 + $hours;
-
+        dump($duration);
         if ($duration <= self::TOKEN_DURATION) {
             return true;
+            dd($duration <= self::TOKEN_DURATION);
         }
 
         return false;

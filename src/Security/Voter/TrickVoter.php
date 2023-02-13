@@ -1,11 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of Snowtricks
+ *
+ * (c)
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Security\Voter;
 
 use App\Entity\User;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 class TrickVoter extends Voter
 {
@@ -16,7 +26,7 @@ class TrickVoter extends Voter
     {
         // replace with your own logic
         // https://symfony.com/doc/current/security/voters.html
-        return in_array($attribute, [self::EDIT, self::DELETE])
+        return \in_array($attribute, [self::EDIT, self::DELETE], true)
             && $subject instanceof \App\Entity\Trick;
     }
 
@@ -33,12 +43,12 @@ class TrickVoter extends Voter
             case self::EDIT:
                 // logic to determine if the user can EDIT
                 // return true or false
-                return $subject->getUser()->getId() == $user->getId();
+                return $subject->getUser()->getId() === $user->getId();
                 break;
             case self::DELETE:
                 // logic to determine if the user can DELETE
                 // return true or false
-                return $subject->getUser()->getId() == $user->getId();
+                return $subject->getUser()->getId() === $user->getId();
                 break;
         }
 

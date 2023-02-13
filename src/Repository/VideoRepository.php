@@ -27,8 +27,6 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class VideoRepository extends ServiceEntityRepository
 {
-
-
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Video::class);
@@ -36,9 +34,6 @@ class VideoRepository extends ServiceEntityRepository
 
     /**
      * save.
-     * 
-     * @param Video $entity
-     * @return void
      */
     public function save(Video $entity, bool $flush = false): void
     {
@@ -51,9 +46,6 @@ class VideoRepository extends ServiceEntityRepository
 
     /**
      * remove.
-     * 
-     * @param Video $entity
-     * @return void
      */
     public function remove(Video $entity, bool $flush = false): void
     {
@@ -63,5 +55,4 @@ class VideoRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-
 }

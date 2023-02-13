@@ -27,19 +27,13 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class GroupRepository extends ServiceEntityRepository
 {
-
-
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Group::class);
     }
 
-
     /**
      * save.
-     * 
-     * @param Group $entity
-     * @return void
      */
     public function save(Group $entity, bool $flush = false): void
     {
@@ -52,9 +46,6 @@ class GroupRepository extends ServiceEntityRepository
 
     /**
      * remove.
-     * 
-     * @param Group $entity
-     * @return void
      */
     public function remove(Group $entity, bool $flush = false): void
     {
@@ -64,5 +55,4 @@ class GroupRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-
 }
