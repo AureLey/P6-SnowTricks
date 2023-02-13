@@ -380,10 +380,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $days = $diff->format('%d');
 
         $duration = $days * 24 + $hours;
-        dump($duration);
         if ($duration <= self::TOKEN_DURATION) {
             return true;
-            dd($duration <= self::TOKEN_DURATION);
         }
 
         return false;

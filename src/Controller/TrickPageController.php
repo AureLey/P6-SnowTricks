@@ -179,8 +179,9 @@ class TrickPageController extends AbstractController
                 $this->removeImageFile($trick->getFeaturedImage());
                 $trick->setFeaturedImage(null);
                 $this->addFlash('danger', 'Featured Image deleted!');
+            } else {
+                $this->addFlash('danger', 'Featured Image is the first image of the images');
             }
-            $this->addFlash('danger', 'Featured Image is the first image of the images');
         } else {
             $this->removeImageFile($trick->getFeaturedImage());
             $trick->setFeaturedImage(null);

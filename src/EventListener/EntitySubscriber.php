@@ -22,7 +22,7 @@ use Doctrine\ORM\Events;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 
-class TrickSubscriber implements EventSubscriberInterface
+class EntitySubscriber implements EventSubscriberInterface
 {
     /**
      * getSubscribedEvents.
