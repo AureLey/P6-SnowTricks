@@ -25,18 +25,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
 
 class TrickFormType extends AbstractType
-{    
+{
     /**
-     * buildForm
-     *
-     * @param  FormBuilderInterface $builder
-     * @param  array $options
-     * @return void
+     * buildForm.
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-
-        
         $builder
             ->add('name', TextType::class, ['label' => null])
             ->add('content')

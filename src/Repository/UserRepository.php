@@ -27,19 +27,13 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class UserRepository extends ServiceEntityRepository
 {
-
-
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
     }
 
-
     /**
      * save.
-     * 
-     * @param User $entity
-     * @return void
      */
     public function save(User $entity, bool $flush = false): void
     {
@@ -52,9 +46,6 @@ class UserRepository extends ServiceEntityRepository
 
     /**
      * remove.
-     * 
-     * @param User $entity
-     * @return void
      */
     public function remove(User $entity, bool $flush = false): void
     {
@@ -64,5 +55,4 @@ class UserRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-
 }

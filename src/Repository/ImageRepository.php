@@ -27,19 +27,13 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ImageRepository extends ServiceEntityRepository
 {
-
-
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Image::class);
     }
 
-
     /**
      * save.
-     * 
-     * @param Image $entity
-     * @return void
      */
     public function save(Image $entity, bool $flush = false): void
     {
@@ -52,9 +46,6 @@ class ImageRepository extends ServiceEntityRepository
 
     /**
      * remove.
-     * 
-     * @param Image $entity
-     * @return void
      */
     public function remove(Image $entity, bool $flush = false): void
     {
@@ -64,5 +55,4 @@ class ImageRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-
 }

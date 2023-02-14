@@ -51,9 +51,11 @@ class RegistrationController extends AbstractController
                 $user,
                 $plaintextPassword
             );
+            // Set Hashing password.
             $user->setPassword($hashedPassword);
+
             // Token Creation method in User.
-            $token = $user->tokenCreation($user->getUsername());
+            $token = $user->tokenRegistration($user->getUsername());
             // set TokenValidation time.
             $date = new \DateTime('now');
 
@@ -67,6 +69,7 @@ class RegistrationController extends AbstractController
             // Persist and flush.
             $entityManager->persist($user);
             $entityManager->flush();
+            $this->addFlash('success', 'Account create, check your mailbox to confirm it!');
 
             return $this->redirectToRoute('homepage');
         }
@@ -80,11 +83,6 @@ class RegistrationController extends AbstractController
     /**
      * verifiedEmail.
      * Function who check if User exist then set to 1 User field isVerified by the mail confirmation.
-     * 
-     * @param  Request $request
-     * @param  UserRepository $userRepo
-     * @param  EntityManagerInterface $entityManager
-     * @return Response
      */
     public function verifiedEmail(Request $request, UserRepository $userRepo, EntityManagerInterface $entityManager): Response
     {
@@ -113,11 +111,14 @@ class RegistrationController extends AbstractController
 
         if ($existingUser->verificationTokenTime($existingUser->getTokenValidation(), $dateValidation)) {
             // Set and persist new status of isVerified in User ExistingUser.
-            $existingUser->setIsVerified(true);
-
+            $existingUser->setIsVerified(true)
+                         ->setTokenValidation(null)
+                         ->setToken(null);
+            // Set token field to null.
             $entityManager->persist($existingUser);
             $entityManager->flush();
 
+            $this->addFlash('success', 'Congrats! Your account is verified.');
             // Return to the login page if everything works.
             return $this->redirectToRoute('app_login');
         }

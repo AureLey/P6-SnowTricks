@@ -2,6 +2,14 @@
 
 {% block body %}
 	<div class="container bg-light rounded">
+		{% for label, messages in app.flashes() %}
+			{% for message in messages %}
+				<div class="alert alert-{{ label }} flash" role="alert">
+					{{ message }}
+				</div>
+			{% endfor %}
+		{% endfor %}
+		
 		{{form_start(trickform)}}
 
 		{# Include Hero & Featured Image #}

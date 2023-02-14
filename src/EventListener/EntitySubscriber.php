@@ -13,19 +13,17 @@ declare(strict_types=1);
 
 namespace App\EventListener;
 
+use App\Entity\Comment;
 use App\Entity\Trick;
 use App\Entity\Video;
-use App\Entity\Comment;
-use Doctrine\ORM\Events;
+use Doctrine\Bundle\DoctrineBundle\EventSubscriber\EventSubscriberInterface;
 use Doctrine\ORM\Event\OnFlushEventArgs;
+use Doctrine\ORM\Events;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Symfony\Component\String\Slugger\AsciiSlugger;
-use Doctrine\Bundle\DoctrineBundle\EventSubscriber\EventSubscriberInterface;
 
 class EntitySubscriber implements EventSubscriberInterface
 {
-
-    
     /**
      * getSubscribedEvents.
      */
@@ -37,12 +35,9 @@ class EntitySubscriber implements EventSubscriberInterface
             Events::onFlush,
         ];
     }
-    
+
     /**
-     * prePersist
-     *
-     * @param  LifecycleEventArgs $args
-     * @return void
+     * prePersist.
      */
     public function prePersist(LifecycleEventArgs $args): void
     {
@@ -50,23 +45,19 @@ class EntitySubscriber implements EventSubscriberInterface
         $this->setSlugTrick($args);
         $this->setDateTimeComment($args);
     }
-    
+
     /**
-     * preUpdate
-     *
-     * @param  LifecycleEventArgs $args
-     * @return void
+     * preUpdate.
      */
     public function preUpdate(LifecycleEventArgs $args): void
     {
         $this->setUpdatedAtTrick($args);
         $this->setSlugTrick($args);
     }
-    
+
     /**
-     * onFlush
+     * onFlush.
      *
-     * @param  OnFlushEventArgs $eventArgs
      * @return void
      */
     public function onFlush(OnFlushEventArgs $eventArgs)
@@ -98,7 +89,6 @@ class EntitySubscriber implements EventSubscriberInterface
             }
         }
     }
-    
 
     /**
      * setDateTimeComment
@@ -112,7 +102,7 @@ class EntitySubscriber implements EventSubscriberInterface
             return;
         }
 
-        $entity->setCreatedAt(new \DateTime());        
+        $entity->setCreatedAt(new \DateTime());
     }
 
     /**

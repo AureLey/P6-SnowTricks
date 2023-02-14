@@ -1,9 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-	<div
-		class="container bg-light rounded">
-
+	<div class="container bg-light rounded">
+		{% for message in app.flashes('success') %}
+            <div class="alert alert-success my-3">
+                {{ message }}
+            </div>
+        {% endfor %}
 		{# Include Hero & Featured Image #}
 		{% include 'trickpage/trickTemplate/_header.html.twig'with {'edit': false }  %}
 
@@ -52,24 +55,4 @@
 			{% include 'comment/comment_trick.html.twig' %}
 		</section>
 	</div>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-	var wraperComment = document.querySelectorAll('#comment');
-	var button = document.querySelector('#load-more');
-	var currentimg = 5
-	var displayer = function(){
-			for(var i = currentimg; i < currentimg +5; i++) {
-				if(wraperComment[i]) {
-					wraperComment[i].style.display = 'block';
-				}
-			}
-			currentimg += 5;
-			if(currentimg >=wraperComment.length){
-			event.target.style.display ='none';
-			}
-		}
-	displayer();
-	button.addEventListener('click',displayer);
-	});
-</script>
 {% endblock %}

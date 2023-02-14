@@ -20,19 +20,23 @@ footer {
   color: aliceblue !important;
 }
 
-/*---------------------------- HOMEPAGE ------------------------------*/
+/* ---------------------------- HOMEPAGE ------------------------------ */
 
-
+.flash-homepage {
+  position: absolute;
+  z-index: 1000;
+  min-width: 100%;
+  border-radius: 0;
+}
 
 #mainNav {
   background-color: #3e3e3e;
 }
 
-#card-homepage {
-  display:none;
+.card-homepage {
+  display: none;
   padding-bottom: 0.3rem;
 }
-
 
 .masthead {
   position: relative;
@@ -52,7 +56,7 @@ footer {
   bottom: 1rem;
 }
 
-.card-img-top{
+.card-img-top {
   height: 150px;
   width: 100%;
   cursor: pointer;
@@ -100,7 +104,7 @@ img {
   border-radius: 5px 5px 0 0;
 }
 
-#card-homepage:hover {
+.card-homepage:hover {
   transform: scale(1.1);
 }
 
@@ -110,10 +114,20 @@ i {
 
 /* -------------------------TRICKPAGE------------------------- */
 
-
 #navicon {
   visibility: hidden;
   display: none;
+}
+
+.page-link,
+.page-link:hover {
+  color: #1a1717;
+}
+
+.active > .page-link,
+.page-link.active {
+  background-color: #677676;
+  border-color: #1a1717;
 }
 
 .default-img-trick {
@@ -156,18 +170,17 @@ i {
   width: 100%;
 }
 
-.trick-group,.trick-content, .trick-comment {
+.trick-group,
+.trick-content,
+.trick-comment {
   display: flex;
   flex-wrap: nowrap;
-  justify-content: space-around;  
+  justify-content: space-around;
 }
+
 .gallery-card {
   display: flex;
   flex-wrap: wrap;
-}
-
-#comment {
-  display:none;  
 }
 
 /* SIGN PAGE */
@@ -195,13 +208,14 @@ i {
   #see-media {
     visibility: visible;
     display: block;
-  }  
+  }
 
-  .trick-name {    
+  .trick-name {
     left: 10%;
   }
+
   /* GALLERY TRICKPAGE AND NAVBAR */
- 
+
   #navmenutext {
     visibility: hidden;
     display: none;
@@ -235,7 +249,7 @@ i {
     display: block;
   }
 
-  #collapseExample >div {
+  #collapseExample > div {
     flex-direction: column;
   }
 
@@ -244,9 +258,8 @@ i {
     align-items: center;
   }
 
-  .video { 
-    
-    min-height:300px;    
+  .video {
+    min-height: 300px;
   }
 
   /* FOOTER */
@@ -263,7 +276,7 @@ i {
   #images {
     flex-direction: column;
     width: 100%;
- }
+  }
 
   .card-img-top {
     height: 250px;
@@ -285,7 +298,7 @@ i {
 
   .trick-name {
     top: unset;
-    left: 20%;    
+    left: 20%;
     bottom: 5%;
   }
 
@@ -297,12 +310,13 @@ i {
     flex-wrap: wrap;
   }
 
-  .trick-content,.trick-comment  {
-    flex-direction: column;    
+  .trick-content,
+  .trick-comment {
+    flex-direction: column;
   }
 
   .trick-comment > a {
-    margin: 1rem;    
+    margin: 1rem;
   }
 }
 
@@ -315,12 +329,12 @@ i {
     margin-left: 2rem;
     margin-right: 2rem;
     font-size: 30px;
-  }  
+  }
 
   .default-img-trick {
     aspect-ratio: 1/1;
-  }  
-  
+  }
+
   .trick-name > h1 {
     text-transform: lowercase;
   }
@@ -328,5 +342,4 @@ i {
   .btn-sm {
     font-size: x-large;
   }
-
 }
