@@ -119,6 +119,17 @@ i {
   display: none;
 }
 
+.page-link,
+.page-link:hover {
+  color: #1a1717;
+}
+
+.active > .page-link,
+.page-link.active {
+  background-color: #677676;
+  border-color: #1a1717;
+}
+
 .default-img-trick {
   aspect-ratio: 3/1;
   width: 100%;
@@ -170,10 +181,6 @@ i {
 .gallery-card {
   display: flex;
   flex-wrap: wrap;
-}
-
-.card-body .comment {
-  display: none;
 }
 
 /* SIGN PAGE */

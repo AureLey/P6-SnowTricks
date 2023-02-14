@@ -18,6 +18,7 @@ use App\Entity\Trick;
 use App\Entity\User;
 use App\Form\CommentFormType;
 use App\Form\TrickFormType;
+use App\Repository\CommentRepository;
 use App\Repository\ImageRepository;
 use App\Service\FileUploader;
 use Doctrine\Common\Collections\Collection;
@@ -75,10 +76,16 @@ class TrickPageController extends AbstractController
     /**
      * showTrick.
      */
-    public function showTrick(Trick $trick, Request $request, EntityManagerInterface $entityManager): Response
+    public function showTrick(Trick $trick, Request $request, EntityManagerInterface $entityManager, CommentRepository $commentRepo): Response
     {
         // Create comment object.
         $comment = new Comment();
+
+        // Get the page number in the request, 1 is the default value.
+        $page = $request->query->getInt('page', 1);
+
+        // Call pagination function, send id trick and currentPage
+        $comments = $commentRepo->loadCommentPaginated($trick->getId(), $page);
 
         // Create the form and handle the request about the comment.
         $form = $this->createForm(CommentFormType::class)->handleRequest($request);
@@ -99,6 +106,7 @@ class TrickPageController extends AbstractController
             'controller_name' => 'TrickPageController',
             'trick' => $trick,
             'commentForm' => $form->createView(),
+            'comments' => $comments,
         ]);
     }
 
@@ -193,6 +201,7 @@ class TrickPageController extends AbstractController
         return $this->RedirectToRoute('update_trick', ['slug' => $trick->getSlug()]);
     }
 
+    
     /**
      * SetFeaturedImageFile
      * If form not null, upload featured image file and set it.
