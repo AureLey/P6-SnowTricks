@@ -45,6 +45,8 @@ class TrickPageController extends AbstractController
      */
     public function newTrick(Request $request, EntityManagerInterface $entityManager): Response
     {
+        // Check permission to delete via Voter function.
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $trick = new Trick();
         $form = $this->createForm(TrickFormType::class, $trick)->handleRequest($request);
 
@@ -201,7 +203,6 @@ class TrickPageController extends AbstractController
         return $this->RedirectToRoute('update_trick', ['slug' => $trick->getSlug()]);
     }
 
-    
     /**
      * SetFeaturedImageFile
      * If form not null, upload featured image file and set it.

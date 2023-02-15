@@ -43,6 +43,7 @@ class Trick
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank(message: 'Too short description')]
+    #[Assert\Length(min: 6, minMessage: '6 letters is the minimum size.')]
     private ?string $content = null;
 
     #[ORM\Column]
