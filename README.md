@@ -30,6 +30,10 @@ php bin/console doctrine:database:create
 php bin/console doctrine:migrations:migrate
 php bin/console doctrine:fixtures:load
 ```
+E-mail command to consume/send all e-mails ( can be catch with Mailhog)
+```
+php bin/console messenger:consume async
+```
 
 Admin login 
 
