@@ -14,13 +14,20 @@ declare(strict_types=1);
 namespace App\Security\Voter;
 
 use App\Entity\User;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 class TrickVoter extends Voter
 {
     public const EDIT = 'TRICK_EDIT';
     public const DELETE = 'TRICK_DELETE';
+    private $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
 
     protected function supports(string $attribute, mixed $subject): bool
     {
@@ -33,6 +40,11 @@ class TrickVoter extends Voter
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
         $user = $token->getUser();
+
+        // ROLE_SUPER_ADMIN can do anything! The power!
+        if ($this->security->isGranted('ROLE_ADMIN')) {
+            return true;
+        }
         // if the user is anonymous, do not grant access
         if (!$user instanceof User) {
             return false;
@@ -42,7 +54,7 @@ class TrickVoter extends Voter
         switch ($attribute) {
             case self::EDIT:
                 // logic to determine if the user can EDIT
-                // return true or false
+                // return true or false              
                 return $subject->getUser()->getId() === $user->getId();
                 break;
             case self::DELETE:
