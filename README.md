@@ -20,11 +20,16 @@ Get composer dependencies
 composer install
 ```
 
-
+Check server adress
 ```
 server adress : http://localhost:8000
 ```
-
+Database creation and Fixtures
+```
+php bin/console doctrine:database:create
+php bin/console doctrine:migrations:migrate
+php bin/console doctrine:fixtures:load
+```
 
 Admin login 
 
