@@ -20,23 +20,26 @@ use App\Form\CommentFormType;
 use App\Form\TrickFormType;
 use App\Repository\CommentRepository;
 use App\Repository\ImageRepository;
-use App\Service\FileUploader;
+use App\Service\FileManager;
+use App\Service\Media\MediaManager;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class TrickPageController extends AbstractController
 {
-    // Inject Service FileUploader.
-    private FileUploader $fileUploader;
+    // Inject Service Service\FileManager.
+    private FileManager $fileManager;
+    // Inject Service Media\MediaManager
+    private MediaManager $mediaManager;
 
-    public function __construct(FileUploader $fileUploader)
+    public function __construct(FileManager $fileManager, MediaManager $mediaManager)
     {
-        $this->fileUploader = $fileUploader;
+        $this->fileManager = $fileManager;
+        $this->mediaManager = $mediaManager;
     }
 
     #[Route('/trick/new', name: 'new_trick')]
@@ -45,15 +48,17 @@ class TrickPageController extends AbstractController
      */
     public function newTrick(Request $request, EntityManagerInterface $entityManager): Response
     {
+        // Check permission to delete via Voter function.
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $trick = new Trick();
         $form = $this->createForm(TrickFormType::class, $trick)->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             // Call private function to Set and Upload images collection to the trick.
-            $this->setImagesCollection($form->get('images')->getData(), $trick);
+            $this->mediaManager->setImagesCollection($form->get('images')->getData(), $trick);
 
             // Call Private function  set FeaturedImage to the trick.
-            $this->SetFeaturedImageFile($form->get('featuredImage')->getData(), $trick);
+            $this->mediaManager->SetFeaturedImageFile($form->get('featuredImage')->getData(), $trick);
 
             // Link Trick to the trick.
             $trick->setUser($this->getUser());
@@ -121,12 +126,12 @@ class TrickPageController extends AbstractController
 
         // Check if the collection is not null and delete all files.
         if (null !== $trick->getImages()) {
-            $this->deleteTrickRemoveImages($trick->getImages());
+            $this->mediaManager->deleteTrickRemoveImages($trick->getImages());
         }
 
         // Check if the field FeaturedImage is not null and delete the file.
         if (null !== $trick->getFeaturedImage()) {
-            $this->removeImageFile($trick->getFeaturedImage());
+            $this->mediaManager->removeImageFile($trick->getFeaturedImage());
         }
         $entityManager->remove($trick);
         $entityManager->flush();
@@ -150,12 +155,12 @@ class TrickPageController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             // Call private function to Set and Upload images collection to the trick.
-            $this->setImagesCollection($form->get('images')->getData(), $trick);
+            $this->mediaManager->setImagesCollection($form->get('images')->getData(), $trick);
 
-            $this->updateTrickRemovesImagesFileToFolder($oldImagesCollection, $trick->getImages());
+            $this->mediaManager->updateTrickRemovesImagesFileToFolder($oldImagesCollection, $trick->getImages());
 
             // Call Private function  set FeaturedImage to the trick.
-            $this->SetFeaturedImageFile($form->get('featuredImage')->getData(), $trick);
+            $this->mediaManager->SetFeaturedImageFile($form->get('featuredImage')->getData(), $trick);
 
             // Link Trick to the trick.
             $trick->setUser($this->getUser());
@@ -184,14 +189,14 @@ class TrickPageController extends AbstractController
         // Test if featuredImage and 1st element of collections are identical, if they are != remove the file.
         if ($trick->getImages()->first()) {
             if ($trick->getFeaturedImage() !== $trick->getImages()->first()->getName()) {
-                $this->removeImageFile($trick->getFeaturedImage());
+                $this->mediaManager->removeImageFile($trick->getFeaturedImage());
                 $trick->setFeaturedImage(null);
                 $this->addFlash('danger', 'Featured Image deleted!');
             } else {
                 $this->addFlash('danger', 'Featured Image is the first image of the images');
             }
         } else {
-            $this->removeImageFile($trick->getFeaturedImage());
+            $this->mediaManager->removeImageFile($trick->getFeaturedImage());
             $trick->setFeaturedImage(null);
         }
 
@@ -199,85 +204,5 @@ class TrickPageController extends AbstractController
         $entityManager->flush();
 
         return $this->RedirectToRoute('update_trick', ['slug' => $trick->getSlug()]);
-    }
-
-    
-    /**
-     * SetFeaturedImageFile
-     * If form not null, upload featured image file and set it.
-     */
-    private function SetFeaturedImageFile(?UploadedFile $featuredFormFile, Trick $trick): Trick
-    {
-        if (null !== $featuredFormFile) {
-            // Set Featured Image with the form element
-            $featuredName = $this->fileUploader->AddFile($featuredFormFile);
-            $trick->setFeaturedImage($featuredName);
-        }
-
-        return $trick;
-    }
-
-    /**
-     * setImagesCollection
-     * Get collection from form collection and Set images collection in trick.
-     */
-    private function setImagesCollection($imagesListUpload, Trick $trick): Trick
-    {
-        if ($imagesListUpload) {
-            // Test collection if image's id is null so no registered and field File not empty, upload and set the file and name
-            foreach ($imagesListUpload as $imageUpload) {
-                if (null === $imageUpload->getId() || !empty($imageUpload->getFile())) {
-                    $fileName = $this->fileUploader->upload($imageUpload->getFile());
-                    $imageUpload->setName($fileName);
-                    $trick->addImage($imageUpload);
-                }
-            }
-        }
-
-        return $trick;
-    }
-
-    /**
-     * Compare oldArray and new collection and remove files unused.
-     *
-     * @return void
-     */
-    private function updateTrickRemovesImagesFileToFolder(array $oldCollection, Collection $newImagesCollection)
-    {
-        foreach ($oldCollection as $oldImage) {
-            $present = \in_array($oldImage->getName(), $newImagesCollection->toArray(), false);
-
-            if (true !== $present) {
-                $this->removeImageFile($oldImage->getName());
-            }
-        }
-    }
-
-    /**
-     * deleteTrickRemoveImages
-     * remove all images from the selected trick in delete_trick route.
-     *
-     * @return void
-     */
-    private function deleteTrickRemoveImages($imagesCollection)
-    {
-        foreach ($imagesCollection as $image) {
-            $this->removeImageFile($image->getName());
-        }
-    }
-
-    /**
-     * removeImageFile
-     * get images folder hard path, and remove file by his name.
-     *
-     * @param string $imageName
-     *
-     * @return void
-     */
-    private function removeImageFile(?string $imageName)
-    {
-        if (null !== $imageName) {
-            $this->fileUploader->removeFile($imageName);
-        }
     }
 }

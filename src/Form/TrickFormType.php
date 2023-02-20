@@ -19,6 +19,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -32,11 +33,16 @@ class TrickFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class, ['label' => null])
-            ->add('content')
+            ->add('name', TextType::class, [
+                    'label' => 'Trick name',
+                    'label_attr' => ['class' => 'text-white'], ])
+            ->add('content', TextareaType::class, [
+                'label' => 'Trick Description',
+            ])
             ->add('groupTrick', EntityType::class, [
                 'class' => Group::class,
                 'choice_label' => 'name',
+                'label' => 'Group of trick',
             ])
             ->add('videos', CollectionType::class, [
                 'label' => false,

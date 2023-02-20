@@ -28,7 +28,7 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class CommentRepository extends ServiceEntityRepository
 {
-    public const COMMENT_LOADED = 5;
+    public const COMMENT_LOADED = 10;
 
     public function __construct(ManagerRegistry $registry)
     {

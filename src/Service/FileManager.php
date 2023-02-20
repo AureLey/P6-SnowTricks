@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
-class FileUploader
+class FileManager
 {
     private string $targetDirectory; // Represent the image directory in serivces.yaml.
     private $slugger; // Represent the function slug.
@@ -53,7 +53,7 @@ class FileUploader
 
     /**
      * removeFile,function who remove the file (image) from the images folder
-     * FileSystem injected in FileUploader Class.
+     * FileSystem injected in FileManager Class.
      *
      * @return void
      */
