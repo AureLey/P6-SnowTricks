@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace App\Security\Voter;
 
 use App\Entity\User;
-use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\Voter;
+use Symfony\Component\Security\Core\Security;
 
 class TrickVoter extends Voter
 {
@@ -54,7 +54,7 @@ class TrickVoter extends Voter
         switch ($attribute) {
             case self::EDIT:
                 // logic to determine if the user can EDIT
-                // return true or false              
+                // return true or false
                 return $subject->getUser()->getId() === $user->getId();
                 break;
             case self::DELETE:
