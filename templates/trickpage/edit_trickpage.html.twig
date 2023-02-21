@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="container bg-light rounded">
+		{% for label, messages in app.flashes() %}
+			{% for message in messages %}
+				<div class="alert alert-{{ label }} flash" role="alert">
+					{{ message }}
+				</div>
+			{% endfor %}
+		{% endfor %}
+		
+		{{form_start(trickform)}}
+
+		{# Include Hero & Featured Image #}
+		{% include 'trickpage/trickTemplate/_header.html.twig' with {'edit': true }  %}
+
+		<div
+			class="content-trick mt-4">
+			{# --------------------Gallery --------------------- #}
+			<section id="gallery">
+				<div class="row container justify-content-center">
+					{% include 'trickpage/trickTemplate/_formMedia.html.twig' with {'trickform': trickform }  %}
+				</div>
+			</section>
+
+			{# Modal pour afficher les images #}
+			{{ include("trickpage/trickTemplate/_modal.html.twig")}}			
+			{# --------------------------------  GALLERY UPDATE  ----------------------------------------- #}
+
+
+			{# Section Contenu Trick && Button #}
+			<section
+				class="row mx-auto col-8 pb-5">
+				{# Description Field && trick group || Form field #}				
+				{% include 'trickpage/trickTemplate/_content.html.twig' with {'edit': true, 'update' : false } %}
+			</section>
+		</div>
+		{{form_end(trickform)}}
+	</div>
+{% endblock %}

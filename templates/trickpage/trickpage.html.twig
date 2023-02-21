@@ -1,140 +1,58 @@
 {% extends 'base.html.twig' %}
 
-
-
 {% block body %}
 	<div class="container bg-light rounded">
-		<div class="header-trick pt-5">
-			<div class="default-img-trick" style="background-image:url('{{asset("images/default-img.jpg")}}');">
-				<div class="overlay">
-					<div class="container">
-						<div class="trick-buttons mt-2">
-							<a href="{{path('updatetrickpagedetail')}}" class="btn btn-info btn-sm mx-2">
-								<i class="bi bi-pencil-fill"></i>
-							</a>
-							<a href="#" class="btn btn-danger btn-sm mx-2">
-								<i class="bi bi-trash3-fill"></i>
-							</a>
-						</div>
-						<div class="trick-name">
-							<h1 class="mx-auto my-4 text-uppercase text-light">Trick name</h1>
-						</div>
+		{% for message in app.flashes('success') %}
+            <div class="alert alert-success my-3">
+                {{ message }}
+            </div>
+        {% endfor %}
+		{# Include Hero & Featured Image #}
+		{% include 'trickpage/trickTemplate/_header.html.twig'with {'edit': false }  %}
+
+		<div
+			class="content-trick mt-4">
+			{# --------------------Gallery links--------------------- #}
+			
+			{# On affiche le bouton media qui permet de load les media en responsive #}
+			<section id="see-media">
+				<div class="button-load-more text-center mb-5">
+					{% if trick.videos is empty and trick.images is empty %}
+						<p class="fw-bold"><h3>No Media </h3></p>
+					{% else %}
+						<a class="btn btn-sm rounded text-light bg-dark px-5 py-3" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+							See media
+						</a>
+					{% endif %}
+				</div>
+			</section>
+			<section id="gallery">
+				<div
+					class="row  justify-content-center">
+					{# Gallery of Media #}
+					<div class="collapse" id="collapseExample">
+						<div class="gallery-card">{% include 'trickpage/trickTemplate/_gallery.html.twig' with {'update': false }  %}</div>
 					</div>
 				</div>
-			</div>
-		</div>
-		{# --------------------Gallery links--------------------- #}
-		<div class="content-trick mt-4">
-            <section id="gallery">
-                <div class="row  justify-content-center">
-                    {% for i in 0..5 %}
-                        {# Media Link #}
-                        <div class="trick-media-card col-3 mx-4">
-                            <a href="#exampleModal">
-                                <img src="{{asset('images/default-img.jpg')}}"data-toggle="modal" data-target="#exampleModal" class="w-100 rounded my-2"/>
-                            </a>
-                        </div>                        
-                    {% endfor %}
-					{# Modal Windows #}
-					<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
-						<div class="modal-dialog" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title" >var twig</h5>
-									<button type="button" class="close border-0" data-dismiss="modal" aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
-								</div>
-								<div class="ratio ratio-16x9 modal-body">
-									<iframe src="https://www.youtube.com/embed/vlDzYIIOYmM" title="YouTube video" allowfullscreen></iframe>
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-								</div>
-							</div>
-						</div>
-					</div>
-					{# End Modal #}
-                </div>
-            </section>
-            {# responsive section  #}
-            <section id="see-media">
-                <div class="button-load-more text-center mb-5">
-                    <a href="" class="btn btn-sm rounded text-light bg-dark px-5 py-3" >See media</a>
-                </div>
-            </section>
-			{# --------------------END Gallery links--------------------- #}
-			<div class="content my-4">
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam itaque impedit et, adipisci animi beatae asperiores quaerat obcaecati architecto eligendi veritatis! Eligendi dicta odio ipsa obcaecati. Excepturi quia itaque facilis.
-																								                Dicta soluta molestias autem officia error eum rerum, id amet! Placeat ratione quae voluptates nemo repellendus et cupiditate eaque, consequuntur earum maxime distinctio molestias laborum tempora, dolorum velit assumenda amet?
-																								                Natus temporibus corporis nesciunt accusamus at esse harum possimus quisquam eum itaque tenetur dolorum ad iure impedit fugiat, magni quibusdam? Dicta quidem ullam cumque iste exercitationem odio saepe incidunt delectus.
-			</div>
-			<div class="d-flex justify-content-evenly mb-4">
-				<h2>
-					<span class="badge bg-secondary ">Flip</span>
-				</h2>
-				<div class="badge text-bg-dark">
-					<h3>Création le : 2022-12-01</h3>
-				</div>
-			</div>
+			</section>
+
+			{# Modal pour afficher les images #}
+			{{ include("trickpage/trickTemplate/_modal.html.twig")}}
+
+			{# --------------------------------END  GALLERY  ----------------------------------------- #}
+
+			{# Section Contenu Trick && Button #}
+			<section
+				class="row mx-auto col-10 pb-5">
+				{# Description Field && trick group #}
+				{# {% include 'trickpage/trickTemplate/_content.html.twig' with {'page': 'show' } %} #}
+				{% include 'trickpage/trickTemplate/_content.html.twig' with {'edit': false, 'update' : false } %}
+			</section>
 		</div>
 
 		<!--Comment section -->
 		<section class="mb-5 pb-2">
-			<div class="card bg-light">
-				<div class="card-body">
-					<!-- Comment form-->
-					{% if app.user %}
-						<form class="mb-4">
-							<textarea class="form-control" rows="3" placeholder="Join the discussion and leave a comment!"></textarea>
-							<button class="btn btn-success mt-3" type="submit">Envoyez</button>
-						</form>
-					{% else %}
-						<div class="btn-comment d-flex justify-content-center border-bottom pb-3">
-							<a href="{{path('signin')}}" class="btn btn-success btn-sm mx-5">
-								<h3>Sign-in</h3>
-							</a>
-							<a href="{{path('signup')}}" class="btn btn-success btn-sm mx-5">
-								<h3>Sign-up</h3>
-							</a>
-						</div>
-					{% endif %}
-					<!-- Comment with nested comments-->
-					<div class="d-flex my-4">
-						<!-- Parent comment-->
-						<div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..."></div>
-						<div class="ms-3">
-							<div class="fw-bold">Commenter Name</div>
-							If you're going to lead a space frontier, it has to be government; it'll never be private enterprise. Because the space frontier is dangerous, and it's expensive, and it has unquantified risks.
-							<!-- Child comment 1-->
-							<div class="d-flex mt-4">
-								<div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..."></div>
-								<div class="ms-3">
-									<div class="fw-bold">Commenter Name</div>
-									And under those conditions, you cannot establish a capital-market evaluation of that enterprise. You can't get investors.
-								</div>
-							</div>
-							<!-- Child comment 2-->
-							<div class="d-flex mt-4">
-								<div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..."></div>
-								<div class="ms-3">
-									<div class="fw-bold">Commenter Name</div>
-									When you put money directly to a problem, it makes a good headline.
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- Single comment-->
-					<div class="d-flex">
-						<div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..."></div>
-						<div class="ms-3">
-							<div class="fw-bold">Commenter Name</div>
-							When I look at the universe and all the ways the universe wants to kill us, I find it hard to reconcile that with statements of beneficence.
-						</div>
-					</div>
-				</div>
-                <div class="footer-comment d-flex justify-content-center my-3"><a href="#" class="btn btn-dark btn-sm mx-5">Load More</a></div>
-			</div>
+			{% include 'comment/comment_trick.html.twig' %}
 		</section>
 	</div>
 {% endblock %}

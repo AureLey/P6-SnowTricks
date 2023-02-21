@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="container form-container">
+		<div class="row my-5">
+			<div class="card cascading-right col-6 mx-auto text-center border">
+				<!--Gestion des erreurs -->
+				{# {% if error != empty %}<div class="alert alert-danger">{{ error }}</div>{% endif %} #}
+				<!--END Gestion des erreurs --><h2 class="fw-bold my-3"> Registration</h2>
+				{{form_start(formRegistration)}}
+					<!-- Username input -->
+					<div class="form-outline mb-2">
+						{{form_row(formRegistration.username, 
+						{'label' : 'Username',
+							'label_attr':{'class' :' text-white '},
+							'attr':{'class' :  'form-control'}})}}
+						<label class="form-label" for="Username">Username</label>
+					</div>
+					<!-- Email input -->
+					<div class="form-outline mb-2">
+						{{form_row(formRegistration.email, 
+						{'label' : 'Email',
+							'label_attr':{'class' :' text-white '},
+							'attr':{'class' :  'form-control'}})}}
+						<label class="form-label" for="Email">Email</label>
+					</div>
+
+					<!-- Password input -->
+					<div class="form-outline mb-3">
+						{{form_row(formRegistration.password, 
+						{'label' : 'Password',
+							'label_attr':{'class' :' text-white '},
+							'attr':{'class' :  'form-control'}})}}
+						<label class="form-label" for="password-signup">Password</label>
+					</div>
+
+					<!-- Submit button -->
+					<button type="submit" class="btn btn-primary btn-block mb-3">
+						Create an account
+					</button>
+				{{form_end(formRegistration)}}
+				<div id="already-account" class="mb-2">
+					<a href="{{path('app_login')}}" class="fw-semibold fs-4">
+						Already an account?</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

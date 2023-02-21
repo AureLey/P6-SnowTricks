@@ -1,0 +1,7 @@
+<h1>Account validation</h1>
+<p>Hello {{ user.username }},</p>
+<p>Your inscription  must be validate, click on the link below to confirm your account creation :</p>
+<p><a href="{{ absolute_url(path('app_verified_mail', {user:user.username,token: user.token})) }}">
+        {{ absolute_url(path('app_verified_mail', {user:user.username,token: user.token})) }}
+    </a>
+</p>

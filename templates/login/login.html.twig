@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="container form-container">
+		<div class="row my-5">
+			<div class="card cascading-right col-6 mx-auto text-center border">				
+				{% if error %}
+					<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+				{% endif %}	
+				{% for label, messages in app.flashes() %}
+					{% for message in messages %}
+						<div class="alert alert-{{ label }} flash" role="alert">
+							{{ message }}
+						</div>
+					{% endfor %}
+				{% endfor %}			
+				<h2 class="fw-bold my-5">Login</h2>
+				<form
+					action="{{ path('app_login') }}" method="post">
+					<!-- Email input -->
+					<div class="form-outline mb-4">
+						<input type="username" id="username" name="_username" class="form-control" value="{{ last_username }}" required/>
+						<label class="form-label" for="Username">Username</label>
+					</div>
+
+					<!-- Password input -->
+					<div class="form-outline mb-2">
+						<input type="password" id="password" name="_password" class="form-control" required/>
+						<label class="form-label" for="password-signin">Mot de passe</label>
+					</div>
+
+					{# CSRF Token #}
+					<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+					<div class="form-outline mb-2">
+						<a href="{{path('forgotpassword')}}" class="fw-semibold">Forgot password?</a>
+					</div>
+					<div id="register" class="mb-2">
+						<a href="{{path('app_signup')}}" class="fw-semibold">Signup</a>
+					</div>
+
+
+					<!-- Submit button -->
+					<button type="submit" class="btn btn-primary btn-block my-2">
+						Login
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}
